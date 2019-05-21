@@ -1,0 +1,11 @@
+/Users/lucaslamy/Downloads/hellokoding-courses-master-3/spring-mvc-examples/registration-login-spring-xml-maven-jsp-mysql/src/main/java/com/hellokoding/account/service/UserService.java
+/Users/lucaslamy/Downloads/hellokoding-courses-master-3/spring-mvc-examples/registration-login-spring-xml-maven-jsp-mysql/src/main/java/com/hellokoding/account/service/SecurityService.java
+/Users/lucaslamy/Downloads/hellokoding-courses-master-3/spring-mvc-examples/registration-login-spring-xml-maven-jsp-mysql/src/main/java/com/hellokoding/account/validator/UserValidator.java
+/Users/lucaslamy/Downloads/hellokoding-courses-master-3/spring-mvc-examples/registration-login-spring-xml-maven-jsp-mysql/src/main/java/com/hellokoding/account/service/UserDetailsServiceImpl.java
+/Users/lucaslamy/Downloads/hellokoding-courses-master-3/spring-mvc-examples/registration-login-spring-xml-maven-jsp-mysql/src/main/java/com/hellokoding/account/service/UserServiceImpl.java
+/Users/lucaslamy/Downloads/hellokoding-courses-master-3/spring-mvc-examples/registration-login-spring-xml-maven-jsp-mysql/src/main/java/com/hellokoding/account/service/SecurityServiceImpl.java
+/Users/lucaslamy/Downloads/hellokoding-courses-master-3/spring-mvc-examples/registration-login-spring-xml-maven-jsp-mysql/src/main/java/com/hellokoding/account/model/Role.java
+/Users/lucaslamy/Downloads/hellokoding-courses-master-3/spring-mvc-examples/registration-login-spring-xml-maven-jsp-mysql/src/main/java/com/hellokoding/account/repository/UserRepository.java
+/Users/lucaslamy/Downloads/hellokoding-courses-master-3/spring-mvc-examples/registration-login-spring-xml-maven-jsp-mysql/src/main/java/com/hellokoding/account/web/UserController.java
+/Users/lucaslamy/Downloads/hellokoding-courses-master-3/spring-mvc-examples/registration-login-spring-xml-maven-jsp-mysql/src/main/java/com/hellokoding/account/model/User.java
+/Users/lucaslamy/Downloads/hellokoding-courses-master-3/spring-mvc-examples/registration-login-spring-xml-maven-jsp-mysql/src/main/java/com/hellokoding/account/repository/RoleRepository.java
