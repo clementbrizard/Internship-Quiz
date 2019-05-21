@@ -1,11 +1,10 @@
-package com.hellokoding.account.web;
+package com.sr03.project.web;
 
-import com.hellokoding.account.model.Role;
-import com.hellokoding.account.model.User;
-import com.hellokoding.account.repository.UserRepository;
-import com.hellokoding.account.service.SecurityService;
-import com.hellokoding.account.service.UserService;
-import com.hellokoding.account.validator.UserValidator;
+import com.sr03.project.model.User;
+import com.sr03.project.repository.UserRepository;
+import com.sr03.project.service.SecurityService;
+import com.sr03.project.service.UserService;
+import com.sr03.project.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.List;
-import java.util.logging.Logger;
 
 @Controller
 public class UserController {

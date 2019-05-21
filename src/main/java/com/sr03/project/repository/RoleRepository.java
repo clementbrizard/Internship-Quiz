@@ -1,6 +1,6 @@
-package com.hellokoding.account.repository;
+package com.sr03.project.repository;
 
-import com.hellokoding.account.model.Role;
+import com.sr03.project.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoleRepository extends JpaRepository<Role, Long>{

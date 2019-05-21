@@ -1,6 +1,6 @@
-package com.hellokoding.account.service;
+package com.sr03.project.service;
 
-import com.hellokoding.account.model.User;
+import com.sr03.project.model.User;
 
 public interface UserService {
     void save(User user);
