@@ -28,7 +28,7 @@ $(document).ready(function() {
 			$( "#userTable tbody tr:even" ).addClass("success");
 		},
 		error : function(e) {
-			alert("ERROR: ", e);
+			alert("ERROR WITH THIS TABLE: ", e);
 			console.log("ERROR: ", e);
 		}
 	});

@@ -22,7 +22,7 @@ public class RestAPI {
     @Autowired
     private UserRepository userRepository;
 
-    Map<Long, User> custUsers = new HashMap<Long, User>();
+    private Map<Long, User> custUsers = new HashMap<Long, User>();
 
     @PostConstruct
     public void initIt() throws Exception {

@@ -29,11 +29,11 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
-            <h2>Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+            <h2 class="text-center">Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
             </h2>
         <div class="container">
-            <h2>All User</h2>
-            <div class="row col-md-7 ">
+            <h2 class="text-center">All User</h2>
+            <div class="row col-md-12 ">
                 <div style="margin-bottom:20px; padding:10px; background-color:#336699; color:white;">
                     <p>Type some text to search the table </p>
                     <input class="form-control" id="inputFilter" type="text" placeholder="Search.." />
