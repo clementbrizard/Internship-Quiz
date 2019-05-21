@@ -10,19 +10,15 @@
     http://www.springframework.org/schema/tx
     http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-
-    <!-- Configure the data source bean -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:8889/db?serverTimezone=GMT-6"/>
         <property name="username" value="root"/>
         <property name="password" value="root"/>
     </bean>
-
-    <!-- Configure the entity manager factory bean -->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="com.hellokoding.account.model"/>
+        <property name="packagesToScan" value="com.sr03.project.model"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
         </property>
@@ -34,13 +30,11 @@
         </property>
     </bean>
 
-    <!-- Configure the transaction manager bean -->
     <bean id="transactionManager"
           class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
-    <!-- Enable annotation driven transaction management -->
     <tx:annotation-driven/>
 
     <!--
@@ -48,6 +42,6 @@
       repository interfaces
     -->
 
-    <jpa:repositories base-package="com.hellokoding.account.repository"/>
+    <jpa:repositories base-package="com.sr03.project.repository"/>
 
 </beans>

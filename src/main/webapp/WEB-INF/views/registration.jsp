@@ -55,6 +55,52 @@
             </div>
         </spring:bind>
 
+        <spring:bind path="mail">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="mail" class="form-control"
+                            placeholder="Mail"></form:input>
+                <form:errors path="mail"></form:errors>
+            </div>
+        </spring:bind>
+
+        <spring:bind path="firstName">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="firstName" class="form-control margin"
+                            placeholder="First Name"></form:input>
+                <form:errors path="firstName"></form:errors>
+            </div>
+        </spring:bind>
+
+        <spring:bind path="secondName">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="secondName" class="form-control margin"
+                            placeholder="Second Name"></form:input>
+                <form:errors path="secondName"></form:errors>
+            </div>
+        </spring:bind>
+
+        <spring:bind path="admin">
+            <div class="form-group text-center">
+                <form:checkbox path="admin" value="admin"/> is an admin ?
+            </div>
+        </spring:bind>
+
+        <spring:bind path="company">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="company" class="form-control margin"
+                            placeholder="Company"></form:input>
+                <form:errors path="company"></form:errors>
+            </div>
+        </spring:bind>
+
+        <spring:bind path="phone">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="phone" class="form-control margin"
+                            placeholder="Phone Number"></form:input>
+                <form:errors path="phone"></form:errors>
+            </div>
+        </spring:bind>
+
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
     </form:form>
 

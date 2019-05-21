@@ -8,12 +8,9 @@
 ## How to run
 Simply run the following command within the directory :
 ~~~
-mvn spring-boot:run
-~~~
-or
-~~~
 mvn jetty:run
 ~~~
+
 ## Other useful command
 ~~~
 mvn clean package

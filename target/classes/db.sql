@@ -26,11 +26,17 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) DEFAULT NULL,
+  `username` varchar(255) UNIQUE NOT NULL,
   `password` varchar(255) DEFAULT NULL,
   `admin` BOOLEAN DEFAULT 0,
   `valid` BOOLEAN DEFAULT 1,
-  PRIMARY KEY (`id`)
+  `firstName` varchar(255) NOT NULL,
+  `secondName` varchar(255) NOT NULL,
+  `mail` varchar(255) UNIQUE NOT NULL,
+  `company` varchar(255) NOT NULL,
+  `phone` varchar(255),
+  `creationdate` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --

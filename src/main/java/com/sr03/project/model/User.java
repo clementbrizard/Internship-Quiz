@@ -1,7 +1,12 @@
 package com.sr03.project.model;
 
 
+import org.hibernate.validator.constraints.Email;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -9,10 +14,16 @@ import java.util.Set;
 public class User {
     private Long id;
     private String username;
-    private Boolean isValid;
-    private Boolean isAdmin;
+    private Boolean valid;
+    private Boolean admin;
     private String password;
     private String passwordConfirm;
+    private String firstName;
+    private String secondName;
+    private String mail;
+    private String company;
+    private Long phone;
+    private Timestamp creationDate;
     private Set<Role> roles;
 
     @Id
@@ -60,19 +71,81 @@ public class User {
         this.roles = roles;
     }
 
+    @Column(nullable = false, columnDefinition = "boolean default true")
     public Boolean getValid() {
-        return isValid;
+        return valid;
     }
 
     public void setValid(Boolean valid) {
-        isValid = valid;
+        this.valid = valid;
     }
 
+    @Column(nullable = false, columnDefinition = "boolean default false")
     public Boolean getAdmin() {
-        return isAdmin;
+        return admin;
     }
 
     public void setAdmin(Boolean admin) {
-        isAdmin = admin;
+        this.admin = admin;
     }
+
+    @Column(nullable = false)
+    @NotNull
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    @Column(nullable = false)
+    @NotNull
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
+    }
+
+    @NotNull
+    @Column(nullable = false, unique = true)
+    @Email
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    @Column(nullable = false)
+    @NotNull
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public Long getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Long phone) {
+        this.phone = phone;
+    }
+
+    @Column(nullable = false, columnDefinition = "datetime default NOW()")
+    @NotNull
+    public Timestamp getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Timestamp creationDate) {
+        this.creationDate = creationDate;
+    }
+
 }
