@@ -3,8 +3,11 @@ package com.sr03.project.web;
 import com.sr03.project.model.User;
 import com.sr03.project.repository.UserRepository;
 import com.sr03.project.service.SecurityService;
+import com.sr03.project.service.SecurityServiceImpl;
 import com.sr03.project.service.UserService;
 import com.sr03.project.validator.UserValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.security.Principal;
 
 @Controller
 public class UserController {
@@ -29,6 +31,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
+
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -64,16 +69,15 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
-    public String welcome(Model model) {
+    public String welcome(Model model, Principal principal) {
+        String name = principal.getName();
+        User user = userRepository.findByUsername(name);
+        Boolean admin = user.getAdmin();
 
-        String currentUsername = securityService.findLoggedInUsername();
-        User currentUser = userRepository.findByUsername(currentUsername);
         Iterable <User> userList = userRepository.findAll();
-        model.addAttribute("currentUsername",currentUsername);
-        model.addAttribute("currentUser",currentUser);
+
+        model.addAttribute("admin", admin);
         model.addAttribute("userList",userList);
-        System.out.println("AAAAA DEBUG AZAZAZ");
-        System.out.println(currentUsername);
         return "welcome";
     }
 

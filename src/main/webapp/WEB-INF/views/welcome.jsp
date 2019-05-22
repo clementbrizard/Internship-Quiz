@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="loggedUserName" value="${pageContext.request.userPrincipal.name}"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,70 +25,25 @@
 <body>
 <div class="container">
 
-    <c:if test="${pageContext.request.userPrincipal.name != null}">
+    <c:if test="${loggedUserName!= null}">
         <form id="logoutForm" method="POST" action="${contextPath}/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
 
-            <h2 class="text-center">Welcome ${pageContext.request.userPrincipal.name} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
-            </h2>
-        <div class="container">
-            <h2 class="text-center">All User</h2>
-            <div class="row col-md-12 ">
-                <div style="margin-bottom:20px; padding:10px; background-color:#336699; color:white;">
-                    <p>Type some text to search the table </p>
-                    <input class="form-control" id="inputFilter" type="text" placeholder="Search.." />
-                </div>
-                <table id="userTable" class="table table-bordered table-hover table-responsive">
-                    <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>username</th>
-                        <th>firstName</th>
-                        <th>secondName</th>
-                        <th>mail</th>
-                        <th>admin</th>
-                        <th>company</th>
-                        <th>phone</th>
-                        <th>creationDate</th>
-                        <th>valid</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <c:forEach items="${userList}" var="item">
-            <li>${item.id}</li>
-            <li>${item.username}</li>
-            <li>${item.firstName}</li>
-            <li>${item.secondName}</li>
-            <li>${item.mail}</li>
-            <li>${item.admin}</li>
-            <li>${item.company}</li>
-            <li>${item.phone}</li>
-            <li>${item.creationDate}</li>
-            <li>${item.valid}</li>
-        </c:forEach>
-            <h2>$$ ${currentUser.admin} $$</h2>
-            <c:if test="${currentUser.admin==true && currentUser.valid==true}">
-                <h2> Your an ADMIN and your account is still valid, so you can see this</h2>
-                <c:forEach items="${userList}" var="item">
-                    <li>${item.username}</li>
-                </c:forEach>
-            </c:if>
-            <c:if test="${currentUser.admin==false && currentUser.valid==true}">
-                <h2> Your not an ADMIN so you can't see the list of the users</h2>
-            </c:if>
+        <h2 class="text-center">Welcome ${loggedUserName} | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
+    </c:if>
 
+    <c:if test="${admin == true}">
+        <h1>Admin</h1>
+    </c:if>
 
-
-
+    <c:if test="${admin == false}">
+        <h1>Not admin</h1>
     </c:if>
 
 </div>
 <!-- /container -->
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 <script src="${contextPath}/resources/js/jqueryScript.js"></script>
