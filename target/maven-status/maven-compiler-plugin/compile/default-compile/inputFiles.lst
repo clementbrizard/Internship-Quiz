@@ -1,12 +1,13 @@
 /Users/lucaslamy/Documents/GI04/SR03/ProjectInternship/ProjectInternship/src/main/java/com/sr03/project/model/User.java
-/Users/lucaslamy/Documents/GI04/SR03/ProjectInternship/ProjectInternship/src/main/java/com/sr03/project/model/Role.java
-/Users/lucaslamy/Documents/GI04/SR03/ProjectInternship/ProjectInternship/src/main/java/com/sr03/project/service/UserService.java
 /Users/lucaslamy/Documents/GI04/SR03/ProjectInternship/ProjectInternship/src/main/java/com/sr03/project/service/UserServiceImpl.java
 /Users/lucaslamy/Documents/GI04/SR03/ProjectInternship/ProjectInternship/src/main/java/com/sr03/project/repository/UserRepository.java
 /Users/lucaslamy/Documents/GI04/SR03/ProjectInternship/ProjectInternship/src/main/java/com/sr03/project/repository/RoleRepository.java
-/Users/lucaslamy/Documents/GI04/SR03/ProjectInternship/ProjectInternship/src/main/java/com/sr03/project/service/SecurityService.java
 /Users/lucaslamy/Documents/GI04/SR03/ProjectInternship/ProjectInternship/src/main/java/com/sr03/project/service/UserDetailsServiceImpl.java
 /Users/lucaslamy/Documents/GI04/SR03/ProjectInternship/ProjectInternship/src/main/java/com/sr03/project/validator/UserValidator.java
 /Users/lucaslamy/Documents/GI04/SR03/ProjectInternship/ProjectInternship/src/main/java/com/sr03/project/web/RestAPI.java
+/Users/lucaslamy/Documents/GI04/SR03/ProjectInternship/ProjectInternship/src/main/java/com/sr03/project/web/UserRestController.java
+/Users/lucaslamy/Documents/GI04/SR03/ProjectInternship/ProjectInternship/src/main/java/com/sr03/project/model/Role.java
+/Users/lucaslamy/Documents/GI04/SR03/ProjectInternship/ProjectInternship/src/main/java/com/sr03/project/service/UserService.java
+/Users/lucaslamy/Documents/GI04/SR03/ProjectInternship/ProjectInternship/src/main/java/com/sr03/project/service/SecurityService.java
 /Users/lucaslamy/Documents/GI04/SR03/ProjectInternship/ProjectInternship/src/main/java/com/sr03/project/web/UserController.java
 /Users/lucaslamy/Documents/GI04/SR03/ProjectInternship/ProjectInternship/src/main/java/com/sr03/project/service/SecurityServiceImpl.java
