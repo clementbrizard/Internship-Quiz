@@ -1,4 +1,5 @@
 com/sr03/project/service/UserService.class
+com/sr03/project/Application.class
 com/sr03/project/service/SecurityService.class
 com/sr03/project/repository/RoleRepository.class
 com/sr03/project/service/UserDetailsServiceImpl.class
@@ -9,5 +10,4 @@ com/sr03/project/validator/UserValidator.class
 com/sr03/project/model/Role.class
 com/sr03/project/model/User.class
 com/sr03/project/web/RestAPI.class
-com/sr03/project/ProjectApplication.class
 com/sr03/project/service/UserServiceImpl.class
