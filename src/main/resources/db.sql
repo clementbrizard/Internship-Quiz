@@ -16,7 +16,8 @@ CREATE TABLE `role` (
 --
 
 LOCK TABLES `role` WRITE;
-INSERT INTO `role` VALUES (1,'ROLE_USER');
+INSERT INTO `role` VALUES (0,'ROLE_USER');
+INSERT INTO `role` VALUES (1,'ROLE_ADMIN');
 UNLOCK TABLES;
 
 --
@@ -28,7 +29,6 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) UNIQUE NOT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `admin` BOOLEAN DEFAULT 0,
   `valid` BOOLEAN DEFAULT 1,
   `firstName` varchar(255) NOT NULL,
   `secondName` varchar(255) NOT NULL,

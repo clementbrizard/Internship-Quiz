@@ -1,5 +1,6 @@
 package com.sr03.project.service;
 
+import com.sr03.project.model.Role;
 import com.sr03.project.model.User;
 import com.sr03.project.repository.RoleRepository;
 import com.sr03.project.repository.UserRepository;
@@ -8,7 +9,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.time.ZonedDateTime;
 import java.util.HashSet;
 
 @Service
@@ -23,9 +23,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(new HashSet<>(roleRepository.findAll()));
+        HashSet<Role> roles = new HashSet<Role>();
+        roles.add(roleRepository.findOne((long)2));
+        user.setRoles(roles);
         user.setValid(true);
-        user.setAdmin(user.getAdmin());
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         user.setCreationDate(timestamp);
         userRepository.save(user);

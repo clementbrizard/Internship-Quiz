@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Welcome</title>
+    <title>Trainee</title>
 
     <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -33,13 +33,7 @@
         <h2 class="text-center">Welcome ${loggedUserName} | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
     </c:if>
 
-    <c:if test="${admin == true}">
-        <h1>Admin</h1>
-    </c:if>
-
-    <c:if test="${admin == false}">
-        <h1>Not admin</h1>
-    </c:if>
+    <h1>Trainee</h1>
 
 </div>
 <!-- /container -->

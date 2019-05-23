@@ -9,6 +9,9 @@ import com.sr03.project.validator.UserValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +34,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityServiceImpl.class);
 
@@ -71,14 +77,13 @@ public class UserController {
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model, Principal principal) {
         String name = principal.getName();
-        User user = userRepository.findByUsername(name);
-        Boolean admin = user.getAdmin();
+        UserDetails userDetails = userDetailsService.loadUserByUsername(name);
+        Boolean isAdmin = userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
 
         Iterable <User> userList = userRepository.findAll();
-
-        model.addAttribute("admin", admin);
         model.addAttribute("userList",userList);
-        return "welcome";
+
+        return isAdmin == true ? "admin" : "trainee";
     }
 
 }
