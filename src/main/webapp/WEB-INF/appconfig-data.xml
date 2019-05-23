@@ -42,6 +42,6 @@
       repository interfaces
     -->
 
-    <jpa:repositories base-package="com.sr03.project.repository"/>
 
+    <jpa:repositories base-package="com.sr03.project.repository"/>
 </beans>

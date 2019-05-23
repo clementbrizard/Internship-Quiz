@@ -4,12 +4,14 @@ import com.sr03.project.model.User;
 import com.sr03.project.repository.RoleRepository;
 import com.sr03.project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -40,4 +42,9 @@ public class UserServiceImpl implements UserService {
     public User findByMail(String mail) {
         return userRepository.findByMail(mail);
     }
+
+    /*    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }*/
 }
