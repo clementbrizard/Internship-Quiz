@@ -35,6 +35,46 @@
 
     <h1>Admin</h1>
 
+    <div class="container">
+        <h2 class="text-center">All User</h2>
+        <div class="row col-md-12 ">
+            <div style="margin-bottom:20px; padding:10px; background-color:#336699; color:white;">
+                <p>Type some text to search the table </p>
+                <input class="form-control" id="inputFilter" type="text" placeholder="Search.." />
+            </div>
+            <table id="userTable" class="table table-bordered table-hover table-responsive">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>username</th>
+                    <th>firstName</th>
+                    <th>secondName</th>
+                    <th>mail</th>
+                    <th>admin</th>
+                    <th>company</th>
+                    <th>phone</th>
+                    <th>creationDate</th>
+                    <th>valid</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <c:forEach items="${userList}" var="item">
+        <li>${item.id}</li>
+        <li>${item.username}</li>
+        <li>${item.firstName}</li>
+        <li>${item.secondName}</li>
+        <li>${item.mail}</li>
+        <li>${item.admin}</li>
+        <li>${item.company}</li>
+        <li>${item.phone}</li>
+        <li>${item.creationDate}</li>
+        <li>${item.valid}</li>
+    </c:forEach>
+
 </div>
 <!-- /container -->
 
