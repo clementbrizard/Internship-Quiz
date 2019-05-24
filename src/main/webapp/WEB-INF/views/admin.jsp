@@ -25,9 +25,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="${contextPath}/resources/css/common.css"/>
     <%--
         <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
     --%>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css"
           href="https://cdn.datatables.net/v/bs4/dt-1.10.18/af-2.3.3/b-1.5.6/b-colvis-1.5.6/b-flash-1.5.6/b-print-1.5.6/cr-1.5.0/r-2.2.2/rr-1.2.4/sc-2.0.0/sl-1.3.0/datatables.min.css"/>
 
@@ -35,18 +38,17 @@
 <body>
 <div class="container col-md-12">
 
-    <c:if test="${loggedUserName!= null}">
     <form id="logoutForm" method="POST" action="${contextPath}/logout">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form>
 
     <h2 class="text-center">Welcome ${loggedUserName} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
     </h2>
-    </c:if>
+
 
     <h1 class="text-center">Admin</h1>
 
-    <h2 class="text-center">All User</h2>
+    <h2 class="text-center">All Users</h2>
     <div class="col-md-12">
         <table id="users" class="table table-striped table-bordered">
             <thead>
@@ -59,7 +61,7 @@
                 <th>Company</th>
                 <th>Phone</th>
                 <th>Creation Date</th>
-                <th>Valid</th>
+                <th>Active</th>
                 <th>Action</th>
 
             </tr>
@@ -70,18 +72,50 @@
                     <td>${item.id}</td>
                     <td>${item.username}</td>
                     <td>${item.firstName}</td>
-                    <td>${item.secondName}</td>
+                    <td>${item.secondName} ${userDetailsService.loadUserByUsername(item.username).getAuthorities()}</td>
                     <td>${item.mail}</td>
                     <td>${item.company}</td>
                     <td>${item.phone}</td>
                     <td>${item.creationDate}</td>
                     <td>${item.valid}</td>
-                    <td>Action</td>
+                    <td>
+                        <c:if test="${item.username != loggedUserName}">
+                            <c:choose>
+                                <c:when test="${item.valid==true}">
+                                    <form id="disableForm" method="POST" action="${contextPath}/disable/${item.id}">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    </form>
+                                    <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit
+                                    </button>
+                                    <button type="button" class="btn btn-danger"><i class="far fa-edit"></i> Delete
+                                    </button>
+                                    <a onclick="document.forms['disableForm'].submit()" class="btn btn-info"><i
+                                            class="fas fa-user-slash"></i> Disable</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <form id="disableForm" method="POST" action="${contextPath}/disable/${item.id}">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                    </form>
+                                    <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit
+                                    </button>
+                                    <button type="button" class="btn btn-danger"><i class="far fa-edit"></i> Delete
+                                    </button>
+                                    <a onclick="document.forms['disableForm'].submit()" class="btn btn-info">
+                                        <i class="fas fa-user-check"></i> Enable</a>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:if>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
+        <div class="container text-center">
+            <button type="button" class="btn btn-success"><i class="fas fa-plus"></i> Add user</button>
+            <button type="button" class="btn btn-success"><i class="fas fa-list-ol"></i> Manage forms</button>
+        </div>
     </div>
+
 
     <script type="text/javascript" charset="utf8"
             src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
@@ -93,9 +127,7 @@
     <script>
         $(function () {
             $("#users").dataTable({
-                select: true,
                 rowReorder: true,
-                responsive: true,
                 colReorder: true,
                 search: {
                     smart: false

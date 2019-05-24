@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.security.Principal;
 
@@ -74,16 +75,34 @@ public class UserController {
         return "login";
     }
 
+    @RequestMapping(value = "/disable/{id}", method = RequestMethod.POST)
+    public String disable(@PathVariable int id){
+        Long lid = Long.valueOf(id);
+        User user = userRepository.findById(lid);
+        user.setValid(!user.getValid());
+        userRepository.save(user);
+        return "redirect:/welcome";
+    }
+    @RequestMapping(value = "/isNotValid", method = RequestMethod.GET)
+    public String notValid(Model model) {
+        return "isNotValid";
+    }
+
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model, Principal principal) {
         String name = principal.getName();
+        User user = userRepository.findByUsername(name);
+        Boolean isValid = user.getValid();
+        if (isValid == false){
+            return "isNotValid";
+        }
         UserDetails userDetails = userDetailsService.loadUserByUsername(name);
         Boolean isAdmin = userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
 
         Iterable <User> userList = userRepository.findAll();
         model.addAttribute("userList",userList);
-
         return isAdmin == true ? "admin" : "trainee";
     }
 
 }
+
