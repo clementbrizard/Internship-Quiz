@@ -21,7 +21,7 @@ public class User {
     private String secondName;
     private String mail;
     private String company;
-    private Long phone;
+    private String phone;
     private Timestamp creationDate;
     private Set<Role> roles;
 
@@ -120,11 +120,11 @@ public class User {
         this.company = company;
     }
 
-    public Long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

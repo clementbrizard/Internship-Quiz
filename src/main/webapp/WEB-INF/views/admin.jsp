@@ -15,71 +15,103 @@
 
     <title>Admin</title>
 
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <%--    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>--%>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <%--
+        <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+    --%>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/v/bs4/dt-1.10.18/af-2.3.3/b-1.5.6/b-colvis-1.5.6/b-flash-1.5.6/b-print-1.5.6/cr-1.5.0/r-2.2.2/rr-1.2.4/sc-2.0.0/sl-1.3.0/datatables.min.css"/>
 
 </head>
 <body>
-<div class="container">
+<div class="container col-md-12">
 
     <c:if test="${loggedUserName!= null}">
-        <form id="logoutForm" method="POST" action="${contextPath}/logout">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
+    <form id="logoutForm" method="POST" action="${contextPath}/logout">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
 
-        <h2 class="text-center">Welcome ${loggedUserName} | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
+    <h2 class="text-center">Welcome ${loggedUserName} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
+    </h2>
     </c:if>
 
-    <h1>Admin</h1>
+    <h1 class="text-center">Admin</h1>
 
-    <div class="container">
-        <h2 class="text-center">All User</h2>
-        <div class="row col-md-12 ">
-            <div style="margin-bottom:20px; padding:10px; background-color:#336699; color:white;">
-                <p>Type some text to search the table </p>
-                <input class="form-control" id="inputFilter" type="text" placeholder="Search.." />
-            </div>
-            <table id="userTable" class="table table-bordered table-hover table-responsive">
-                <thead>
+    <h2 class="text-center">All User</h2>
+    <div class="col-md-12">
+        <table id="users" class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>First Name</th>
+                <th>Second Name</th>
+                <th>Mail</th>
+                <th>Company</th>
+                <th>Phone</th>
+                <th>Creation Date</th>
+                <th>Valid</th>
+                <th>Action</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${userList}" var="item">
                 <tr>
-                    <th>id</th>
-                    <th>username</th>
-                    <th>firstName</th>
-                    <th>secondName</th>
-                    <th>mail</th>
-                    <th>admin</th>
-                    <th>company</th>
-                    <th>phone</th>
-                    <th>creationDate</th>
-                    <th>valid</th>
+                    <td>${item.id}</td>
+                    <td>${item.username}</td>
+                    <td>${item.firstName}</td>
+                    <td>${item.secondName}</td>
+                    <td>${item.mail}</td>
+                    <td>${item.company}</td>
+                    <td>${item.phone}</td>
+                    <td>${item.creationDate}</td>
+                    <td>${item.valid}</td>
+                    <td>Action</td>
                 </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
+            </c:forEach>
+            </tbody>
+        </table>
     </div>
-    <c:forEach items="${userList}" var="item">
-        <li>${item.id}</li>
-        <li>${item.username}</li>
-        <li>${item.firstName}</li>
-        <li>${item.secondName}</li>
-        <li>${item.mail}</li>
-        <li>${item.admin}</li>
-        <li>${item.company}</li>
-        <li>${item.phone}</li>
-        <li>${item.creationDate}</li>
-        <li>${item.valid}</li>
-    </c:forEach>
 
-</div>
-<!-- /container -->
+    <script type="text/javascript" charset="utf8"
+            src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+            src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/v/bs4/dt-1.10.18/af-2.3.3/b-1.5.6/b-colvis-1.5.6/b-flash-1.5.6/b-print-1.5.6/cr-1.5.0/r-2.2.2/rr-1.2.4/sc-2.0.0/sl-1.3.0/datatables.min.js"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-<script src="${contextPath}/resources/js/jqueryScript.js"></script>
+    <script>
+        $(function () {
+            $("#users").dataTable({
+                select: true,
+                rowReorder: true,
+                responsive: true,
+                colReorder: true,
+                search: {
+                    smart: false
+                }
+            });
+
+        })
+    </script>
+
+    <%--</div>--%>
+    <!-- /container -->
+
+    <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="${contextPath}/resources/js/bootstrap.min.js"></script>--%>
+    <%--
+    <script src="${contextPath}/resources/js/jqueryScript.js"></script>
+    --%>
 </body>
 </html>
