@@ -1,11 +1,14 @@
 package com.sr03.project.web;
 
+import com.github.javafaker.Faker;
 import com.sr03.project.model.User;
 import com.sr03.project.repository.UserRepository;
 import com.sr03.project.service.SecurityService;
 import com.sr03.project.service.UserService;
 import com.sr03.project.validator.UserValidator;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +34,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -62,6 +70,37 @@ public class UserController {
 
         return "login";
     }
+
+/*
+    @RequestMapping(value = {"/init"},method = RequestMethod.GET)
+    public String init(Model model){
+        int NUMBER_TO_GENERATE = 100;
+        Faker faker = new Faker();
+        List<User> userList = new ArrayList<>();
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        for (long i = 0; i <= NUMBER_TO_GENERATE; i++) {
+            User user = new User();
+            user.setFirstName(faker.gameOfThrones().character());
+            user.setSecondName(faker.gameOfThrones().city());
+            user.setUsername(faker.name().username());
+            //.password(faker.crypto().sha1())
+            String password = bCryptPasswordEncoder.encode(faker.gameOfThrones().quote());
+            user.setPassword(password);
+            user.setPasswordConfirm(password);
+            user.setMail(faker.bothify("????##@gmail.com"));
+            user.setCompany(faker.gameOfThrones().house());
+            user.setPhone(faker.phoneNumber().phoneNumber());
+            user.setCreationDate(timestamp);
+            user.setAdmin(false);
+            user.setValid(true);
+            userRepository.save(user);
+            userList.add(user);
+
+        }
+        // userList.forEach(System.out::println);
+        return "welcome";
+    }
+*/
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)
     public String welcome(Model model) {

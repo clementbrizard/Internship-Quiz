@@ -1,6 +1,10 @@
 package com.sr03.project.model;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
@@ -9,6 +13,10 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Set;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "user")
 public class User {
@@ -22,7 +30,7 @@ public class User {
     private String secondName;
     private String mail;
     private String company;
-    private Long phone;
+    private String phone;
     private Timestamp creationDate;
     private Set<Role> roles;
 
@@ -130,11 +138,11 @@ public class User {
         this.company = company;
     }
 
-    public Long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
