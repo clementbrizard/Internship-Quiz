@@ -15,7 +15,6 @@ public class User {
     private Long id;
     private String username;
     private Boolean valid;
-    private Boolean admin;
     private String password;
     private String passwordConfirm;
     private String firstName;
@@ -78,15 +77,6 @@ public class User {
 
     public void setValid(Boolean valid) {
         this.valid = valid;
-    }
-
-    @Column(nullable = false, columnDefinition = "boolean default false")
-    public Boolean getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Boolean admin) {
-        this.admin = admin;
     }
 
     @Column(nullable = false)

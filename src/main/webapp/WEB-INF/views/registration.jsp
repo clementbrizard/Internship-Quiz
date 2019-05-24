@@ -79,12 +79,6 @@
             </div>
         </spring:bind>
 
-        <spring:bind path="admin">
-            <div class="form-group text-center">
-                <form:checkbox path="admin" value="admin"/> is an admin ?
-            </div>
-        </spring:bind>
-
         <spring:bind path="company">
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="text" path="company" class="form-control margin"
