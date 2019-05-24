@@ -112,7 +112,11 @@
         </table>
         <div class="container text-center">
             <button type="button" class="btn btn-success"><i class="fas fa-plus"></i> Add user</button>
-            <button type="button" class="btn btn-success"><i class="fas fa-list-ol"></i> Manage forms</button>
+            <form id="managerForm" method="POST" action="${contextPath}/forms">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+            <a onclick="document.forms['managerForm'].submit()" class="btn btn-success"><i
+                    class="fas fa-list-ol"></i> Manage forms</a>
         </div>
     </div>
 
