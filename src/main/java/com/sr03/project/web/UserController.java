@@ -83,9 +83,18 @@ public class UserController {
         userRepository.save(user);
         return "redirect:/welcome";
     }
+
     @RequestMapping(value = "/isNotValid", method = RequestMethod.GET)
     public String notValid(Model model) {
         return "isNotValid";
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public String delete(@PathVariable int id){
+        Long lid = Long.valueOf(id);
+        User user = userRepository.findById(lid);
+        userRepository.delete(user);
+        return "redirect:/welcome";
     }
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)

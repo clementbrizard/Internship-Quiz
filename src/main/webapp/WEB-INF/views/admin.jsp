@@ -79,10 +79,18 @@
                             <form id="disableForm" method="POST" action="${contextPath}/disable/${item.id}">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             </form>
-                            <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit
-                            </button>
-                            <button type="button" class="btn btn-danger"><i class="far fa-edit"></i> Delete
-                            </button>
+
+                            <form id="deleteForm" method="POST" action="${contextPath}/delete/${item.id}">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
+
+                            <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit</button>
+
+                            <a onclick="document.forms['deleteForm'].submit()" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i>
+                                Delete
+                            </a>
+
                             <c:choose>
                                 <c:when test="${item.valid==true}">
                                     <a onclick="document.forms['disableForm'].submit()" class="btn btn-info"><i
@@ -93,6 +101,7 @@
                                         <i class="fas fa-user-check"></i> Enable</a>
                                 </c:otherwise>
                             </c:choose>
+
                         </c:if>
                         <c:if test="${item.username == loggedUserName}">
                             <div class="text-center"> Can't edit your own account like this </div>
