@@ -76,26 +76,19 @@
                     <td class="text-center">${item.valid}</td>
                     <td>
                         <c:if test="${item.username != loggedUserName}">
+                            <form id="disableForm" method="POST" action="${contextPath}/disable/${item.id}">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
+                            <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit
+                            </button>
+                            <button type="button" class="btn btn-danger"><i class="far fa-edit"></i> Delete
+                            </button>
                             <c:choose>
                                 <c:when test="${item.valid==true}">
-                                    <form id="disableForm" method="POST" action="${contextPath}/disable/${item.id}">
-                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                    </form>
-                                    <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit
-                                    </button>
-                                    <button type="button" class="btn btn-danger"><i class="far fa-edit"></i> Delete
-                                    </button>
                                     <a onclick="document.forms['disableForm'].submit()" class="btn btn-info"><i
                                             class="fas fa-user-slash"></i> Disable</a>
                                 </c:when>
                                 <c:otherwise>
-                                    <form id="disableForm" method="POST" action="${contextPath}/disable/${item.id}">
-                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                    </form>
-                                    <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit
-                                    </button>
-                                    <button type="button" class="btn btn-danger"><i class="far fa-edit"></i> Delete
-                                    </button>
                                     <a onclick="document.forms['disableForm'].submit()" class="btn btn-info">
                                         <i class="fas fa-user-check"></i> Enable</a>
                                 </c:otherwise>

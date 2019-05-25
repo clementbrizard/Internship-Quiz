@@ -21,8 +21,15 @@
 </head>
 <body>
 <div class="container col-md-12">
+
     <h1 class="text-center">Sorry ${loggedUserName}</h1>
     <h1 class="text-center">Your account have been disabled by an admin. Please contact our support team.</h1>
+
+    <form id="logoutForm" method="POST" action="${contextPath}/logout">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    </form>
+    <h2 class="text-center"><a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
+
 </div>
 </body>
 </html>
