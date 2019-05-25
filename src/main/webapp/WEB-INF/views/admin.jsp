@@ -45,10 +45,6 @@
     <h2 class="text-center">Welcome ${loggedUserName} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
     </h2>
 
-
-    <h1 class="text-center">Admin</h1>
-
-    <h2 class="text-center">All Users</h2>
     <div class="col-md-12">
         <table id="users" class="table table-striped table-bordered">
             <thead>
