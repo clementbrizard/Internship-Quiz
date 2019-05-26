@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.Email;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,6 +24,7 @@ public class User {
     private String phone;
     private Timestamp creationDate;
     private Set<Role> roles;
+    private Set<Track> track = new HashSet<>(0);
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -138,4 +139,12 @@ public class User {
         this.creationDate = creationDate;
     }
 
+    @OneToMany(mappedBy = "user")
+    public Set<Track> getTrack() {
+        return track;
+    }
+
+    public void setTrack(Set<Track> track) {
+        this.track = track;
+    }
 }

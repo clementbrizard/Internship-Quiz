@@ -1,27 +1,29 @@
 package com.sr03.project.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import com.sr03.project.model.User;
-import com.sr03.project.model.Form;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "Track")
+@Table(name = "track")
 public class Track {
     @Id
     @GeneratedValue
+    @Column(name = "track_id")
     private Integer id;
-    @NotNull
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="form_id")
     private Form form;
-    @NotNull
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id")
     private User user;
     @NotNull
     private Double score;
     @NotNull
     private Integer duration;
+    @OneToMany(mappedBy = "track")
+    public Set<TrackQuestion> trackQuestion  = new HashSet<TrackQuestion>(0);
 
     public Track(Form form, User user, Double score, Integer duration) {
         this.form = form;
@@ -69,4 +71,13 @@ public class Track {
     public void setDuration(Integer duration) {
         this.duration = duration;
     }
+
+    public Set<TrackQuestion> getTrackQuestion() {
+        return trackQuestion;
+    }
+
+    public void setTrackQuestion(Set<TrackQuestion> trackQuestion) {
+        this.trackQuestion = trackQuestion;
+    }
+
 }

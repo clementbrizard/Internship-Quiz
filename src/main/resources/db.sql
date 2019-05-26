@@ -54,7 +54,7 @@ CREATE TABLE `user_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-create table if not exists Answer
+create table if not exists answer
 (
     id int auto_increment
         primary key,
@@ -62,93 +62,96 @@ create table if not exists Answer
     isActive tinyint(1) default 1 not null
 );
 
-create table if not exists Subject
+create table if not exists subject
 (
     id int auto_increment
         primary key,
     title varchar(200) not null
 );
 
-create table if not exists Form
+create table if not exists form
 (
     id int auto_increment
         primary key,
-    idSubject int not null,
+    subject_id int not null,
     title varchar(200) not null,
     isActive tinyint(1) default 1 not null,
     constraint Form_Subject_id_fk
-        foreign key (idSubject) references Subject (id)
+        foreign key (subject_id) references Subject (id)
 );
 
-create table if not exists Question
+create table if not exists question
 (
     id int auto_increment
         primary key,
-    idSubject int not null,
+    subject_id int not null,
     title varchar(200) null,
     isActive tinyint(1) default 1 not null,
     constraint Question_Subject_id_fk
-        foreign key (idSubject) references Subject (id)
+        foreign key (subject_id) references Subject (id)
 );
 
-create table if not exists AnswerQuestion
-(
-    idQuestion int not null,
-    idAnswer int not null,
-    position int default 1 not null,
-    isValid tinyint(1) default 0 not null,
-    primary key (idQuestion, idAnswer),
-    constraint AnswerQuestion_Answer_id_fk
-        foreign key (idAnswer) references Answer (id),
-    constraint AnswerQuestion_Question_id_fk
-        foreign key (idQuestion) references Question (id)
-);
-
-create table if not exists QuestionForm
-(
-    idForm int not null,
-    idQuestion int not null,
-    position int default 1 not null,
-    primary key (idForm, idQuestion),
-    constraint QuestionForm_Form_id_fk
-        foreign key (idForm) references Form (id),
-    constraint QuestionForm_Question_id_fk
-        foreign key (idQuestion) references Question (id)
-);
-
-create table if not exists QuestionSubject
-(
-    idQuestion int not null,
-    idSubject int not null,
-    primary key (idQuestion, idSubject),
-    constraint QuestionSubject_Question_id_fk
-        foreign key (idQuestion) references Question (id),
-    constraint QuestionSubject_Subject_id_fk
-        foreign key (idSubject) references Subject (id)
-);
-
-create table if not exists Track
+create table if not exists answer_question
 (
     id int auto_increment
         primary key,
-    idForm int not null,
+    question_id int not null,
+    answer_id int not null,
+    position int default 1 not null,
+    valid tinyint(1) default 0 not null,
+    constraint AnswerQuestion_Answer_id_fk
+        foreign key (answer_id) references Answer (id),
+    constraint AnswerQuestion_Question_id_fk
+        foreign key (question_id) references Question (id)
+);
+
+create table if not exists form_question
+(
+    id int auto_increment
+        primary key,
+    form_id int not null,
+    question_id int not null,
+    position int default 1 not null,
+    constraint QuestionForm_Form_id_fk
+        foreign key (form_id) references Form (id),
+    constraint QuestionForm_Question_id_fk
+        foreign key (question_id) references Question (id)
+);
+
+create table if not exists subject_question
+(
+    question_id int not null,
+    subject_id int not null,
+    primary key (question_id, subject_id),
+    constraint QuestionSubject_Question_id_fk
+        foreign key (question_id) references Question (id),
+    constraint QuestionSubject_Subject_id_fk
+        foreign key (subject_id) references Subject (id)
+);
+
+create table if not exists track
+(
+    id int auto_increment
+        primary key,
+    form_id int not null,
     idUser int not null,
     score int default 0 not null,
     duration timestamp,
     constraint Track_Form_id_fk
-        foreign key (idForm) references Form (id),
+        foreign key (form_id) references Form (id),
     constraint Track_User_id_fk
         foreign key (idUser) references User (id)
 );
 
-create table if not exists Choice
+create table if not exists track_question
 (
-    idTrack int not null,
-    idQuestion int not null,
+    id int auto_increment
+        primary key,
+    track_id int not null,
+    question_id int not null,
     choicePosition int default 1 not null,
-    primary key (idTrack, idQuestion),
     constraint Choice_Question_id_fk
-        foreign key (idQuestion) references Question (id),
+        foreign key (question_id) references Question (id),
     constraint Choice_Track_id_fk
-        foreign key (idTrack) references Track (id)
+        foreign key (track_id) references Track (id)
 );
