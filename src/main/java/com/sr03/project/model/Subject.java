@@ -12,7 +12,7 @@ public class Subject {
     @Column(name = "subject_id")
     private Long id;
     @NotNull
-    private String text;
+    private String title;
     @ManyToMany(mappedBy = "subjects")
     private Set<Question> questions;
     @ManyToMany(mappedBy = "subjects")
@@ -20,7 +20,7 @@ public class Subject {
 
 
     public Subject(String text) {
-        this.text = text;
+        this.title = text;
     }
 
     public Long getId() {
@@ -40,11 +40,11 @@ public class Subject {
     }
 
     public String getText() {
-        return text;
+        return title;
     }
 
     public void setText(String text) {
-        this.text = text;
+        this.title = text;
     }
 
     public Set<Question> getQuestions() {
