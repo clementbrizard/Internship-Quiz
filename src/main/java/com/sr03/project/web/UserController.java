@@ -75,6 +75,38 @@ public class UserController {
         return "login";
     }
 
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String getEditUserForm(@PathVariable int id, Model model){
+        Long lid = Long.valueOf(id);
+        User user = userRepository.findById(lid);
+        model.addAttribute("user", user);
+
+        return "editUser";
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    public String editUser(@ModelAttribute("user") User user, @PathVariable int id, BindingResult bindingResult, Model model){
+
+        // TODO implement proper validator for edited user
+        /*
+        userValidator.validate(user, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "editUser";
+        }*/
+
+        Long lid = Long.valueOf(id);
+        User savedUser = userRepository.findById(lid);
+        user.setId(lid);
+        user.setPassword(savedUser.getPassword());
+        user.setPasswordConfirm(savedUser.getPasswordConfirm());
+        user.setCreationDate(savedUser.getCreationDate());
+
+        userService.save(user);
+
+        return "redirect:/welcome";
+    }
+
     @RequestMapping(value = "/disable/{id}", method = RequestMethod.POST)
     public String disable(@PathVariable int id){
         Long lid = Long.valueOf(id);
