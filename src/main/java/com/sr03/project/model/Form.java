@@ -11,9 +11,7 @@ public class Form {
     @Id
     @GeneratedValue
     @Column(name = "form_id")
-    private Integer id;
-    @NotNull
-    private Integer subject;
+    private Long id;
     @NotNull
     private String title;
     @NotNull
@@ -22,27 +20,17 @@ public class Form {
     public Set<FormQuestion> formQuestion  = new HashSet<FormQuestion>(0);
     @OneToMany(mappedBy = "form")
     public Set<Track> track  = new HashSet<>(0);
+    @ManyToMany
+    @JoinTable(name = "subject_form", joinColumns = @JoinColumn(name = "form_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
+    private Set<Subject> subjects;
 
-    public Form(Integer subject, String title) {
-        this.subject = subject;
-        this.title = title;
-        this.isActive = true;
-    }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getSubject() {
-        return subject;
-    }
-
-    public void setSubject(Integer subject) {
-        this.subject = subject;
     }
 
     public String getTitle() {
@@ -75,5 +63,13 @@ public class Form {
 
     public void setTrack(Set<Track> track) {
         this.track = track;
+    }
+
+    public Set<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(Set<Subject> subjects) {
+        this.subjects = subjects;
     }
 }

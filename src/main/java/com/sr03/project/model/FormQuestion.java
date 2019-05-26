@@ -9,7 +9,7 @@ public class FormQuestion {
     @Id
     @GeneratedValue
     @Column(name = "form_question_id")
-    private Integer id;
+    private Long id;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="form_id")
     private Form form;
@@ -23,12 +23,28 @@ public class FormQuestion {
         this.position = position;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public Form getForm() {
+        return form;
+    }
+
+    public void setForm(Form form) {
+        this.form = form;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     public Integer getPosition() {

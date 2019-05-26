@@ -11,7 +11,7 @@ public class Question {
     @Id
     @GeneratedValue
     @Column(name = "question_id")
-    private Integer id;
+    private Long id;
     @NotNull
     private String text;
     @NotNull
@@ -30,11 +30,11 @@ public class Question {
     private List<Answer> answers;*/
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

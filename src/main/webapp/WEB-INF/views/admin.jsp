@@ -53,31 +53,31 @@
         <table id="users" class="table table-striped table-bordered">
             <thead>
             <tr>
-                <th>Id</th>
-                <th>Username</th>
-                <th>First Name</th>
-                <th>Second Name</th>
-                <th>Mail</th>
-                <th>Company</th>
-                <th>Phone</th>
-                <th>Creation Date</th>
-                <th>Active</th>
-                <th>Action</th>
+                <th class="text-center">Id</th>
+                <th class="text-center">Username</th>
+                <th class="text-center">First Name</th>
+                <th class="text-center">Second Name</th>
+                <th class="text-center">Mail</th>
+                <th class="text-center">Company</th>
+                <th class="text-center">Phone</th>
+                <th class="text-center">Creation Date</th>
+                <th class="text-center">Active</th>
+                <th class="text-center">Action</th>
 
             </tr>
             </thead>
             <tbody>
             <c:forEach items="${userList}" var="item">
                 <tr>
-                    <td>${item.id}</td>
-                    <td>${item.username}</td>
-                    <td>${item.firstName}</td>
-                    <td>${item.secondName} ${userDetailsService.loadUserByUsername(item.username).getAuthorities()}</td>
-                    <td>${item.mail}</td>
-                    <td>${item.company}</td>
-                    <td>${item.phone}</td>
-                    <td>${item.creationDate}</td>
-                    <td>${item.valid}</td>
+                    <td class="text-center">${item.id}</td>
+                    <td class="text-center">${item.username}</td>
+                    <td class="text-center">${item.firstName}</td>
+                    <td class="text-center">${item.secondName} ${userDetailsService.loadUserByUsername(item.username).getAuthorities()}</td>
+                    <td class="text-center">${item.mail}</td>
+                    <td class="text-center">${item.company}</td>
+                    <td class="text-center">${item.phone}</td>
+                    <td class="text-center">${item.creationDate}</td>
+                    <td class="text-center">${item.valid}</td>
                     <td>
                         <c:if test="${item.username != loggedUserName}">
                             <c:choose>
@@ -105,6 +105,9 @@
                                 </c:otherwise>
                             </c:choose>
                         </c:if>
+                        <c:if test="${item.username == loggedUserName}">
+                            <div class="text-center"> Can't edit your own account like this </div>
+                        </c:if>
                     </td>
                 </tr>
             </c:forEach>
@@ -112,7 +115,7 @@
         </table>
         <div class="container text-center">
             <button type="button" class="btn btn-success"><i class="fas fa-plus"></i> Add user</button>
-            <form id="managerForm" method="POST" action="${contextPath}/forms">
+            <form id="managerForm" method="GET" action="${contextPath}/forms">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
             <a onclick="document.forms['managerForm'].submit()" class="btn btn-success"><i

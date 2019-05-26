@@ -9,7 +9,7 @@ public class TrackQuestion {
     @Id
     @GeneratedValue
     @Column(name = "track_question_id")
-    private Integer id;
+    private Long id;
     @NotNull
     private Integer choicePosition;
     @ManyToOne(cascade = CascadeType.ALL)
@@ -18,12 +18,29 @@ public class TrackQuestion {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="track_id")
     private Track track;
-    public Integer getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public Track getTrack() {
+        return track;
+    }
+
+    public void setTrack(Track track) {
+        this.track = track;
     }
 
     public Integer getChoicePosition() {

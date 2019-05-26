@@ -9,7 +9,7 @@ public class AnswerQuestion {
     @Id
     @GeneratedValue
     @Column(name = "answer_question_id")
-    private Integer id;
+    private Long id;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="answer_id")
     private Answer answer;
@@ -26,12 +26,28 @@ public class AnswerQuestion {
         this.isValid = isValid;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
+    }
+
+    public Answer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
+    }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     public Integer getPosition() {

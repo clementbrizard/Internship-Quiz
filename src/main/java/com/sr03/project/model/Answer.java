@@ -11,7 +11,7 @@ public class Answer {
     @Id
     @GeneratedValue
     @Column(name = "answer_id")
-    private Integer id;
+    private Long id;
     @NotNull
     private String text;
     @NotNull
@@ -26,11 +26,11 @@ public class Answer {
         this.isActive = isActive;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

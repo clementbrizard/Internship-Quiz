@@ -11,7 +11,7 @@ public class Track {
     @Id
     @GeneratedValue
     @Column(name = "track_id")
-    private Integer id;
+    private Long id;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="form_id")
     private Form form;
@@ -32,11 +32,11 @@ public class Track {
         this.duration = duration;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

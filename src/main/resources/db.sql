@@ -56,7 +56,7 @@ CREATE TABLE `user_role` (
 
 create table if not exists answer
 (
-    id int auto_increment
+    answer_id int auto_increment
         primary key,
     title varchar(200) not null,
     isActive tinyint(1) default 1 not null
@@ -64,58 +64,58 @@ create table if not exists answer
 
 create table if not exists subject
 (
-    id int auto_increment
+    subject_id int auto_increment
         primary key,
     title varchar(200) not null
 );
 
 create table if not exists form
 (
-    id int auto_increment
+    form_id int auto_increment
         primary key,
     subject_id int not null,
     title varchar(200) not null,
     isActive tinyint(1) default 1 not null,
     constraint Form_Subject_id_fk
-        foreign key (subject_id) references Subject (id)
+        foreign key (subject_id) references Subject (subject_id)
 );
 
 create table if not exists question
 (
-    id int auto_increment
+    question_id int auto_increment
         primary key,
     subject_id int not null,
     title varchar(200) null,
     isActive tinyint(1) default 1 not null,
     constraint Question_Subject_id_fk
-        foreign key (subject_id) references Subject (id)
+        foreign key (subject_id) references Subject (subject_id)
 );
 
 create table if not exists answer_question
 (
-    id int auto_increment
+    answer_question_id int auto_increment
         primary key,
     question_id int not null,
     answer_id int not null,
     position int default 1 not null,
     valid tinyint(1) default 0 not null,
     constraint AnswerQuestion_Answer_id_fk
-        foreign key (answer_id) references Answer (id),
+        foreign key (answer_id) references Answer (answer_id),
     constraint AnswerQuestion_Question_id_fk
-        foreign key (question_id) references Question (id)
+        foreign key (question_id) references Question (question_id)
 );
 
 create table if not exists form_question
 (
-    id int auto_increment
+    form_question_id int auto_increment
         primary key,
     form_id int not null,
     question_id int not null,
     position int default 1 not null,
     constraint QuestionForm_Form_id_fk
-        foreign key (form_id) references Form (id),
+        foreign key (form_id) references Form (form_id),
     constraint QuestionForm_Question_id_fk
-        foreign key (question_id) references Question (id)
+        foreign key (question_id) references Question (question_id)
 );
 
 create table if not exists subject_question
@@ -124,34 +124,34 @@ create table if not exists subject_question
     subject_id int not null,
     primary key (question_id, subject_id),
     constraint QuestionSubject_Question_id_fk
-        foreign key (question_id) references Question (id),
+        foreign key (question_id) references Question (question_id),
     constraint QuestionSubject_Subject_id_fk
-        foreign key (subject_id) references Subject (id)
+        foreign key (subject_id) references Subject (subject_id)
 );
 
 create table if not exists track
 (
-    id int auto_increment
+    track_id int auto_increment
         primary key,
     form_id int not null,
-    idUser int not null,
+    user_id int not null,
     score int default 0 not null,
     duration timestamp,
     constraint Track_Form_id_fk
-        foreign key (form_id) references Form (id),
+        foreign key (form_id) references Form (form_id),
     constraint Track_User_id_fk
-        foreign key (idUser) references User (id)
+        foreign key (user_id) references User (id)
 );
 
 create table if not exists track_question
 (
-    id int auto_increment
+    track_question_id int auto_increment
         primary key,
     track_id int not null,
     question_id int not null,
     choicePosition int default 1 not null,
     constraint Choice_Question_id_fk
-        foreign key (question_id) references Question (id),
+        foreign key (question_id) references Question (question_id),
     constraint Choice_Track_id_fk
-        foreign key (track_id) references Track (id)
+        foreign key (track_id) references Track (track_id)
 );
