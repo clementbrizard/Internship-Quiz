@@ -59,11 +59,10 @@
                 <th class="text-center">Creation Date</th>
                 <th class="text-center">Active</th>
                 <th class="text-center">Action</th>
-
             </tr>
             </thead>
-            <tbody>
-            <c:forEach items="${userList}" var="item">
+
+            <c:forEach var="item" items="${userList}">
                 <tr>
                     <td class="text-center">${item.id}</td>
                     <td class="text-center">${item.username}</td>
@@ -76,28 +75,28 @@
                     <td class="text-center">${item.valid}</td>
                     <td>
                         <c:if test="${item.username != loggedUserName}">
-                            <form id="disableForm" method="POST" action="${contextPath}/disable/${item.id}">
+                            <form id="disableForm/${item.id}" method="POST" action="${contextPath}/disable/${item.id}">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             </form>
 
-                            <form id="deleteForm" method="POST" action="${contextPath}/delete/${item.id}">
+                            <form id="deleteForm/${item.id}" method="POST" action="${contextPath}/delete/${item.id}">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             </form>
 
                             <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit</button>
 
-                            <a onclick="document.forms['deleteForm'].submit()" class="btn btn-danger">
+                            <a onclick="document.forms['deleteForm/${item.id}'].submit()" class="btn btn-danger">
                                 <i class="fas fa-trash-alt"></i>
                                 Delete
                             </a>
 
                             <c:choose>
                                 <c:when test="${item.valid==true}">
-                                    <a onclick="document.forms['disableForm'].submit()" class="btn btn-info"><i
+                                    <a onclick="document.forms['disableForm/${item.id}'].submit()" class="btn btn-info"><i
                                             class="fas fa-user-slash"></i> Disable</a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a onclick="document.forms['disableForm'].submit()" class="btn btn-info">
+                                    <a onclick="document.forms['disableForm/${item.id}'].submit()" class="btn btn-info">
                                         <i class="fas fa-user-check"></i> Enable</a>
                                 </c:otherwise>
                             </c:choose>
@@ -109,7 +108,6 @@
                     </td>
                 </tr>
             </c:forEach>
-            </tbody>
         </table>
         <div class="container text-center">
             <button type="button" class="btn btn-success"><i class="fas fa-plus"></i> Add user</button>
