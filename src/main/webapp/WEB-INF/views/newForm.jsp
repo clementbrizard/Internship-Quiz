@@ -24,15 +24,17 @@
 <div class="container col-md-12">
     <h1 class="text-center">${loggedUserName}</h1>
     <h1 class="text-center">Add a new form</h1>
-    <form:form method="POST" modelAttribute="formForm" class="form-signin">
-        <spring:bind path="title">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="title" class="form-control" placeholder="Title"
-                            autofocus="true"></form:input>
-                <form:errors path="title"></form:errors>
-            </div>
-        </spring:bind>
+    <form:form method="POST" modelAttribute="formAttribute" class="form-signin">
+        <div class="form-group ${status.error ? 'has-error' : ''}">
+            <form:input type="text" path="title" class="form-control" placeholder="Title" autofocus="true"></form:input>
+            <form:errors path="title"></form:errors>
+        </div>
 
+        <div class="form-group ${status.error ? 'has-error' : ''}">
+            <form:select path="subjects" multiple="true" class="form-control">
+                <form:options items="${subjectList}" itemValue="id" itemLabel="title"/>
+            </form:select>
+        </div>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
     </form:form>

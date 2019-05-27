@@ -17,9 +17,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class FormController {
@@ -46,31 +44,26 @@ public class FormController {
 
     @RequestMapping(value = "/forms/new", method = RequestMethod.GET)
     public String newForm(Model model) {
-        Iterable<Subject> subjectList = subjectRepository.findAll();
-        ArrayList<String> titleList = new ArrayList<>();
-        subjectList.forEach(subject -> {
-            titleList.add(subject.getTitle());
-        });
-        //.getText()
-        String chosenSubject = new String();
-        model.addAttribute("subject",chosenSubject);
-        model.addAttribute("formForm", new Form());
+
+        Form formEntity = new Form();
+        formEntity.setSubjects(new ArrayList<Subject>());
+        model.addAttribute("formAttribute", formEntity);
+
+        Iterable<Subject> source = subjectRepository.findAll();
+        List<Subject> subjectList = new ArrayList<Subject>();
+        source.forEach(subjectList::add);
+
         model.addAttribute("subjectList", subjectList);
-        model.addAttribute("titleList", titleList);
         return "newForm";
     }
 
     @RequestMapping(value = "/forms/new", method = RequestMethod.POST)
-    public String newForm(RedirectAttributes redirectAttributes, @ModelAttribute("formForm") Form formForm, BindingResult bindingResult, Model model) {
-        formValidator.validate(formForm, bindingResult);
+    public String newForm(@ModelAttribute("formAttribute") Form form, @RequestParam("subjects") Subject subject, BindingResult bindingResult, Model model) {
 
-        if (bindingResult.hasErrors()) {
-            return "newForm";
-        }
-
-        formService.save(formForm);
-        redirectAttributes.addFlashAttribute("form_id", formForm.getId());
-
+        List<Subject> subjects = new ArrayList<Subject>();
+        subjects.add(subject);
+        form.setSubjects(subjects);
+        formService.save(form);
         return "redirect:/forms";
     }
 
@@ -113,29 +106,5 @@ public class FormController {
 
         return "redirect:/forms";
     }
-
-
-
-    private Map<String, Subject> subjectCache;
-
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) throws Exception {
-        binder.registerCustomEditor(List.class, "subjects", new CustomCollectionEditor(List.class) {
-            protected Object convertElement(Object element) {
-                if (element instanceof Subject) {
-                    System.out.println("Converting from Subject to Subject: " + element);
-                    return element;
-                }
-                if (element instanceof String) {
-                    Subject subject = subjectCache.get(element);
-                    System.out.println("Looking up subject for id " + element + ": " + subject);
-                    return subject;
-                }
-                System.out.println("Don't know what to do with: " + element);
-                return null;
-            }
-        });
-    }
-
 
 }
