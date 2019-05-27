@@ -8,15 +8,16 @@ import com.sr03.project.repository.UserRepository;
 import com.sr03.project.service.FormService;
 import com.sr03.project.validator.FormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 
 @Controller
 public class FormController {
@@ -81,6 +82,27 @@ public class FormController {
         form.setActive(!form.getActive());
         formRepository.save(form);
         return "redirect:/form";
+    }
+
+    private Map<String, Subject> subjectCache;
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) throws Exception {
+        binder.registerCustomEditor(Set.class, "subjects", new CustomCollectionEditor(Set.class) {
+            protected Object convertElement(Object element) {
+                if (element instanceof Subject) {
+                    System.out.println("Converting from Subject to Subject: " + element);
+                    return element;
+                }
+                if (element instanceof String) {
+                    Subject subject = subjectCache.get(element);
+                    System.out.println("Looking up subject for id " + element + ": " + subject);
+                    return subject;
+                }
+                System.out.println("Don't know what to do with: " + element);
+                return null;
+            }
+        });
     }
 
 
