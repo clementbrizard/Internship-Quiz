@@ -34,15 +34,16 @@
             </div>
         </spring:bind>
 
-        <spring:bind path="subject">
+
+        <spring:bind path="subjects">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:select type="text" path="subject" class="form-control">
-                    <form:option value="NONE" label="--- Select a subject ---"/>
-                    <form:options items="${subjectsList}"/>
+                <form:select path="subjects" class="form-control">
+                    <form:options items="${subjectList}" itemValue="id" itemLabel="title"/>
                 </form:select>
-                <form:errors path="subject"></form:errors>
+                <form:errors path="subjects"></form:errors>
             </div>
         </spring:bind>
+
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
     </form:form>

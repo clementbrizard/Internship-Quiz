@@ -18,9 +18,14 @@ public class Subject {
     @ManyToMany(mappedBy = "subjects")
     private Set<Form> forms;
 
+    public Subject(){
 
-    public Subject(String text) {
-        this.title = text;
+    }
+
+    public Subject(String title, Set<Question> questions, Set<Form> forms) {
+        this.title = title;
+        this.questions = questions;
+        this.forms = forms;
     }
 
     public Long getId() {
@@ -39,12 +44,12 @@ public class Subject {
         this.forms = forms;
     }
 
-    public String getText() {
+    public String getTitle() {
         return title;
     }
 
-    public void setText(String text) {
-        this.title = text;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Set<Question> getQuestions() {

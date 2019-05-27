@@ -49,11 +49,14 @@ public class FormController {
         Iterable<Subject> subjectList = subjectRepository.findAll();
         ArrayList<String> titleList = new ArrayList<>();
         subjectList.forEach(subject -> {
-            titleList.add(subject.getText());
+            titleList.add(subject.getTitle());
         });
+        //.getText()
+        String chosenSubject = new String();
+        model.addAttribute("subject",chosenSubject);
         model.addAttribute("formForm", new Form());
         model.addAttribute("subjectList", subjectList);
-        model.addAttribute("subjectList", titleList);
+        model.addAttribute("titleList", titleList);
         return "newForm";
     }
 
