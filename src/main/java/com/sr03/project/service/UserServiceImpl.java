@@ -22,13 +22,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        HashSet<Role> roles = new HashSet<Role>();
-        roles.add(roleRepository.findOne((long)2));
-        user.setRoles(roles);
-        user.setValid(true);
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        user.setCreationDate(timestamp);
+
+        if (user.getId() == null) {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            HashSet<Role> roles = new HashSet<Role>();
+            roles.add(roleRepository.findOne((long)2));
+            user.setRoles(roles);
+            user.setValid(true);
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            user.setCreationDate(timestamp);
+        }
+
         userRepository.save(user);
     }
 

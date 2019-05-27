@@ -75,6 +75,62 @@ public class UserController {
         return "login";
     }
 
+    // TODO implement a proper form handling https://www.mkyong.com/spring-mvc/spring-mvc-form-handling-example/
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String getEditUserForm(@PathVariable int id, Model model){
+        Long lid = Long.valueOf(id);
+        User user = userRepository.findById(lid);
+        model.addAttribute("user", user);
+
+        return "editUser";
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
+    public String editUser(@ModelAttribute("user") User user, @PathVariable int id, BindingResult bindingResult, Model model){
+
+        // TODO implement proper validator for edited user
+        /*
+        userValidator.validate(user, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "editUser";
+        }*/
+
+        Long lid = Long.valueOf(id);
+        User savedUser = userRepository.findById(lid);
+        user.setId(lid);
+        user.setPassword(savedUser.getPassword());
+        user.setPasswordConfirm(savedUser.getPasswordConfirm());
+        user.setCreationDate(savedUser.getCreationDate());
+        user.setValid(savedUser.getValid());
+
+        userService.save(user);
+
+        return "redirect:/welcome";
+    }
+
+    @RequestMapping(value = "/addUser", method = RequestMethod.GET)
+    public String displayaddUserForm(Model model) {
+        model.addAttribute("userForm", new User());
+
+        return "addUser";
+    }
+
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    public String addUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+
+        userValidator.validate(userForm, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+
+        userService.save(userForm);
+
+        return "redirect:/welcome";
+    }
+
     @RequestMapping(value = "/disable/{id}", method = RequestMethod.POST)
     public String disable(@PathVariable int id){
         Long lid = Long.valueOf(id);
@@ -83,9 +139,19 @@ public class UserController {
         userRepository.save(user);
         return "redirect:/welcome";
     }
+
+
     @RequestMapping(value = "/isNotValid", method = RequestMethod.GET)
     public String notValid(Model model) {
         return "isNotValid";
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    public String delete(@PathVariable int id){
+        Long lid = Long.valueOf(id);
+        User user = userRepository.findById(lid);
+        userRepository.delete(user);
+        return "redirect:/welcome";
     }
 
     @RequestMapping(value = {"/", "/welcome"}, method = RequestMethod.GET)

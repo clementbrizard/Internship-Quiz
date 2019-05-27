@@ -33,8 +33,6 @@
         <h2 class="text-center">Welcome ${loggedUserName} | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
     </c:if>
 
-    <h1>Trainee</h1>
-
 </div>
 <!-- /container -->
 

@@ -45,10 +45,6 @@
     <h2 class="text-center">Welcome ${loggedUserName} | <a onclick="document.forms['logoutForm'].submit()">Logout</a>
     </h2>
 
-
-    <h1 class="text-center">Admin</h1>
-
-    <h2 class="text-center">All Users</h2>
     <div class="col-md-12">
         <table id="users" class="table table-striped table-bordered">
             <thead>
@@ -63,11 +59,10 @@
                 <th class="text-center">Creation Date</th>
                 <th class="text-center">Active</th>
                 <th class="text-center">Action</th>
-
             </tr>
             </thead>
-            <tbody>
-            <c:forEach items="${userList}" var="item">
+
+            <c:forEach var="item" items="${userList}">
                 <tr>
                     <td class="text-center">${item.id}</td>
                     <td class="text-center">${item.username}</td>
@@ -80,30 +75,38 @@
                     <td class="text-center">${item.valid}</td>
                     <td>
                         <c:if test="${item.username != loggedUserName}">
+                            <form id="disableForm/${item.id}" method="POST" action="${contextPath}/disable/${item.id}">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
+
+                            <form id="deleteForm/${item.id}" method="POST" action="${contextPath}/delete/${item.id}">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
+
+                            <form id="editForm/${item.id}" method="GET" action="${contextPath}/edit/${item.id}">
+                            </form>
+
+                            <a onclick="document.forms['editForm/${item.id}'].submit()" class="btn btn-warning">
+                                <i class="fas fa-edit"></i>
+                                Edit
+                            </a>
+
+                            <a onclick="document.forms['deleteForm/${item.id}'].submit()" class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i>
+                                Delete
+                            </a>
+
                             <c:choose>
                                 <c:when test="${item.valid==true}">
-                                    <form id="disableForm" method="POST" action="${contextPath}/disable/${item.id}">
-                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                    </form>
-                                    <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit
-                                    </button>
-                                    <button type="button" class="btn btn-danger"><i class="far fa-edit"></i> Delete
-                                    </button>
-                                    <a onclick="document.forms['disableForm'].submit()" class="btn btn-info"><i
+                                    <a onclick="document.forms['disableForm/${item.id}'].submit()" class="btn btn-info"><i
                                             class="fas fa-user-slash"></i> Disable</a>
                                 </c:when>
                                 <c:otherwise>
-                                    <form id="disableForm" method="POST" action="${contextPath}/disable/${item.id}">
-                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                    </form>
-                                    <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit
-                                    </button>
-                                    <button type="button" class="btn btn-danger"><i class="far fa-edit"></i> Delete
-                                    </button>
-                                    <a onclick="document.forms['disableForm'].submit()" class="btn btn-info">
+                                    <a onclick="document.forms['disableForm/${item.id}'].submit()" class="btn btn-info">
                                         <i class="fas fa-user-check"></i> Enable</a>
                                 </c:otherwise>
                             </c:choose>
+
                         </c:if>
                         <c:if test="${item.username == loggedUserName}">
                             <div class="text-center"> Can't edit your own account like this </div>
@@ -111,15 +114,26 @@
                     </td>
                 </tr>
             </c:forEach>
-            </tbody>
         </table>
+
         <div class="container text-center">
-            <button type="button" class="btn btn-success"><i class="fas fa-plus"></i> Add user</button>
+            <form id="addUserForm" method="GET" action="${contextPath}/addUser">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+
+            <a onclick="document.forms['addUserForm'].submit()" class="btn btn-success">
+                <i class="fas fa-plus"></i>
+                Add user
+            </a>
+
             <form id="managerForm" method="GET" action="${contextPath}/forms">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
+
             <a onclick="document.forms['managerForm'].submit()" class="btn btn-success"><i
-                    class="fas fa-list-ol"></i> Manage forms</a>
+                    class="fas fa-list-ol"></i>
+                Manage forms
+            </a>
         </div>
     </div>
 
@@ -131,18 +145,7 @@
     <script type="text/javascript"
             src="https://cdn.datatables.net/v/bs4/dt-1.10.18/af-2.3.3/b-1.5.6/b-colvis-1.5.6/b-flash-1.5.6/b-print-1.5.6/cr-1.5.0/r-2.2.2/rr-1.2.4/sc-2.0.0/sl-1.3.0/datatables.min.js"></script>
 
-    <script>
-        $(function () {
-            $("#users").dataTable({
-                rowReorder: true,
-                colReorder: true,
-                search: {
-                    smart: false
-                }
-            });
-
-        })
-    </script>
+    <script src="<c:url value="/resources/js/admin.js" />"></script>
 
     <%--</div>--%>
     <!-- /container -->
