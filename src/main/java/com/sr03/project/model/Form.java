@@ -3,6 +3,7 @@ package com.sr03.project.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,7 +23,7 @@ public class Form {
     public Set<Track> track  = new HashSet<>(0);
     @ManyToMany
     @JoinTable(name = "subject_form", joinColumns = @JoinColumn(name = "form_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
-    private Set<Subject> subjects;
+    private List<Subject> subjects;
 
 
     public Long getId() {
@@ -65,11 +66,19 @@ public class Form {
         this.track = track;
     }
 
-    public Set<Subject> getSubjects() {
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public List<Subject> getSubjects() {
         return subjects;
     }
 
-    public void setSubjects(Set<Subject> subjects) {
+    public void setSubjects(List<Subject> subjects) {
         this.subjects = subjects;
     }
 }

@@ -2,6 +2,7 @@ package com.sr03.project.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,15 +17,23 @@ public class Subject {
     @ManyToMany(mappedBy = "subjects")
     private Set<Question> questions;
     @ManyToMany(mappedBy = "subjects")
-    private Set<Form> forms;
+    private List<Form> forms;
 
     public Subject(){
 
     }
 
-    public Subject(String title, Set<Question> questions, Set<Form> forms) {
+    public Subject(String title, Set<Question> questions, List<Form> forms) {
         this.title = title;
         this.questions = questions;
+        this.forms = forms;
+    }
+
+    public List<Form> getForms() {
+        return forms;
+    }
+
+    public void setForms(List<Form> forms) {
         this.forms = forms;
     }
 
@@ -36,13 +45,6 @@ public class Subject {
         this.id = id;
     }
 
-    public Set<Form> getForms() {
-        return forms;
-    }
-
-    public void setForms(Set<Form> forms) {
-        this.forms = forms;
-    }
 
     public String getTitle() {
         return title;

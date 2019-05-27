@@ -47,7 +47,7 @@
                         <td class="text-center">${item.id}</td>
                         <td class="text-center">${item.title}</td>
                         <td class="text-center">${item.isActive}</td>
-                        <td>
+                        <td class="text-center">
                                     <form id="disableForm/${item.id}" method="POST"
                                           action="${contextPath}/forms/disable/${item.id}">
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

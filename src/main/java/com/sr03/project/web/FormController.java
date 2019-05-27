@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @Controller
 public class FormController {
@@ -90,7 +90,7 @@ public class FormController {
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) throws Exception {
-        binder.registerCustomEditor(Set.class, "subjects", new CustomCollectionEditor(Set.class) {
+        binder.registerCustomEditor(List.class, "subjects", new CustomCollectionEditor(List.class) {
             protected Object convertElement(Object element) {
                 if (element instanceof Subject) {
                     System.out.println("Converting from Subject to Subject: " + element);
