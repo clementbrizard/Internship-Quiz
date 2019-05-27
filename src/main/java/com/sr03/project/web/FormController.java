@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -62,7 +63,7 @@ public class FormController {
     }
 
     @RequestMapping(value = "/forms/new", method = RequestMethod.POST)
-    public String newForm(@ModelAttribute("formForm") Form formForm, BindingResult bindingResult, Model model) {
+    public String newForm(RedirectAttributes redirectAttributes, @ModelAttribute("formForm") Form formForm, BindingResult bindingResult, Model model) {
         formValidator.validate(formForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
@@ -70,8 +71,9 @@ public class FormController {
         }
 
         formService.save(formForm);
+        redirectAttributes.addFlashAttribute("form_id", formForm.getId());
 
-        return "redirect:/forms";
+        return "redirect:/questions/new";
     }
 
 
