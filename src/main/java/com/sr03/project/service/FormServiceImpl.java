@@ -13,6 +13,7 @@ public class FormServiceImpl implements FormService {
     @Override
     public void save(Form form) {
         form.setActive(true);
+        form.setSubjects(form.getSubjects());
         formRepository.save(form);
     }
     @Override
