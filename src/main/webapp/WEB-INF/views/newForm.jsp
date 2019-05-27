@@ -25,7 +25,6 @@
     <h1 class="text-center">${loggedUserName}</h1>
     <h1 class="text-center">Add a new form</h1>
     <form:form method="POST" modelAttribute="formForm" class="form-signin">
-        <h2 class="form-signin-heading">Create your account</h2>
         <spring:bind path="title">
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="text" path="title" class="form-control" placeholder="Title"
