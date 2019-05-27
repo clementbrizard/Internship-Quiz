@@ -75,6 +75,8 @@ public class UserController {
         return "login";
     }
 
+    // TODO implement a proper form handling https://www.mkyong.com/spring-mvc/spring-mvc-form-handling-example/
+
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String getEditUserForm(@PathVariable int id, Model model){
         Long lid = Long.valueOf(id);
@@ -101,8 +103,30 @@ public class UserController {
         user.setPassword(savedUser.getPassword());
         user.setPasswordConfirm(savedUser.getPasswordConfirm());
         user.setCreationDate(savedUser.getCreationDate());
+        user.setValid(savedUser.getValid());
 
         userService.save(user);
+
+        return "redirect:/welcome";
+    }
+
+    @RequestMapping(value = "/addUser", method = RequestMethod.GET)
+    public String displayaddUserForm(Model model) {
+        model.addAttribute("userForm", new User());
+
+        return "addUser";
+    }
+
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    public String addUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+
+        userValidator.validate(userForm, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+
+        userService.save(userForm);
 
         return "redirect:/welcome";
     }
@@ -115,6 +139,7 @@ public class UserController {
         userRepository.save(user);
         return "redirect:/welcome";
     }
+
 
     @RequestMapping(value = "/isNotValid", method = RequestMethod.GET)
     public String notValid(Model model) {

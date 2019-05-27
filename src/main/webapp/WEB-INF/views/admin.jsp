@@ -115,13 +115,25 @@
                 </tr>
             </c:forEach>
         </table>
+
         <div class="container text-center">
-            <button type="button" class="btn btn-success"><i class="fas fa-plus"></i> Add user</button>
+            <form id="addUserForm" method="GET" action="${contextPath}/addUser">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+
+            <a onclick="document.forms['addUserForm'].submit()" class="btn btn-success">
+                <i class="fas fa-plus"></i>
+                Add user
+            </a>
+
             <form id="managerForm" method="GET" action="${contextPath}/forms">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
+
             <a onclick="document.forms['managerForm'].submit()" class="btn btn-success"><i
-                    class="fas fa-list-ol"></i> Manage forms</a>
+                    class="fas fa-list-ol"></i>
+                Manage forms
+            </a>
         </div>
     </div>
 
