@@ -34,16 +34,6 @@
         </spring:bind>
 
 
-        <spring:bind path="subjects">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:select path="subjects" class="form-control">
-                    <form:options items="${subjectList}" itemValue="id" itemLabel="title"/>
-                </form:select>
-                <form:errors path="subjects"></form:errors>
-            </div>
-        </spring:bind>
-
-
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
     </form:form>
 </div>
