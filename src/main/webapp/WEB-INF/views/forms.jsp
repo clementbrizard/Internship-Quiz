@@ -48,14 +48,21 @@
                         <td class="text-center">${item.title}</td>
                         <td class="text-center">${item.isActive}</td>
                         <td class="text-center">
-                                    <form id="disableForm/${item.id}" method="POST"
-                                          action="${contextPath}/forms/disable/${item.id}">
-                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                    </form>
-                                    <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit
-                                    </button>
-                                    <button type="button" class="btn btn-danger"><i class="far fa-edit"></i> Delete
-                                    </button>
+                            <form id="disableForm/${item.id}" method="POST"
+                                  action="${contextPath}/forms/disable/${item.id}">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
+                            <form id="deleteForm/${item.id}" method="POST"
+                                  action="${contextPath}/forms/delete/${item.id}">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
+
+                            <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit
+                            </button>
+
+                            <a onclick="document.forms['deleteForm/${item.id}'].submit()" class="btn btn-danger">
+                                <i class="fas fa-times-circle"></i> Delete</a>
+
                             <c:choose>
                                 <c:when test="${item.isActive==true}">
                                     <a onclick="document.forms['disableForm/${item.id}'].submit()" class="btn btn-info">

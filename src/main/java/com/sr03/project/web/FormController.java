@@ -73,7 +73,7 @@ public class FormController {
         formService.save(formForm);
         redirectAttributes.addFlashAttribute("form_id", formForm.getId());
 
-        return "redirect:/questions/new";
+        return "redirect:/forms";
     }
 
 
@@ -86,6 +86,13 @@ public class FormController {
         return "redirect:/forms";
     }
 
+    @RequestMapping(value = "/forms/delete/{id}", method = RequestMethod.POST)
+    public String delete(@PathVariable int id) {
+        Long lid = Long.valueOf(id);
+        Form form = formRepository.findById(lid);
+        formRepository.delete(form);
+        return "redirect:/forms";
+    }
 
     private Map<String, Subject> subjectCache;
 
