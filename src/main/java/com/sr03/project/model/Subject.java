@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Entity
-@Table(name = "Subject")
+@Table(name = "subject")
 public class Subject {
     @Id
     @GeneratedValue
