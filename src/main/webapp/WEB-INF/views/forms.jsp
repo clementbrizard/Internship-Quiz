@@ -48,7 +48,7 @@
                         <td class="text-center">${item.title}</td>
                         <td class="text-center">${item.isActive}</td>
                         <td>
-                                    <form id="disableForm" method="POST"
+                                    <form id="disableForm/${item.id}" method="POST"
                                           action="${contextPath}/forms/disable/${item.id}">
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                     </form>
@@ -58,11 +58,11 @@
                                     </button>
                             <c:choose>
                                 <c:when test="${item.isActive==true}">
-                                    <a onclick="document.forms['disableForm'].submit()" class="btn btn-info">
+                                    <a onclick="document.forms['disableForm/${item.id}'].submit()" class="btn btn-info">
                                         <i class="fas fa-times-circle"></i> Disable</a>
                                 </c:when>
                                 <c:otherwise>
-                                    <a onclick="document.forms['disableForm'].submit()" class="btn btn-info">
+                                    <a onclick="document.forms['disableForm/${item.id}'].submit()" class="btn btn-info">
                                         <i class="fas fa-check-circle"></i> Enable</a>
                                 </c:otherwise>
                             </c:choose>

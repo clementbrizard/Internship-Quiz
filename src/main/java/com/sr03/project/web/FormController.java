@@ -81,7 +81,7 @@ public class FormController {
         Form form = formRepository.findById(lid);
         form.setIsActive(!form.getIsActive());
         formRepository.save(form);
-        return "redirect:/form";
+        return "redirect:/forms";
     }
 
     private Map<String, Subject> subjectCache;
