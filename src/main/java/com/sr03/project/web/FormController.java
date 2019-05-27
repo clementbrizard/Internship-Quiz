@@ -2,6 +2,7 @@ package com.sr03.project.web;
 
 import com.sr03.project.model.Form;
 import com.sr03.project.model.Subject;
+import com.sr03.project.model.User;
 import com.sr03.project.repository.FormRepository;
 import com.sr03.project.repository.SubjectRepository;
 import com.sr03.project.repository.UserRepository;
@@ -24,9 +25,6 @@ import java.util.Map;
 public class FormController {
     @Autowired
     private FormService formService;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private FormRepository formRepository;
@@ -93,6 +91,30 @@ public class FormController {
         formRepository.delete(form);
         return "redirect:/forms";
     }
+
+    @RequestMapping(value = "forms/edit/{id}", method = RequestMethod.GET)
+    public String getEditForm(@PathVariable int id, Model model){
+        Long lid = Long.valueOf(id);
+        Form form = formRepository.findById(lid);
+        model.addAttribute("form", form);
+
+        return "editForm";
+    }
+
+    @RequestMapping(value = "forms/edit/{id}", method = RequestMethod.POST)
+    public String editForm(@ModelAttribute("form") Form form, @PathVariable int id, BindingResult bindingResult, Model model){
+
+        Long lid = Long.valueOf(id);
+        Form savedForm = formRepository.findById(lid);
+        form.setId(lid);
+        form.setIsActive(savedForm.getIsActive());
+
+        formService.save(form);
+
+        return "redirect:/forms";
+    }
+
+
 
     private Map<String, Subject> subjectCache;
 

@@ -56,12 +56,17 @@
                                   action="${contextPath}/forms/delete/${item.id}">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             </form>
+                            <form id="editForm/${item.id}" method="GET"
+                                  action="${contextPath}/forms/edit/${item.id}">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
 
-                            <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit
-                            </button>
+
+                            <a onclick="document.forms['editForm/${item.id}'].submit()" class="btn btn-warning">
+                                <i class="far fa-edit"></i> Edit</a>
 
                             <a onclick="document.forms['deleteForm/${item.id}'].submit()" class="btn btn-danger">
-                                <i class="fas fa-times-circle"></i> Delete</a>
+                                <i class="fas fa-trash-alt"></i> Delete</a>
 
                             <c:choose>
                                 <c:when test="${item.isActive==true}">
