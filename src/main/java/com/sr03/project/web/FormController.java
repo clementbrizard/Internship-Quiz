@@ -2,6 +2,7 @@ package com.sr03.project.web;
 
 import com.sr03.project.model.Form;
 import com.sr03.project.model.Subject;
+import com.sr03.project.model.User;
 import com.sr03.project.repository.FormRepository;
 import com.sr03.project.repository.SubjectRepository;
 import com.sr03.project.repository.UserRepository;
@@ -17,16 +18,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @Controller
 public class FormController {
     @Autowired
     private FormService formService;
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private FormRepository formRepository;
@@ -73,7 +71,7 @@ public class FormController {
         formService.save(formForm);
         redirectAttributes.addFlashAttribute("form_id", formForm.getId());
 
-        return "redirect:/questions/new";
+        return "redirect:/forms";
     }
 
 
@@ -86,11 +84,43 @@ public class FormController {
         return "redirect:/forms";
     }
 
+    @RequestMapping(value = "/forms/delete/{id}", method = RequestMethod.POST)
+    public String delete(@PathVariable int id) {
+        Long lid = Long.valueOf(id);
+        Form form = formRepository.findById(lid);
+        formRepository.delete(form);
+        return "redirect:/forms";
+    }
+
+    @RequestMapping(value = "forms/edit/{id}", method = RequestMethod.GET)
+    public String getEditForm(@PathVariable int id, Model model){
+        Long lid = Long.valueOf(id);
+        Form form = formRepository.findById(lid);
+        model.addAttribute("form", form);
+
+        return "editForm";
+    }
+
+    @RequestMapping(value = "forms/edit/{id}", method = RequestMethod.POST)
+    public String editForm(@ModelAttribute("form") Form form, @PathVariable int id, BindingResult bindingResult, Model model){
+
+        Long lid = Long.valueOf(id);
+        Form savedForm = formRepository.findById(lid);
+        form.setId(lid);
+        form.setIsActive(savedForm.getIsActive());
+
+        formService.save(form);
+
+        return "redirect:/forms";
+    }
+
+
+
     private Map<String, Subject> subjectCache;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) throws Exception {
-        binder.registerCustomEditor(Set.class, "subjects", new CustomCollectionEditor(Set.class) {
+        binder.registerCustomEditor(List.class, "subjects", new CustomCollectionEditor(List.class) {
             protected Object convertElement(Object element) {
                 if (element instanceof Subject) {
                     System.out.println("Converting from Subject to Subject: " + element);

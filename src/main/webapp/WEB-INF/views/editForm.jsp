@@ -23,8 +23,8 @@
 <body>
 <div class="container col-md-12">
     <h1 class="text-center">${loggedUserName}</h1>
-    <h1 class="text-center">Add a new form</h1>
-    <form:form method="POST" modelAttribute="formForm" class="form-signin">
+    <h1 class="text-center">Edit form</h1>
+    <form:form method="POST" modelAttribute="form" class="form-signin">
         <spring:bind path="title">
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:input type="text" path="title" class="form-control" placeholder="Title"

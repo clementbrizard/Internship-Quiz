@@ -20,9 +20,9 @@ public class Form {
     public Set<FormQuestion> formQuestion  = new HashSet<FormQuestion>(0);
     @OneToMany(mappedBy = "form")
     public Set<Track> track  = new HashSet<>(0);
-    @ManyToMany
-    @JoinTable(name = "subject_form", joinColumns = @JoinColumn(name = "form_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
-    private Set<Subject> subjects;
+//    @ManyToMany
+  //  @JoinTable(name = "subject_form", joinColumns = @JoinColumn(name = "form_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
+    //private List<Subject> subjects;
 
 
     public Long getId() {
@@ -65,11 +65,19 @@ public class Form {
         this.track = track;
     }
 
-    public Set<Subject> getSubjects() {
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+/*    public List<Subject> getSubjects() {
         return subjects;
     }
 
-    public void setSubjects(Set<Subject> subjects) {
+    public void setSubjects(List<Subject> subjects) {
         this.subjects = subjects;
-    }
+    }*/
 }

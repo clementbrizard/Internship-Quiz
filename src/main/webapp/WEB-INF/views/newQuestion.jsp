@@ -73,6 +73,31 @@
         </table>
     </div>
 
+    <form:form method="POST" modelAttribute="questionForm" class="form-signin">
+        <spring:bind path="title">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:select path="title" class="form-control">
+                    <form:options items="${questionList}"/>
+                </form:select>
+                <form:errors path="title"></form:errors>
+            </div>
+        </spring:bind>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+    </form:form>
+
+    <form:form method="POST" modelAttribute="answerForm" class="form-signin">
+        <spring:bind path="title">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:select path="title" class="form-control">
+                    <form:options items="${answerList}"/>
+                </form:select>
+                <form:errors path="title"></form:errors>
+            </div>
+        </spring:bind>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+    </form:form>
 
 </div>
 <script type="text/javascript" charset="utf8"
