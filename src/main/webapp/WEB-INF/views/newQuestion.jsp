@@ -49,8 +49,8 @@
                     <td class="text-center">${item.title}</td>
                     <td class="text-center">${item.isActive}</td>
                     <td class="text-center">
-                        <form id="disableForm" method="POST"
-                              action="${contextPath}/forms/disable/${item.id}">
+                        <form id="disableForm/${item.id}" method="POST"
+                              action="${contextPath}/questions/disable/${item.id}">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </form>
                         <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit
@@ -74,14 +74,6 @@
     </div>
 
 
-
-    <div class="col-md-12 text-center">
-        <form id="addForm" method="GET" action="${contextPath}/forms/new">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
-        <a onclick="document.forms['addForm'].submit()" class="btn btn-success"><i class="fas fa-plus"></i> Add a
-            form</a>
-    </div>
 </div>
 <script type="text/javascript" charset="utf8"
         src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>

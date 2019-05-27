@@ -9,10 +9,7 @@ import com.sr03.project.validator.QuestionValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @SessionAttributes("form_id")
@@ -51,5 +48,14 @@ public class QuestionController {
         questionService.save(questionForm);
 
         return "redirect:/questions/new";
+    }
+
+    @RequestMapping(value = "/questions/disable/{id}", method = RequestMethod.POST)
+    public String disable(@PathVariable int id) {
+        Long lid = Long.valueOf(id);
+        Question question = questionRepository.findById(lid);
+        question.setIsActive(!question.getIsActive());
+        questionRepository.save(question);
+        return "redirect:/newQuestion";
     }
 }
