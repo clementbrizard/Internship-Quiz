@@ -79,7 +79,7 @@ public class FormController {
     public String disable(@PathVariable int id) {
         Long lid = Long.valueOf(id);
         Form form = formRepository.findById(lid);
-        form.setActive(!form.getActive());
+        form.setIsActive(!form.getIsActive());
         formRepository.save(form);
         return "redirect:/form";
     }

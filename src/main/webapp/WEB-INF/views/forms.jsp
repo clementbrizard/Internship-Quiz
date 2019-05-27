@@ -21,8 +21,6 @@
     <link rel="stylesheet" type="text/css"
           href="https://cdn.datatables.net/v/bs4/dt-1.10.18/af-2.3.3/b-1.5.6/b-colvis-1.5.6/b-flash-1.5.6/b-print-1.5.6/cr-1.5.0/r-2.2.2/rr-1.2.4/sc-2.0.0/sl-1.3.0/datatables.min.css"/>
 
-
-
 </head>
 <body>
 <div class="container col-md-12">
@@ -38,17 +36,14 @@
                 <thead>
                 <tr>
                     <th class="text-center">Id</th>
-                    <th class="text-center">Subjects</th>
                     <th class="text-center">Title</th>
                     <th class="text-center">Active</th>
                     <th class="text-center">Action</th>
 
                 </tr>
                 </thead>
-                <tbody>
                 <c:forEach items="${formList}" var="item">
                     <tr>
-                        <td class="text-center">${item.id}</td>
                         <td class="text-center">${item.id}</td>
                         <td class="text-center">${item.title}</td>
                         <td class="text-center">${item.isActive}</td>
@@ -74,7 +69,6 @@
                         </td>
                     </tr>
                 </c:forEach>
-                </tbody>
             </table>
         </div>
 
