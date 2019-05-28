@@ -16,8 +16,8 @@ public class Subject {
     private String title;
     @ManyToMany(mappedBy = "subjects")
     private Set<Question> questions;
-/*    @ManyToMany(mappedBy = "subjects")
-    private List<Form> forms;*/
+    @ManyToMany(mappedBy = "subjects")
+    private List<Form> forms;
 
     public Subject(){
 
@@ -26,16 +26,16 @@ public class Subject {
     public Subject(String title, Set<Question> questions, List<Form> forms) {
         this.title = title;
         this.questions = questions;
-      //  this.forms = forms;
+        this.forms = forms;
     }
 
-/*    public List<Form> getForms() {
+    public List<Form> getForms() {
         return forms;
     }
 
     public void setForms(List<Form> forms) {
         this.forms = forms;
-    }*/
+    }
 
     public Long getId() {
         return id;
@@ -61,4 +61,5 @@ public class Subject {
     public void setQuestions(Set<Question> questions) {
         this.questions = questions;
     }
+
 }
