@@ -13,8 +13,10 @@ import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
@@ -58,11 +60,8 @@ public class FormController {
     }
 
     @RequestMapping(value = "/forms/new", method = RequestMethod.POST)
-    public String newForm(@ModelAttribute("formAttribute") Form form, @RequestParam("subjects") Subject subject, BindingResult bindingResult, Model model) {
+    public String newForm(@ModelAttribute("formAttribute") Form form, BindingResult bindingResult, Model model) {
 
-        List<Subject> subjects = new ArrayList<Subject>();
-        subjects.add(subject);
-        form.setSubjects(subjects);
         formService.save(form);
         return "redirect:/forms";
     }
@@ -105,6 +104,18 @@ public class FormController {
         formService.save(form);
 
         return "redirect:/forms";
+    }
+
+    @InitBinder
+    public void initBinder(WebRequest request, WebDataBinder binder) throws Exception {
+        binder.registerCustomEditor(List.class, "subjects", new CustomCollectionEditor(List.class) {
+            @Override
+            public void setAsText(String id) {
+                Long subjectId = Long.valueOf((String)id);
+                Subject subject = subjectRepository.findById(subjectId);
+                this.setValue(subject);
+            }
+        });
     }
 
 }

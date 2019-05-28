@@ -23,7 +23,7 @@ public class Form {
     @OneToMany(mappedBy = "form")
     public Set<Track> track  = new HashSet<>(0);
     @ManyToMany
-    @JoinTable(name = "subject_form", joinColumns = @JoinColumn(name = "form_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
+    @JoinTable(name = "form_subject", joinColumns = @JoinColumn(name = "form_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
     private List<Subject> subjects = new ArrayList<Subject>();
 
     public Long getId() {
