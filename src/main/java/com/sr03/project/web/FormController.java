@@ -30,6 +30,7 @@ public class FormController {
     @Autowired
     private SubjectRepository subjectRepository;
 
+    // Get list of forms
     @RequestMapping(value = "/forms", method = RequestMethod.GET)
     public String showForms(Model model) {
         Iterable<Form> formList = formRepository.findAll();
@@ -38,6 +39,7 @@ public class FormController {
         return "forms";
     }
 
+    // Get new form view
     @RequestMapping(value = "/forms/new", method = RequestMethod.GET)
     public String newForm(Model model) {
 
@@ -52,6 +54,7 @@ public class FormController {
         return "newForm";
     }
 
+    // Create new form
     @RequestMapping(value = "/forms/new", method = RequestMethod.POST)
     public String newForm(@ModelAttribute("formAttribute") Form form, BindingResult bindingResult, Model model) {
 
@@ -66,7 +69,7 @@ public class FormController {
         return "redirect:/forms";
     }
 
-
+    // Disable or enable form
     @RequestMapping(value = "/forms/disable/{id}", method = RequestMethod.POST)
     public String disable(@PathVariable int id) {
         Long lid = Long.valueOf(id);
@@ -76,6 +79,7 @@ public class FormController {
         return "redirect:/forms";
     }
 
+    // Delete form
     @RequestMapping(value = "/forms/delete/{id}", method = RequestMethod.POST)
     public String delete(@PathVariable int id) {
         Long lid = Long.valueOf(id);
@@ -84,6 +88,7 @@ public class FormController {
         return "redirect:/forms";
     }
 
+    // Get edit form view
     @RequestMapping(value = "forms/edit/{id}", method = RequestMethod.GET)
     public String getEditForm(@PathVariable int id, Model model){
         Long lid = Long.valueOf(id);
@@ -93,6 +98,7 @@ public class FormController {
         return "editForm";
     }
 
+    // Save edited form
     @RequestMapping(value = "forms/edit/{id}", method = RequestMethod.POST)
     public String editForm(@ModelAttribute("form") Form form, @PathVariable int id, BindingResult bindingResult, Model model){
 
@@ -109,6 +115,8 @@ public class FormController {
 
     @InitBinder
     public void initBinder(ServletRequestDataBinder binder) throws Exception {
+
+        // This custom editor converts selected Subjects ids to corresponding Subject objects
         binder.registerCustomEditor(Set.class, "subjects", new CustomCollectionEditor(Set.class) {
             @Override
             public Object convertElement(Object element) {
