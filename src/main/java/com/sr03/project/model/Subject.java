@@ -62,19 +62,4 @@ public class Subject {
         this.questions = questions;
     }
 
-    @Override
-    public int hashCode() {
-        return new Long(id).hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (! (obj instanceof Subject)) {
-            return false;
-        }
-        return this.id == ((Subject)obj).getId();
-    }
 }

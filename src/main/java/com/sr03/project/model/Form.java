@@ -24,7 +24,7 @@ public class Form {
     public Set<Track> track  = new HashSet<>(0);
     @ManyToMany
     @JoinTable(name = "form_subject", joinColumns = @JoinColumn(name = "form_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
-    private List<Subject> subjects = new ArrayList<Subject>();
+    private Set<Subject> subjects = new HashSet<Subject>(0);
 
     public Long getId() {
         return id;
@@ -74,11 +74,11 @@ public class Form {
         isActive = active;
     }
 
-    public List<Subject> getSubjects() {
+    public Set<Subject> getSubjects() {
         return subjects;
     }
 
-    public void setSubjects(List<Subject> subjects) {
+    public void setSubjects(Set<Subject> subjects) {
         this.subjects = subjects;
     }
 }

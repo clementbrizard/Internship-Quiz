@@ -2,10 +2,8 @@ package com.sr03.project.web;
 
 import com.sr03.project.model.Form;
 import com.sr03.project.model.Subject;
-import com.sr03.project.model.User;
 import com.sr03.project.repository.FormRepository;
 import com.sr03.project.repository.SubjectRepository;
-import com.sr03.project.repository.UserRepository;
 import com.sr03.project.service.FormService;
 import com.sr03.project.validator.FormValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
 
@@ -37,7 +32,6 @@ public class FormController {
 
     @RequestMapping(value = "/forms", method = RequestMethod.GET)
     public String showForms(Model model) {
-        // model.addAttribute("formForm", new Form());
         Iterable<Form> formList = formRepository.findAll();
         model.addAttribute("nbForms", formList.spliterator().getExactSizeIfKnown());
         model.addAttribute("formList", formList);
@@ -48,11 +42,10 @@ public class FormController {
     public String newForm(Model model) {
 
         Form formEntity = new Form();
-        formEntity.setSubjects(new ArrayList<Subject>());
         model.addAttribute("formAttribute", formEntity);
 
         Iterable<Subject> source = subjectRepository.findAll();
-        List<Subject> subjectList = new ArrayList<Subject>();
+        Set<Subject> subjectList = new HashSet<>();
         source.forEach(subjectList::add);
 
         model.addAttribute("subjectList", subjectList);
@@ -61,6 +54,13 @@ public class FormController {
 
     @RequestMapping(value = "/forms/new", method = RequestMethod.POST)
     public String newForm(@ModelAttribute("formAttribute") Form form, BindingResult bindingResult, Model model) {
+
+        formValidator.validate(form, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            // if we just put "return 'newForm' the subjects are not injected
+            return "redirect:/forms/new";
+        }
 
         formService.save(form);
         return "redirect:/forms";
@@ -106,14 +106,20 @@ public class FormController {
         return "redirect:/forms";
     }
 
+
     @InitBinder
-    public void initBinder(WebRequest request, WebDataBinder binder) throws Exception {
-        binder.registerCustomEditor(List.class, "subjects", new CustomCollectionEditor(List.class) {
+    public void initBinder(ServletRequestDataBinder binder) throws Exception {
+        binder.registerCustomEditor(Set.class, "subjects", new CustomCollectionEditor(Set.class) {
             @Override
-            public void setAsText(String id) {
-                Long subjectId = Long.valueOf((String)id);
-                Subject subject = subjectRepository.findById(subjectId);
-                this.setValue(subject);
+            public Object convertElement(Object element) {
+                if (element != null) {
+                    Integer id = Integer.parseInt(element.toString());
+                    Long subjectId = Long.valueOf(id);
+                    Subject subject = subjectRepository.findById(subjectId);
+                    return subject;
+                }
+
+                return null;
             }
         });
     }
