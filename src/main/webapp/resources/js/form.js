@@ -1,4 +1,4 @@
-$(function () {
+$(document).ready(function () {
     $("#forms").dataTable({
         rowReorder: true,
         colReorder: true,

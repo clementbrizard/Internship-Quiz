@@ -2,10 +2,12 @@ package com.sr03.project.validator;
 
 import com.sr03.project.model.Form;
 import com.sr03.project.model.Question;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+@Component
 public class QuestionValidator  implements Validator {
     @Override
     public boolean supports(Class<?> aClass) {

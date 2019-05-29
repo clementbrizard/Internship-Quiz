@@ -2,9 +2,7 @@ package com.sr03.project.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,7 +20,7 @@ public class Form {
     public Set<FormQuestion> formQuestion  = new HashSet<FormQuestion>(0);
     @OneToMany(mappedBy = "form")
     public Set<Track> track  = new HashSet<>(0);
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "form_subject", joinColumns = @JoinColumn(name = "form_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
     private Set<Subject> subjects = new HashSet<Subject>(0);
 

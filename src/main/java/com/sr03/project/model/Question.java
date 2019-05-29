@@ -13,7 +13,7 @@ public class Question {
     @Column(name = "question_id")
     private Long id;
     @NotNull
-    private String text;
+    private String title;
     @NotNull
     private Boolean isActive;
     @OneToMany(mappedBy = "question")
@@ -38,12 +38,12 @@ public class Question {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getTitle() {
+        return title;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Boolean getIsActive() {

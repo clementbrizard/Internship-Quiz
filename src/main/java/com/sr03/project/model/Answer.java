@@ -13,7 +13,7 @@ public class Answer {
     @Column(name = "answer_id")
     private Long id;
     @NotNull
-    private String text;
+    private String title;
     @NotNull
     private Boolean isActive;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "answer")
@@ -21,9 +21,13 @@ public class Answer {
 /*    @ManyToMany(mappedBy = "answers")
     private Question questions;*/
 
-    public Answer(String text, Boolean isActive) {
-        this.text = text;
+    public Answer(String title, Boolean isActive) {
+        this.title = title;
         this.isActive = isActive;
+    }
+
+    public Answer() {
+
     }
 
     public Long getId() {
@@ -34,19 +38,19 @@ public class Answer {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getTitle() {
+        return title;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Boolean getActive() {
+    public Boolean getIsActive() {
         return isActive;
     }
 
-    public void setActive(Boolean active) {
+    public void setIsActive(Boolean active) {
         isActive = active;
     }
 

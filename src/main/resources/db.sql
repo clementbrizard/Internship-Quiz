@@ -25,8 +25,8 @@ create table question
 (
     question_id int auto_increment
         primary key,
-    subject_id  int                  not null,
-    title       varchar(200)         null,
+    subject_id  int                  null,
+    title       varchar(200)         not null,
     isActive    tinyint(1) default 1 not null,
     constraint Question_Subject_id_fk
         foreign key (subject_id) references subject (subject_id)

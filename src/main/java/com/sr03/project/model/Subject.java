@@ -16,7 +16,7 @@ public class Subject {
     private String title;
     @ManyToMany(mappedBy = "subjects")
     private Set<Question> questions;
-    @ManyToMany(mappedBy = "subjects")
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "subjects")
     private List<Form> forms;
 
     public Subject(){

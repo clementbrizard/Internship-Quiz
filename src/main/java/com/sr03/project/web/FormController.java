@@ -13,8 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class FormController {
@@ -34,8 +38,12 @@ public class FormController {
     @RequestMapping(value = "/forms", method = RequestMethod.GET)
     public String showForms(Model model) {
         Iterable<Form> formList = formRepository.findAll();
+        List<Form> form = new ArrayList<>();
+        formRepository.findAll().forEach(form::add);
         model.addAttribute("nbForms", formList.spliterator().getExactSizeIfKnown());
         model.addAttribute("formList", formList);
+        model.addAttribute("repo",subjectRepository);
+        model.addAttribute("listtest",form);
         return "forms";
     }
 
@@ -56,7 +64,7 @@ public class FormController {
 
     // Create new form
     @RequestMapping(value = "/forms/new", method = RequestMethod.POST)
-    public String newForm(@ModelAttribute("formAttribute") Form form, BindingResult bindingResult, Model model) {
+    public String newForm(@ModelAttribute("formAttribute") Form form, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {//RedirectAttributes redirectAttributes
 
         formValidator.validate(form, bindingResult);
 
@@ -65,8 +73,11 @@ public class FormController {
             return "redirect:/forms/new";
         }
 
+
         formService.save(form);
-        return "redirect:/forms";
+
+        redirectAttributes.addFlashAttribute("form_id", form.getId());
+        return "redirect:/questions/new";
     }
 
     // Disable or enable form

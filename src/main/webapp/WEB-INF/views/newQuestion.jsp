@@ -25,7 +25,7 @@
 <body>
 <div class="container col-md-12">
     <h1 class="text-center">${loggedUserName}</h1>
-    <h1 class="text-center">${form_name}</h1>
+    <h1 class="text-center">${form_name.title}</h1>
     <c:if test="${nbQuestions>0}">
         <h2 class="text-center">Current ${nbQuestions} question</h2>
     </c:if>
@@ -33,9 +33,8 @@
         <h2 class="text-center">There is no questions in your form currently</h2>
     </c:if>
     <div class="col-md-12">
-        <table id="forms" class="table table-striped table-bordered">
+        <table id="questions" class="table table-striped table-bordered">
             <thead>
-            <tr>
                 <th class="text-center">Id</th>
                 <th class="text-center">Title</th>
                 <th class="text-center">Active</th>
@@ -43,7 +42,7 @@
 
             </tr>
             </thead>
-            <c:forEach items="${formList}" var="item">
+            <c:forEach items="${questionList}" var="item">
                 <tr>
                     <td class="text-center">${item.id}</td>
                     <td class="text-center">${item.title}</td>
@@ -73,31 +72,34 @@
         </table>
     </div>
 
-    <form:form method="POST" modelAttribute="questionForm" class="form-signin">
-        <spring:bind path="title">
+    <div class="col-md-6 text-center">
+   <form:form method="POST" modelAttribute="questionForm" class="form-signin">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:select path="title" class="form-control">
+                <form:select path="title" multiple="true" class="form-control">
                     <form:options items="${questionList}"/>
                 </form:select>
-                <form:errors path="title"></form:errors>
             </div>
-        </spring:bind>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+       <div class="form-group ${status.error ? 'has-error' : ''}">
+           <form:select path="subjects" multiple="true" class="form-control">
+               <form:options items="${subjectList}" itemValue="id" itemLabel="title"/>
+           </form:select>
+       </div>
+
+
+<%--        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>--%>
     </form:form>
 
     <form:form method="POST" modelAttribute="answerForm" class="form-signin">
-        <spring:bind path="title">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:select path="title" class="form-control">
+                <form:select path="title" multiple="true" class="form-control">
                     <form:options items="${answerList}"/>
                 </form:select>
-                <form:errors path="title"></form:errors>
             </div>
-        </spring:bind>
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
     </form:form>
+    </div>
 
 </div>
 <script type="text/javascript" charset="utf8"

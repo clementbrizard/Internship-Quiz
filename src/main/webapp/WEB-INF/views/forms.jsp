@@ -38,15 +38,21 @@
                     <th class="text-center">Id</th>
                     <th class="text-center">Title</th>
                     <th class="text-center">Active</th>
+                    <th class="text-center">Subjects</th>
                     <th class="text-center">Action</th>
 
                 </tr>
                 </thead>
-                <c:forEach items="${formList}" var="item">
+                <c:forEach items="${listtest}" var="item">
                     <tr>
                         <td class="text-center">${item.id}</td>
                         <td class="text-center">${item.title}</td>
                         <td class="text-center">${item.isActive}</td>
+                        <td class="text-center">
+                         <c:forEach items="${item.subjects}" var="subject">
+                               ${subject.title}
+                         </c:forEach>
+                        </td>
                         <td class="text-center">
                             <form id="disableForm/${item.id}" method="POST"
                                   action="${contextPath}/forms/disable/${item.id}">
@@ -61,12 +67,19 @@
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             </form>
 
+                            <form id="questionForm/${item.id}" method="GET"
+                                  action="${contextPath}/questions/edit/${item.id}">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            </form>
 
                             <a onclick="document.forms['editForm/${item.id}'].submit()" class="btn btn-warning">
                                 <i class="far fa-edit"></i> Edit</a>
 
                             <a onclick="document.forms['deleteForm/${item.id}'].submit()" class="btn btn-danger">
                                 <i class="fas fa-trash-alt"></i> Delete</a>
+
+                            <a onclick="document.forms['questionForm/${item.id}'].submit()" class="btn btn-success">
+                                <i class="fas fa-question-circle"></i> Add a question</a>
 
                             <c:choose>
                                 <c:when test="${item.isActive==true}">
