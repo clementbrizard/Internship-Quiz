@@ -3,7 +3,6 @@ package com.sr03.project.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "subject")
@@ -15,7 +14,7 @@ public class Subject {
     @NotNull
     private String title;
     @ManyToMany(mappedBy = "subjects")
-    private Set<Question> questions;
+    private List<Question> questions;
     @ManyToMany(fetch = FetchType.EAGER,mappedBy = "subjects")
     private List<Form> forms;
 
@@ -23,7 +22,7 @@ public class Subject {
 
     }
 
-    public Subject(String title, Set<Question> questions, List<Form> forms) {
+    public Subject(String title, List<Question> questions, List<Form> forms) {
         this.title = title;
         this.questions = questions;
         this.forms = forms;
@@ -54,12 +53,11 @@ public class Subject {
         this.title = title;
     }
 
-    public Set<Question> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(Set<Question> questions) {
+    public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
-
 }

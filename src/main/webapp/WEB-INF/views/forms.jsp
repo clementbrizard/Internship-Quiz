@@ -24,7 +24,7 @@
 </head>
 <body>
 <div class="container col-md-12">
-    <h1 class="text-center">${loggedUserName}</h1>
+    <h1 class="text-center">User : ${loggedUserName}</h1>
     <c:if test="${nbForms>0}">
         <h2 class="text-center">Current ${nbForms} forms</h2>
     </c:if>
@@ -38,6 +38,7 @@
                     <th class="text-center">Id</th>
                     <th class="text-center">Title</th>
                     <th class="text-center">Active</th>
+                    <th class="text-center">Number of questions</th>
                     <th class="text-center">Subjects</th>
                     <th class="text-center">Action</th>
 
@@ -48,6 +49,7 @@
                         <td class="text-center">${item.id}</td>
                         <td class="text-center">${item.title}</td>
                         <td class="text-center">${item.isActive}</td>
+                        <td class="text-center">${item.formQuestion.size()}</td>
                         <td class="text-center">
                          <c:forEach items="${item.subjects}" var="subject">
                                ${subject.title}

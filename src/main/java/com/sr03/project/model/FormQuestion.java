@@ -10,10 +10,10 @@ public class FormQuestion {
     @GeneratedValue
     @Column(name = "form_question_id")
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name="form_id")
     private Form form;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name="question_id")
     private Question question;
     @NotNull
@@ -23,6 +23,14 @@ public class FormQuestion {
         this.position = position;
     }
 
+    public FormQuestion(Form form,Question question) {
+        this.form = form;
+        this.question = question;
+    }
+
+    public FormQuestion() {
+
+    }
     public Long getId() {
         return id;
     }

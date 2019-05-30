@@ -40,7 +40,7 @@ create table answer_question
     question_id        int                  not null,
     answer_id          int                  not null,
     position           int        default 1 not null,
-    valid              tinyint(1) default 0 not null,
+    isValid              tinyint(1) default 0 not null,
     constraint AnswerQuestion_Answer_id_fk
         foreign key (answer_id) references answer (answer_id),
     constraint AnswerQuestion_Question_id_fk

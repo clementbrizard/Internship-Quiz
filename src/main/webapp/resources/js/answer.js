@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#questions").dataTable({
+    $("#answers").dataTable({
         rowReorder: true,
         colReorder: true,
         order: [[ 1, "asc" ]],

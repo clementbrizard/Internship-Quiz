@@ -16,15 +16,15 @@ public class Question {
     private String title;
     @NotNull
     private Boolean isActive;
-    @OneToMany(mappedBy = "question")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "question")
     private Set<AnswerQuestion> answerQuestion = new HashSet<>(0);
-    @OneToMany(mappedBy = "question")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "question")
     private Set<TrackQuestion> trackQuestion = new HashSet<>(0);
-    @OneToMany(mappedBy = "question")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "question")
     private Set<FormQuestion> formQuestion = new HashSet<>(0);
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "subject_question", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
-    private Set<Subject> subjects;
+    private Set<Subject> subjects = new HashSet<Subject>(0);
 /*    @ManyToMany
     @JoinTable(name = "question_answer", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "answer_id"))
     private List<Answer> answers;*/

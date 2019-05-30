@@ -12,6 +12,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void save(Question question) {
+        question.setIsActive(true);
         questionRepository.save(question);
     }
     @Override

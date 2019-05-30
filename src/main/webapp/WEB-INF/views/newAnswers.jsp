@@ -14,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>New Question</title>
+    <title>New Answer</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="${contextPath}/resources/css/common.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
@@ -27,48 +27,37 @@
 <div class="container col-md-12">
     <h1 class="text-center">User : ${loggedUserName}</h1>
     <h1 class="text-center">Form : ${form_name}</h1>
-    <c:if test="${nbQuestions>0}">
-        <h2 class="text-center">Current ${nbQuestions} question</h2>
+    <h1 class="text-center">Question : ${currentQuestion.title}</h1>
+    <c:if test="${nbAnswers>0}">
+        <h2 class="text-center">Current ${nbAnswers} answers</h2>
     </c:if>
-    <c:if test="${nbQuestions==0}">
-        <h2 class="text-center">There is no questions in your form currently</h2>
+    <c:if test="${nbAnswers==0}">
+        <h2 class="text-center">There is no answers for this question currently</h2>
     </c:if>
     <div class="col-md-12">
-        <table id="questions" class="table table-striped table-bordered">
+        <table id="answers" class="table table-striped table-bordered">
             <thead>
             <th class="text-center">Id</th>
             <th class="text-center">Position</th>
             <th class="text-center">Title</th>
             <th class="text-center">Active</th>
-            <th class="text-center">Number of answers</th>
-            <th class="text-center">Answers</th>
-            <th class="text-center">Subjects</th>
+            <th class="text-center">Valid</th>
             <th class="text-center">Action</th>
 
             </tr>
             </thead>
-            <c:forEach items="${currentForm.formQuestion}" var="item">
+            <c:forEach items="${currentQuestion.answerQuestion}" var="item">
                 <tr>
-                    <td class="text-center">${item.question.id}</td>
+                    <td class="text-center">${item.answer.id}</td>
                     <td class="text-center">${item.position}</td>
-                    <td class="text-center">${item.question.title}</td>
-                    <td class="text-center">${item.question.isActive}</td>
-                    <td class="text-center">${item.question.answerQuestion.size()}</td>
-                    <td class="text-center">
-                        <c:forEach items="${item.question.answerQuestion}" var="question">
-                        <a class="text-center ${question.isValid ? 'is-valid' : 'is-false'}">
-                                ${question.answer.title}
-
-                            </c:forEach>
-                        </a>
-                    <td class="text-center">
-                        <c:forEach items="${item.question.subjects}" var="subject">
-                            ${subject.title}
-                        </c:forEach>
+                    <td class="text-center">${item.answer.title}</td>
+                    <td class="text-center">${item.answer.isActive}</td>
+                    <td class="text-center ${item.isValid ? 'is-valid' : 'is-false'}">
+                            ${item.isValid}
                     </td>
                     <td class="text-center">
                         <form id="disableForm/${item.id}" method="POST"
-                              action="${contextPath}/questions/disable/${item.question.id}">
+                              action="${contextPath}/answers/disable/${item.answer.id}">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </form>
                         <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit
@@ -76,7 +65,7 @@
                         <button type="button" class="btn btn-danger"><i class="far fa-edit"></i> Delete
                         </button>
                         <c:choose>
-                            <c:when test="${item.question.isActive==true}">
+                            <c:when test="${item.answer.isActive==true}">
                                 <a onclick="document.forms['disableForm'].submit()" class="btn btn-info">
                                     <i class="fas fa-times-circle"></i> Disable</a>
                             </c:when>
@@ -94,11 +83,11 @@
     <div class="col-md-12 text-center">
 
 
-        <h2>Add a new question</h2>
-        <form:form method="POST" modelAttribute="formQuestionAttribute" class="form-signin formSubmit">
+        <h2>Add some answers</h2>
+        <form:form method="POST" modelAttribute="answerQuestionForm" class="form-signin formSubmit">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:select path="question" multiple="false" class="form-control">
-                    <form:options items="${questionList}" itemValue="id" itemLabel="title"/>
+                <form:select path="answer" multiple="false" class="form-control">
+                    <form:options items="${answerList}" itemValue="id" itemLabel="title"/>
                 </form:select>
             </div>
             <h2>Choose a position</h2>
@@ -106,6 +95,10 @@
                 <form:input type="text" path="position" class="form-control" placeholder="Position"
                             autofocus="true"></form:input>
                 <form:errors path="position"></form:errors>
+            </div>
+            <h2>Is it a good answer ?</h2>
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:checkbox path="isValid"></form:checkbox>
             </div>
 
             <button class="btn btn-lg btn-primary" id="submit" type="submit">Submit</button>
@@ -120,7 +113,7 @@
         src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
 <script type="text/javascript"
         src="https://cdn.datatables.net/v/bs4/dt-1.10.18/af-2.3.3/b-1.5.6/b-colvis-1.5.6/b-flash-1.5.6/b-print-1.5.6/cr-1.5.0/r-2.2.2/rr-1.2.4/sc-2.0.0/sl-1.3.0/datatables.min.js"></script>
-<script src="${contextPath}/resources/js/question.js"></script>
-<script src="${contextPath}/resources/js/formLoop.js"></script>
+<script src="${contextPath}/resources/js/answer.js"></script>
+
 </body>
 </html>

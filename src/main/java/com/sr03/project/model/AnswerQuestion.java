@@ -10,10 +10,10 @@ public class AnswerQuestion {
     @GeneratedValue
     @Column(name = "answer_question_id")
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name="answer_id")
     private Answer answer;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name="question_id")
     private Question question;
     @NotNull
@@ -24,6 +24,10 @@ public class AnswerQuestion {
     public AnswerQuestion(Integer position, Boolean isValid) {
         this.position = position;
         this.isValid = isValid;
+    }
+
+    public AnswerQuestion() {
+
     }
 
     public Long getId() {
@@ -58,11 +62,11 @@ public class AnswerQuestion {
         this.position = position;
     }
 
-    public Boolean getValid() {
+    public Boolean getIsValid() {
         return isValid;
     }
 
-    public void setValid(Boolean valid) {
+    public void setIsValid(Boolean valid) {
         isValid = valid;
     }
 }

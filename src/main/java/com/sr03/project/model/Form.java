@@ -16,9 +16,9 @@ public class Form {
     private String title;
     @NotNull
     private Boolean isActive;
-    @OneToMany(mappedBy = "form")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "form")
     public Set<FormQuestion> formQuestion  = new HashSet<FormQuestion>(0);
-    @OneToMany(mappedBy = "form")
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "form")
     public Set<Track> track  = new HashSet<>(0);
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "form_subject", joinColumns = @JoinColumn(name = "form_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))

@@ -46,3 +46,11 @@ body {
 .has-error {
     color: red
 }
+
+.is-valid {
+    color: green
+}
+
+.is-false {
+    color: red
+}
