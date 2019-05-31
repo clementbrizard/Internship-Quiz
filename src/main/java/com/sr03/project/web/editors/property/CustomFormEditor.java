@@ -19,8 +19,6 @@ public class CustomFormEditor extends PropertyEditorSupport {
     public void setAsText(String text) throws IllegalArgumentException{
         if (text != null) {
             Long id = Long.valueOf(text);
-            System.out.println("DEBUUUUUUUUUUUUUG " + id + " " + id.getClass());
-            System.out.println("Form repository " + formRepository);
             Form form = formRepository.findById(id);
             System.out.println(form);
             setValue(form);

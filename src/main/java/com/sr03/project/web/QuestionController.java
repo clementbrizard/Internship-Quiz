@@ -111,22 +111,26 @@ public class QuestionController {
     }
 
     @RequestMapping(value = "/questions/new/answers", method = RequestMethod.GET)
-    public String new_answers(Model model, RedirectAttributes redirectAttributes,@ModelAttribute("question_id") final Long question_id, @ModelAttribute("form_id") final Long form_id) {//, RedirectAttributes redirectAttributes, @ModelAttribute("form_id") final Long form_id) {
+    public String new_answers(Model model, RedirectAttributes redirectAttributes,@ModelAttribute("question_id") Question question, @ModelAttribute("form_id") Form form) {//, RedirectAttributes redirectAttributes, @ModelAttribute("form_id") final Long form_id) {
+
+        model.addAttribute("form_name", form.getTitle());
+        model.addAttribute("currentForm", form);
+
         Iterable<Question> questionList = questionRepository.findAll();
-        Iterable<Answer> answerList = answerRepository.findAll();
-        Form currentForm = formRepository.findById(form_id);
-        Question currentQuestion = questionRepository.findById(question_id);
-        model.addAttribute("form_name", currentForm.getTitle());
-        model.addAttribute("currentForm", currentForm);
-        model.addAttribute("nbAnswers", currentQuestion.getAnswerQuestion().spliterator().getExactSizeIfKnown());
         model.addAttribute("questionList", questionList);
+
+        Iterable<Answer> answerList = answerRepository.findAll();
         model.addAttribute("answerList", answerList);
+
         model.addAttribute("answerQuestionForm", new AnswerQuestion());
         Iterable<Subject> source = subjectRepository.findAll();
         Set<Subject> subjectList = new HashSet<>();
         source.forEach(subjectList::add);
         model.addAttribute("subjectList", subjectList);
-        model.addAttribute("currentQuestion",currentQuestion);
+
+        model.addAttribute("currentQuestion",question);
+        model.addAttribute("nbAnswers", question.getAnswerQuestion().spliterator().getExactSizeIfKnown());
+
         return "newAnswers";
     }
 
@@ -146,8 +150,10 @@ public class QuestionController {
         //formQuestionService.save(formQuestion);
         //  answerService.save(answerForm);
 
-        redirectAttributes.addFlashAttribute("form_id", form.getId());
-        redirectAttributes.addFlashAttribute("question_id", questionForm.getQuestion().getId());
+        String formId = String.valueOf(form.getId());
+        redirectAttributes.addFlashAttribute("form_id", formId);
+        String questionId = String.valueOf(questionForm.getQuestion().getId());
+        redirectAttributes.addFlashAttribute("question_id", questionId);
         return "redirect:/questions/new/answers";
     }
 
