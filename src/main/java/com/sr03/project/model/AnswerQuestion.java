@@ -11,13 +11,13 @@ public class AnswerQuestion {
     @Column(name = "answer_question_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name="answer_id")
-    private Answer answer;
-
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="question_id")
     private Question question;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="answer_id")
+    private Answer answer;
 
     @NotNull
     private Integer position;

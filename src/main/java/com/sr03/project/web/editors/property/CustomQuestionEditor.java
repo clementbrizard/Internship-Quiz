@@ -20,7 +20,7 @@ public class CustomQuestionEditor extends PropertyEditorSupport {
         if (text != null) {
             Long id = Long.valueOf(text);
             Question question = questionRepository.findById(id);
-            System.out.println(question);
+            System.out.println("DEBUUUUUUUUUUUUG CONV  QUESTION " + question.getId());
             setValue(question);
         }
     }

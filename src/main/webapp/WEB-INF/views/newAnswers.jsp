@@ -27,7 +27,7 @@
 <body>
 <div class="container col-md-12">
     <h1 class="text-center">User : ${loggedUserName}</h1>
-    <h1 class="text-center">Form : ${form_name}</h1>
+    <h1 class="text-center">Form : ${formName}</h1>
     <h1 class="text-center">Question : ${currentQuestion.title}</h1>
     <c:if test="${nbAnswers>0}">
         <h2 class="text-center">Current ${nbAnswers} answers</h2>
@@ -85,7 +85,13 @@
 
 
         <h2>Add some answers</h2>
-        <form:form method="POST" modelAttribute="answerQuestionForm" class="form-signin formSubmit">
+        <form:form method="POST" modelAttribute="answerQuestionForm" action="/questions/new/answers/${currentForm.id}" class="form-signin formSubmit">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:select path="question" multiple="false" class="form-control">
+                    <form:options items="${questionList}" itemValue="id" itemLabel="title"/>
+                </form:select>
+            </div>
+            <h2>Choose answer</h2>
             <div class="form-group ${status.error ? 'has-error' : ''}">
                 <form:select path="answer" multiple="false" class="form-control">
                     <form:options items="${answerList}" itemValue="id" itemLabel="title"/>

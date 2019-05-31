@@ -26,8 +26,11 @@ public class Question {
             fetch = FetchType.EAGER)
     private Set<FormQuestion> formQuestion = new HashSet<FormQuestion>(0);
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "question")
-    private Set<AnswerQuestion> answerQuestion = new HashSet<>(0);
+    @OneToMany(targetEntity = AnswerQuestion.class,
+            mappedBy = "question",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
+    private Set<AnswerQuestion> answerQuestion = new HashSet<AnswerQuestion>(0);
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "question")
     private Set<TrackQuestion> trackQuestion = new HashSet<>(0);

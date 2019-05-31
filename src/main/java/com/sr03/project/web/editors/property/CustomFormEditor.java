@@ -20,7 +20,7 @@ public class CustomFormEditor extends PropertyEditorSupport {
         if (text != null) {
             Long id = Long.valueOf(text);
             Form form = formRepository.findById(id);
-            System.out.println(form);
+            System.out.println("DEBUUUUUUUUUG CONV FORM " + form.getId());
             setValue(form);
         }
     }
