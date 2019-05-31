@@ -71,7 +71,7 @@
                             </form>
 
                             <form id="questionForm/${item.id}" method="GET"
-                                  action="${contextPath}/questions/edit/${item.id}">
+                                  action="${contextPath}/questions/new/${item.id}">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             </form>
 

@@ -6,16 +6,20 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "form_question")
 public class FormQuestion {
+
     @Id
     @GeneratedValue
     @Column(name = "form_question_id")
     private Long id;
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="form_id")
     private Form form;
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="question_id")
     private Question question;
+
     @NotNull
     private Integer position;
 
@@ -45,6 +49,10 @@ public class FormQuestion {
 
     public void setForm(Form form) {
         this.form = form;
+    }
+
+    private boolean sameAsFormer(Form newForm) {
+        return form==null? newForm == null : form.equals(newForm);
     }
 
     public Question getQuestion() {

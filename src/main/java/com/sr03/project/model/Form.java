@@ -8,18 +8,27 @@ import java.util.Set;
 @Entity
 @Table(name = "form")
 public class Form {
+
     @Id
     @GeneratedValue
     @Column(name = "form_id")
     private Long id;
+
     @NotNull
     private String title;
+
     @NotNull
     private Boolean isActive;
+
+    @OneToMany(targetEntity = FormQuestion.class,
+            mappedBy = "form",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
+    private Set<FormQuestion> formQuestion  = new HashSet<FormQuestion>(0);
+
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "form")
-    public Set<FormQuestion> formQuestion  = new HashSet<FormQuestion>(0);
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "form")
-    public Set<Track> track  = new HashSet<>(0);
+    private Set<Track> track  = new HashSet<>(0);
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "form_subject", joinColumns = @JoinColumn(name = "form_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
     private Set<Subject> subjects = new HashSet<Subject>(0);
@@ -79,4 +88,6 @@ public class Form {
     public void setSubjects(Set<Subject> subjects) {
         this.subjects = subjects;
     }
+
+
 }

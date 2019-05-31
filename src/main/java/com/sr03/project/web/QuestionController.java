@@ -9,6 +9,8 @@ import com.sr03.project.service.QuestionService;
 import com.sr03.project.validator.AnswerValidator;
 import com.sr03.project.validator.FormQuestionValidator;
 import com.sr03.project.validator.QuestionValidator;
+import com.sr03.project.web.editors.property.CustomFormEditor;
+import com.sr03.project.web.editors.property.CustomQuestionEditor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.beans.PropertyEditorSupport;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -67,7 +70,7 @@ public class QuestionController {
         Form currentForm = formRepository.findById(lid);
         model.addAttribute("currentForm", currentForm);
         model.addAttribute("form_name", formRepository.findById(lid).getTitle());
-        model.addAttribute("nbQuestions", currentForm.formQuestion.spliterator().getExactSizeIfKnown());
+        model.addAttribute("nbQuestions", currentForm.getFormQuestion().spliterator().getExactSizeIfKnown());
         model.addAttribute("questionList", questionList);
         model.addAttribute("answerList", answerList);
         model.addAttribute("questionForm", new FormQuestion());
@@ -88,8 +91,9 @@ public class QuestionController {
         // FormQuestion formQuestions = formQuestionRepository.findFormQuestionByForm(currentForm);
         // Iterable<Question> formQuestionList = formQuestions.getQuestion();
         model.addAttribute("form_name", currentForm.getTitle());
+        model.addAttribute("form_id", String.valueOf(form_id));
         model.addAttribute("currentForm", currentForm);
-        model.addAttribute("nbQuestions", currentForm.formQuestion.spliterator().getExactSizeIfKnown());
+        model.addAttribute("nbQuestions", currentForm.getFormQuestion().spliterator().getExactSizeIfKnown());
 
         model.addAttribute("answerList", answerList);
      //   model.addAttribute("questionForm", new FormQuestion());
@@ -127,15 +131,15 @@ public class QuestionController {
     }
 
     @RequestMapping(value = "/questions/new", method = RequestMethod.POST)
-    public String new_question(@RequestParam("question") Question question,@ModelAttribute("formQuestionAttribute") FormQuestion questionForm, RedirectAttributes redirectAttributes, BindingResult bindingResult, Model model, @ModelAttribute("currentForm") Form form) {
+    public String new_question(@ModelAttribute("formQuestionAttribute") FormQuestion questionForm, RedirectAttributes redirectAttributes, BindingResult bindingResult, Model model, @ModelAttribute("form_id") Form form) {
         formQuestionValidator.validate(questionForm, bindingResult);
 //        answerValidator.validate(answerForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "redirect:/questions/new";
         }
+
         questionForm.setForm(form);
-        questionForm.setQuestion(question);
         formQuestionService.save(questionForm);
 
         //  FormQuestion formQuestion = new FormQuestion(form,questionForm);
@@ -197,34 +201,10 @@ public class QuestionController {
     @InitBinder
     public void initBinder(ServletRequestDataBinder binder) throws Exception {
 
-        // This custom editor converts selected Questions ids to corresponding Questions objects
-        binder.registerCustomEditor(String.class, "question", new CustomCollectionEditor(String.class) {
-            @Override
-            public Object convertElement(Object element) {
-                if (element != null) {
-                    Integer id = Integer.parseInt(element.toString());
-                    Long questionId = Long.valueOf(id);
-                    Question question = questionRepository.findById(questionId);
-                    return question;
-                }
+        // This custom editor converts selected question id to corresponding Question object
+        binder.registerCustomEditor(Question.class, new CustomQuestionEditor(questionRepository));
 
-                return null;
-            }
-        });
-        // This custom editor converts selected Subjects ids to corresponding Subject objects
-        binder.registerCustomEditor(Set.class, "subjects", new CustomCollectionEditor(Set.class) {
-            @Override
-            public Object convertElement(Object element) {
-                if (element != null) {
-                    Integer id = Integer.parseInt(element.toString());
-                    Long subjectId = Long.valueOf(id);
-                    Subject subject = subjectRepository.findById(subjectId);
-                    return subject;
-                }
-
-                return null;
-            }
-        });
+        binder.registerCustomEditor(Form.class, new CustomFormEditor(formRepository));
 
         // This custom editor converts selected Answers ids to corresponding Answer objects
         binder.registerCustomEditor(Set.class, "answer", new CustomCollectionEditor(Set.class) {
