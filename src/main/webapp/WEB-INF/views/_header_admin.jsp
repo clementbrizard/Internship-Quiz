@@ -21,7 +21,7 @@
                         </form>
 
                     <a onclick="document.forms['usersForm'].submit()"><i class="fas fa-users"></i></i>
-                            Manage Users
+                             Manage Users
                         </a></li>
                     <li>
                         <form id="managerForm" method="GET" action="${contextPath}/forms">
@@ -29,17 +29,17 @@
                         </form>
 
                         <a onclick="document.forms['managerForm'].submit()"><i class="fas fa-list-ol"></i>
-                            Manage forms
+                             Manage forms
                         </a></li>
-                    <li><a href="#"><i class="fas fa-tags"></i>Manage Subjects</a></li>
-                    <li><a href="#"><i class="fas fa-question"></i>Manage Question</a></li>
-                    <li><a href="#"><i class="fas fa-check-square"></i>Manage Answers</a></li>
+                    <li><a href="#"><i class="fas fa-tags"></i> Manage Subjects</a></li>
+                    <li><a href="#"><i class="fas fa-question"></i> Manage Question</a></li>
+                    <li><a href="#"><i class="fas fa-check-square"></i> Manage Answers</a></li>
                     <li>
                         <form id="logoutForm" method="POST" action="${contextPath}/logout">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </form>
                         <a onclick="document.forms['logoutForm'].submit()"><i
-                                class="fas fa-sign-out-alt"></i>Logout</a></li>
+                                class="fas fa-sign-out-alt"></i> Logout</a></li>
                     <li>
                         <a class="btn btn-default btn-outline btn-circle" data-toggle="collapse" href="#nav-collapse3"
                            aria-expanded="false"
