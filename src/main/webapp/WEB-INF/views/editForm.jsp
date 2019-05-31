@@ -20,6 +20,7 @@
 
 
 </head>
+<%@include file="_header_admin.jsp" %>
 <body>
 <div class="container col-md-12">
     <h1 class="text-center">${loggedUserName}</h1>

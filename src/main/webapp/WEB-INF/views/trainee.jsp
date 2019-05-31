@@ -22,6 +22,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 
 </head>
+<%@include file="_header_trainee.jsp" %>
 <body>
 <div class="container">
 
