@@ -73,52 +73,31 @@ public class QuestionController {
     @Autowired
     private AnswerValidator answerValidator;
 
-    @RequestMapping(value = "/questions/edit/{id}", method = RequestMethod.GET)
-    public String edit_question(Model model, @PathVariable int id) {
-        Long lid = Long.valueOf(id);
-        Iterable<Question> questionList = questionRepository.findAll();
-        Iterable<Answer> answerList = answerRepository.findAll();
-        Form currentForm = formRepository.findById(lid);
-        model.addAttribute("currentForm", currentForm);
-        model.addAttribute("form_name", formRepository.findById(lid).getTitle());
-        model.addAttribute("nbQuestions", currentForm.getFormQuestion().spliterator().getExactSizeIfKnown());
-        model.addAttribute("questionList", questionList);
-        model.addAttribute("answerList", answerList);
-        model.addAttribute("questionForm", new FormQuestion());
-        Iterable<Subject> source = subjectRepository.findAll();
-        Set<Subject> subjectList = new HashSet<>();
-        source.forEach(subjectList::add);
-        model.addAttribute("subjectList", subjectList);
-
-        // model.addAttribute("answerForm",new Answer());
-        return "newQuestion";
-    }
-
     @RequestMapping(value = "/questions/new", method = RequestMethod.GET)
     public String new_question(Model model,
                                RedirectAttributes redirectAttributes,
                                @ModelAttribute("form_id") final Long form_id) {
-        Iterable<Answer> answerList = answerRepository.findAll();
+
+        // The form to which we will add a question
         Form currentForm = formRepository.findById(form_id);
-        // FormQuestion formQuestions = formQuestionRepository.findFormQuestionByForm(currentForm);
-        // Iterable<Question> formQuestionList = formQuestions.getQuestion();
         model.addAttribute("form_name", currentForm.getTitle());
         model.addAttribute("form_id", String.valueOf(form_id));
         model.addAttribute("currentForm", currentForm);
+
+        // The existing number of questions of the form
         model.addAttribute("nbQuestions", currentForm.getFormQuestion().spliterator().getExactSizeIfKnown());
 
-        model.addAttribute("answerList", answerList);
-     //   model.addAttribute("questionForm", new FormQuestion());
-        //   model.addAttribute("answerForm",new AnswerQuestion());
+        // Lists of existing questions and answers
+        Iterable<Question> source = questionRepository.findAll();
+        List<Question> questionList = new ArrayList<Question>();
+        source.forEach(questionList::add);
+        model.addAttribute("questionList", questionList);
+
+        // The new FormQuestion object we will fill
         FormQuestion formQuestionEntity = new FormQuestion();
         formQuestionEntity.setQuestion(new Question());
         model.addAttribute("formQuestionAttribute", formQuestionEntity);
 
-        Iterable<Question> source = questionRepository.findAll();
-        List<Question> questionList = new ArrayList<Question>();
-        source.forEach(questionList::add);
-
-        model.addAttribute("questionList", questionList);
         return "newQuestion";
     }
 
@@ -152,23 +131,22 @@ public class QuestionController {
                               RedirectAttributes redirectAttributes,
                               @ModelAttribute("questionId") Question question,
                               @ModelAttribute("formId") Form form) {
-        // Form
+
+        // The form to which we will add a QuestionAnswer
         String formId = String.valueOf(form.getId());
-        System.out.println("DEBBBBBBBBBBBBBBBBUG GET FORM " + formId);
         redirectAttributes.addFlashAttribute("formId", formId);
         model.addAttribute("formName", form.getTitle());
         model.addAttribute("currentForm", form);
 
-        // Question
+        // The question to which we will add an answer
         model.addAttribute("currentQuestion",question);
         String questionId = String.valueOf(question.getId());
-        System.out.println("DEBBBBBBBBBBBBBBBBUG GET QUESTION " + questionId);
         redirectAttributes.addFlashAttribute("questionId", questionId);
 
-        // Answers
+        // The number of answers the question already has
         model.addAttribute("nbAnswers", question.getAnswerQuestion().spliterator().getExactSizeIfKnown());
 
-        // Lists
+        // Lists of existing questions, answers and subjects
         Iterable<Question> questionList = questionRepository.findAll();
         model.addAttribute("questionList", questionList);
 
@@ -180,7 +158,7 @@ public class QuestionController {
         source.forEach(subjectList::add);
         model.addAttribute("subjectList", subjectList);
 
-        // New object
+        // The new AnswerQuestion object we will fill
         model.addAttribute("answerQuestionForm", new AnswerQuestion());
 
         return "newAnswers";
@@ -205,7 +183,29 @@ public class QuestionController {
         Question question = answerQuestionForm.getQuestion();
         String questionId =  String.valueOf(question.getId());
         redirectAttributes.addFlashAttribute("questionId", questionId);
+
         return "redirect:/questions/new/answers";
+    }
+
+    @RequestMapping(value = "/questions/edit/{id}", method = RequestMethod.GET)
+    public String edit_question(Model model, @PathVariable int id) {
+        Long lid = Long.valueOf(id);
+        Iterable<Question> questionList = questionRepository.findAll();
+        Iterable<Answer> answerList = answerRepository.findAll();
+        Form currentForm = formRepository.findById(lid);
+        model.addAttribute("currentForm", currentForm);
+        model.addAttribute("form_name", formRepository.findById(lid).getTitle());
+        model.addAttribute("nbQuestions", currentForm.getFormQuestion().spliterator().getExactSizeIfKnown());
+        model.addAttribute("questionList", questionList);
+        model.addAttribute("answerList", answerList);
+        model.addAttribute("questionForm", new FormQuestion());
+        Iterable<Subject> source = subjectRepository.findAll();
+        Set<Subject> subjectList = new HashSet<>();
+        source.forEach(subjectList::add);
+        model.addAttribute("subjectList", subjectList);
+
+        // model.addAttribute("answerForm",new Answer());
+        return "newQuestion";
     }
 
     @RequestMapping(value = "/questions/edit/{id}", method = RequestMethod.POST)
