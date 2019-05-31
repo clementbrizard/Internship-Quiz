@@ -12,14 +12,18 @@ public class Answer {
     @GeneratedValue
     @Column(name = "answer_id")
     private Long id;
+
     @NotNull
     private String title;
+
     @NotNull
     private Boolean isActive;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "answer")
+
+    @OneToMany(targetEntity = AnswerQuestion.class,
+            mappedBy = "answer",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
     public Set<AnswerQuestion> answerQuestion  = new HashSet<AnswerQuestion>(0);
-/*    @ManyToMany(mappedBy = "answers")
-    private Question questions;*/
 
     public Answer(String title, Boolean isActive) {
         this.title = title;
