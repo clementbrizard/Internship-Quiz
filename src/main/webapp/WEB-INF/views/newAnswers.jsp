@@ -26,7 +26,7 @@
 <%@include file="_header_admin.jsp" %>
 <body>
 <div class="container col-md-12">
-    <h1 class="text-center">User : ${loggedUserName}</h1>
+    <h1 class="text-center">User : ${loggedUserName} </h1>
     <h1 class="text-center">Form : ${formName}</h1>
     <h1 class="text-center">Question : ${currentQuestion.title}</h1>
     <c:if test="${nbAnswers>0}">
@@ -57,15 +57,15 @@
                             ${item.isValid}
                     </td>
                     <td class="text-center">
-                        <form id="disableForm/${item.id}" method="POST"
+<%--                        <form id="disableForm/${item.id}" method="POST"
                               action="${contextPath}/answers/disable/${item.answer.id}">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        </form>
+                        </form>--%>
                         <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit
                         </button>
                         <button type="button" class="btn btn-danger"><i class="far fa-edit"></i> Delete
                         </button>
-                        <c:choose>
+    <%--                    <c:choose>
                             <c:when test="${item.answer.isActive==true}">
                                 <a onclick="document.forms['disableForm'].submit()" class="btn btn-info">
                                     <i class="fas fa-times-circle"></i> Disable</a>
@@ -74,7 +74,7 @@
                                 <a onclick="document.forms['disableForm'].submit()" class="btn btn-info">
                                     <i class="fas fa-check-circle"></i> Enable</a>
                             </c:otherwise>
-                        </c:choose>
+                        </c:choose>--%>
                     </td>
                 </tr>
             </c:forEach>

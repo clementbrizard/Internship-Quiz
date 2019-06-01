@@ -70,7 +70,7 @@
                     <td class="text-center">${item.phone}</td>
                     <td class="text-center">${item.creationDate}</td>
                     <td class="text-center">${item.valid}</td>
-                    <td>
+                    <td class="text-center">
                         <c:if test="${item.username != loggedUserName}">
                             <form id="disableForm/${item.id}" method="POST" action="${contextPath}/disable/${item.id}">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

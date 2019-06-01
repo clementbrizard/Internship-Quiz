@@ -22,7 +22,8 @@ public class Form {
 
     @OneToMany(targetEntity = FormQuestion.class,
             mappedBy = "form",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.REMOVE,
+            orphanRemoval = true,
             fetch = FetchType.EAGER)
     private Set<FormQuestion> formQuestion  = new HashSet<FormQuestion>(0);
 

@@ -21,7 +21,7 @@ public class Answer {
 
     @OneToMany(targetEntity = AnswerQuestion.class,
             mappedBy = "answer",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY)
     public Set<AnswerQuestion> answerQuestion  = new HashSet<AnswerQuestion>(0);
 

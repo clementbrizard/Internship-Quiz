@@ -22,13 +22,13 @@ public class Question {
 
     @OneToMany(targetEntity = FormQuestion.class,
             mappedBy = "question",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.REMOVE,
             fetch = FetchType.EAGER)
     private Set<FormQuestion> formQuestion = new HashSet<FormQuestion>(0);
 
     @OneToMany(targetEntity = AnswerQuestion.class,
             mappedBy = "question",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.REMOVE,
             fetch = FetchType.EAGER)
     private Set<AnswerQuestion> answerQuestion = new HashSet<AnswerQuestion>(0);
 

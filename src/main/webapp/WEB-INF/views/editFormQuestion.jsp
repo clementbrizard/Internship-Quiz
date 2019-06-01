@@ -14,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>New Form</title>
+    <title>Edit Question</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="${contextPath}/resources/css/common.css"/>
 
@@ -26,16 +26,11 @@
     <h1 class="text-center">${loggedUserName}</h1>
     <h1 class="text-center">Edit form</h1>
     <form:form method="POST" modelAttribute="form" class="form-signin">
-        <spring:bind path="title">
+        <spring:bind path="position">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="title" class="form-control" placeholder="Title"
+                <form:input type="text" path="position" class="form-control" placeholder="Position"
                             autofocus="true"></form:input>
-                <form:errors path="title"></form:errors>
-            </div>
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:select path="subjects" multiple="true" class="form-control">
-                    <form:options items="${subjectList}" itemValue="id" itemLabel="title"/>
-                </form:select>
+                <form:errors path="position"></form:errors>
             </div>
         </spring:bind>
 

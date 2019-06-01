@@ -15,7 +15,6 @@ import com.sr03.project.web.editors.property.CustomAnswerQuestionEditor;
 import com.sr03.project.web.editors.property.CustomFormEditor;
 import com.sr03.project.web.editors.property.CustomQuestionEditor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.beans.PropertyEditorSupport;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -98,6 +96,7 @@ public class QuestionController {
         formQuestionEntity.setQuestion(new Question());
         model.addAttribute("formQuestionAttribute", formQuestionEntity);
 
+
         return "newQuestion";
     }
 
@@ -107,6 +106,56 @@ public class QuestionController {
                                BindingResult bindingResult,
                                Model model,
                                @ModelAttribute("form_id") Form form) {
+
+        formQuestionValidator.validate(questionForm, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "redirect:/questions/new";
+        }
+
+        questionForm.setForm(form);
+        formQuestionService.save(questionForm);
+
+        String formId = String.valueOf(form.getId());
+        redirectAttributes.addFlashAttribute("formId", formId);
+
+        String questionId = String.valueOf(questionForm.getQuestion().getId());
+        redirectAttributes.addFlashAttribute("questionId", questionId);
+
+        return "redirect:/questions/new/answers";
+    }
+
+    @RequestMapping(value = "/questions/edit/{id}", method = RequestMethod.GET)
+    public String edit_question(Model model, @PathVariable int id) {
+        Long form_id = Long.valueOf(id);
+        // The form to which we will add a question
+        Form currentForm = formRepository.findById(form_id);
+        model.addAttribute("form_name", currentForm.getTitle());
+        model.addAttribute("form_id", String.valueOf(form_id));
+        model.addAttribute("currentForm", currentForm);
+
+        // The existing number of questions of the form
+        model.addAttribute("nbQuestions", currentForm.getFormQuestion().spliterator().getExactSizeIfKnown());
+
+        // Lists of existing questions and answers
+        Iterable<Question> source = questionRepository.findAll();
+        List<Question> questionList = new ArrayList<Question>();
+        source.forEach(questionList::add);
+        model.addAttribute("questionList", questionList);
+
+        // The new FormQuestion object we will fill
+        FormQuestion formQuestionEntity = new FormQuestion();
+        formQuestionEntity.setQuestion(new Question());
+        model.addAttribute("formQuestionAttribute", formQuestionEntity);
+        return "newQuestion";
+    }
+
+    @RequestMapping(value = "/questions/edit/{id}", method = RequestMethod.POST)
+    public String edit_question(@ModelAttribute("formQuestionAttribute") FormQuestion questionForm,
+                                RedirectAttributes redirectAttributes,
+                                BindingResult bindingResult,
+                                Model model,
+                                @ModelAttribute("form_id") Form form) {
 
         formQuestionValidator.validate(questionForm, bindingResult);
 
@@ -139,7 +188,7 @@ public class QuestionController {
         model.addAttribute("currentForm", form);
 
         // The question to which we will add an answer
-        model.addAttribute("currentQuestion",question);
+        model.addAttribute("currentQuestion", question);
         String questionId = String.valueOf(question.getId());
         redirectAttributes.addFlashAttribute("questionId", questionId);
 
@@ -157,10 +206,10 @@ public class QuestionController {
         Set<Subject> subjectList = new HashSet<>();
         source.forEach(subjectList::add);
         model.addAttribute("subjectList", subjectList);
-
+/*        FormQuestion test = formQuestionRepository.findFormQuestionByFormAndQuestion(form,question);*/
         // The new AnswerQuestion object we will fill
         model.addAttribute("answerQuestionForm", new AnswerQuestion());
-
+/*        model.addAttribute("test",form);*/
         return "newAnswers";
     }
 
@@ -181,55 +230,12 @@ public class QuestionController {
         redirectAttributes.addFlashAttribute("formId", formId);
 
         Question question = answerQuestionForm.getQuestion();
-        String questionId =  String.valueOf(question.getId());
+        String questionId = String.valueOf(question.getId());
         redirectAttributes.addFlashAttribute("questionId", questionId);
 
         return "redirect:/questions/new/answers";
     }
 
-    @RequestMapping(value = "/questions/edit/{id}", method = RequestMethod.GET)
-    public String edit_question(Model model, @PathVariable int id) {
-        Long lid = Long.valueOf(id);
-        Iterable<Question> questionList = questionRepository.findAll();
-        Iterable<Answer> answerList = answerRepository.findAll();
-        Form currentForm = formRepository.findById(lid);
-        model.addAttribute("currentForm", currentForm);
-        model.addAttribute("form_name", formRepository.findById(lid).getTitle());
-        model.addAttribute("nbQuestions", currentForm.getFormQuestion().spliterator().getExactSizeIfKnown());
-        model.addAttribute("questionList", questionList);
-        model.addAttribute("answerList", answerList);
-        model.addAttribute("questionForm", new FormQuestion());
-        Iterable<Subject> source = subjectRepository.findAll();
-        Set<Subject> subjectList = new HashSet<>();
-        source.forEach(subjectList::add);
-        model.addAttribute("subjectList", subjectList);
-
-        // model.addAttribute("answerForm",new Answer());
-        return "newQuestion";
-    }
-
-    @RequestMapping(value = "/questions/edit/{id}", method = RequestMethod.POST)
-    public String edit_question(@ModelAttribute("questionForm") FormQuestion questionForm,
-                                RedirectAttributes redirectAttributes,
-                                BindingResult bindingResult,
-                                Model model,
-                                @ModelAttribute("currentForm") Form form) {
-
-        formQuestionValidator.validate(questionForm, bindingResult);
-
-        if (bindingResult.hasErrors()) {
-            return "redirect:/questions/new";
-        }
-        questionForm.setForm(form);
-        formQuestionService.save(questionForm);
-        //  FormQuestion formQuestion = new FormQuestion(form,questionForm);
-        //formQuestionService.save(formQuestion);
-        //  answerService.save(answerForm);
-
-        redirectAttributes.addFlashAttribute("form_id", form.getId());
-        redirectAttributes.addFlashAttribute("question_id", questionForm.getQuestion().getId());
-        return "redirect:/questions/new/answers";
-    }
 
     @RequestMapping(value = "/questions/disable/{id}", method = RequestMethod.POST)
     public String disable(@PathVariable int id) {
@@ -237,7 +243,45 @@ public class QuestionController {
         Question question = questionRepository.findById(lid);
         question.setIsActive(!question.getIsActive());
         questionRepository.save(question);
-        return "redirect:/newQuestion";
+        return "redirect:/questions";
+    }
+
+    @RequestMapping(value = "/questions/delete/{id}", method = RequestMethod.POST)
+    public String delete(@PathVariable int id,@ModelAttribute("form_id") Long form_id,RedirectAttributes redirectAttributes) {
+        Long lid = Long.valueOf(id);
+        FormQuestion formQuestion = formQuestionRepository.findById(lid);
+        formQuestionRepository.delete(formQuestion);
+        redirectAttributes.addFlashAttribute("formId", form_id);
+        return "redirect:/questions/new";
+    }
+
+    // Get edit question view
+    @RequestMapping(value = "questions/editPosition/{id}", method = RequestMethod.GET)
+    public String getEditPositionQuestion(@PathVariable int id, Model model){
+        Long lid = Long.valueOf(id);
+        FormQuestion formQuestion = formQuestionRepository.findById(lid);
+        model.addAttribute("form", formQuestion);
+        return "editFormQuestion";
+    }
+
+    // Save edited question
+    @RequestMapping(value = "questions/editPosition/{id}", method = RequestMethod.POST)
+    public String editPositionQuestion(@ModelAttribute("form") FormQuestion form, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes,@PathVariable int id) {//RedirectAttributes redirectAttributes
+
+        formQuestionValidator.validate(form, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "redirect:/questions/editPosition/{id}";
+        }
+
+        Long lid = Long.valueOf(id);
+        FormQuestion formQuestion = formQuestionRepository.findById(lid);
+        form.setForm(formQuestion.getForm());
+        form.setQuestion(formQuestion.getQuestion());
+        formQuestionService.save(form);
+
+        redirectAttributes.addFlashAttribute("form_id", form.getForm().getId());
+        return "redirect:/questions/new";
     }
 
     @InitBinder

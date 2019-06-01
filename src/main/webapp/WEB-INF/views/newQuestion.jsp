@@ -59,7 +59,6 @@
                         <c:forEach items="${item.question.answerQuestion}" var="question">
                         <a class="text-center ${question.isValid ? 'is-valid' : 'is-false'}">
                                 ${question.answer.title}
-
                             </c:forEach>
                         </a>
                     <td class="text-center">
@@ -68,24 +67,36 @@
                         </c:forEach>
                     </td>
                     <td class="text-center">
-                        <form id="disableForm/${item.id}" method="POST"
-                              action="${contextPath}/questions/disable/${item.question.id}">
+                        <form id="deleteForm/${item.id}" method="POST"
+                              action="${contextPath}/questions/delete/${item.id}">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </form>
-                        <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit
-                        </button>
-                        <button type="button" class="btn btn-danger"><i class="far fa-edit"></i> Delete
-                        </button>
-                        <c:choose>
-                            <c:when test="${item.question.isActive==true}">
-                                <a onclick="document.forms['disableForm'].submit()" class="btn btn-info">
-                                    <i class="fas fa-times-circle"></i> Disable</a>
-                            </c:when>
-                            <c:otherwise>
-                                <a onclick="document.forms['disableForm'].submit()" class="btn btn-info">
-                                    <i class="fas fa-check-circle"></i> Enable</a>
-                            </c:otherwise>
-                        </c:choose>
+                        <form id="editForm/${item.id}" method="POST"
+                              action="${contextPath}/questions/editPosition/${item.id}">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
+                        <form id="editQuestionForm/${item.id}" method="POST"
+                              action="${contextPath}/questions/new/answers/${item.id}">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
+                        <a onclick="document.forms['editForm/${item.id}'].submit()" class="btn btn-warning"><i class="far fa-edit"></i> Edit
+                        </a>
+
+                        <a onclick="document.forms['editQuestionForm/${item.id}'].submit()" class="btn btn-success">
+                            <i class="fas fa-check-square"></i> Edit answer list</a>
+
+                        <a onclick="document.forms['deleteForm/${item.id}'].submit()" class="btn btn-danger">
+                            <i class="far fa-trash-alt"></i> Delete</a>
+                            <%--                        <c:choose>
+                                                        <c:when test="${item.question.isActive==true}">
+                                                            <a onclick="document.forms['disableForm'].submit()" class="btn btn-info">
+                                                                <i class="fas fa-times-circle"></i> Disable</a>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a onclick="document.forms['disableForm'].submit()" class="btn btn-info">
+                                                                <i class="fas fa-check-circle"></i> Enable</a>
+                                                        </c:otherwise>
+                                                    </c:choose>--%>
                     </td>
                 </tr>
             </c:forEach>
