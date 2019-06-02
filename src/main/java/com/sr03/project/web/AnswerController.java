@@ -8,6 +8,7 @@ import com.sr03.project.repository.AnswerQuestionRepository;
 import com.sr03.project.repository.AnswerRepository;
 import com.sr03.project.service.AnswerQuestionService;
 import com.sr03.project.validator.AnswerQuestionValidator;
+import com.sr03.project.validator.AnswerValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,9 @@ public class AnswerController {
 
     @Autowired
     private AnswerQuestionValidator answerQuestionValidator;
+
+    @Autowired
+    private AnswerValidator answerValidator;
 
     @RequestMapping(value = "/answers/disable/{id}", method = RequestMethod.POST)
     public String disable(@PathVariable int id) {
@@ -79,5 +83,66 @@ public class AnswerController {
         redirectAttributes.addFlashAttribute("form", form_id);
         redirectAttributes.addFlashAttribute("questionId", question);
         return "redirect:/questions/new/answers";
+    }
+
+    @RequestMapping(value = "answers/manage", method = RequestMethod.GET)
+    public String getanswers(Model model){
+        Iterable<Answer> answerList = answerRepository.findAll();
+        model.addAttribute("answerList", answerList);
+
+        return "answers";
+    }
+    @RequestMapping(value = "answers/manage/delete/{id}", method = RequestMethod.POST)
+    public String deleteanswers(Model model, @PathVariable Long id){
+        Answer answer = answerRepository.findById(id);
+        answerRepository.delete(answer);
+        return "answers";
+    }
+    @RequestMapping(value = "answers/manage/edit/{id}", method = RequestMethod.GET)
+    public String editanswers(Model model, @PathVariable Long id){
+        Answer answer = answerRepository.findById(id);
+        model.addAttribute("answer",answer);
+
+        return "editAnswers";
+    }
+
+    @RequestMapping(value = "answers/manage/edit/{id}", method = RequestMethod.POST)
+    public String post_editanswers(Model model, @PathVariable Long id, @ModelAttribute("answer") Answer answer, BindingResult bindingResult){
+        answerValidator.validate(answer, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "redirect:/answers/manage/edit/{id}";
+        }
+        answerRepository.save(answer);
+        return "redirect:/answers/manage";
+    }
+
+    @RequestMapping(value = "answers/manage/add", method = RequestMethod.GET)
+    public String addanswers(Model model){
+        Answer answer = new Answer();
+        model.addAttribute("answer",answer);
+        return "addAnswers";
+    }
+
+    @RequestMapping(value = "answers/manage/add", method = RequestMethod.POST)
+    public String post_addanswers(Model model, @ModelAttribute("answer") Answer answer, BindingResult bindingResult){
+        answerValidator.validate(answer, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "redirect:/answers/manage/add";
+        }
+
+
+        answerRepository.save(answer);
+        return "redirect:/answers/manage";
+    }
+
+    @RequestMapping(value = "answers/manage/disable/{id}", method = RequestMethod.POST)
+    public String manage_disable(@PathVariable int id){
+        Long lid = Long.valueOf(id);
+        Answer answer = answerRepository.findById(lid);
+        answer.setIsActive(!answer.getIsActive());
+        answerRepository.save(answer);
+        return "redirect:/answers/manage";
     }
 }

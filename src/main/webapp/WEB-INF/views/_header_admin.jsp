@@ -20,8 +20,8 @@
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </form>
 
-                    <a onclick="document.forms['usersForm'].submit()"><i class="fas fa-users"></i></i>
-                             Manage Users
+                        <a onclick="document.forms['usersForm'].submit()"><i class="fas fa-users"></i></i>
+                            Manage Users
                         </a></li>
                     <li>
                         <form id="managerForm" method="GET" action="${contextPath}/forms">
@@ -29,11 +29,34 @@
                         </form>
 
                         <a onclick="document.forms['managerForm'].submit()"><i class="fas fa-list-ol"></i>
-                             Manage forms
+                            Manage Forms
                         </a></li>
-                    <li><a href="#"><i class="fas fa-tags"></i> Manage Subjects</a></li>
-                    <li><a href="#"><i class="fas fa-question"></i> Manage Question</a></li>
-                    <li><a href="#"><i class="fas fa-check-square"></i> Manage Answers</a></li>
+                    <li>
+                        <form id="managerSubject" method="GET" action="${contextPath}/subjects">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
+
+                        <a onclick="document.forms['managerSubject'].submit()"><i class="fas fa-tag"></i>
+                            Manage Subjects
+                        </a></li>
+                    </li>
+                    <li>
+                        <form id="managerQuestion" method="GET" action="${contextPath}/questions/manage">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
+
+                        <a onclick="document.forms['managerQuestion'].submit()"><i class="fas fa-question"></i>
+                            Manage Questions
+                        </a></li>
+                    </li>
+                    <li>
+                        <form id="managerAnswer" method="GET" action="${contextPath}/answers/manage">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
+
+                        <a onclick="document.forms['managerAnswer'].submit()"><i class="fas fa-check-square"></i>
+                            Manage Answers
+                        </a></li>
                     <li>
                         <form id="logoutForm" method="POST" action="${contextPath}/logout">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

@@ -14,7 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>New Form</title>
+    <title>Add Subject</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="${contextPath}/resources/css/common.css"/>
 
@@ -22,26 +22,18 @@
 </head>
 <%@include file="_header_admin.jsp" %>
 <body>
-<div class="container col-md-12">
+<div class="container col-md-12 text-center">
 
-    <h1 class="text-center">Edit form</h1>
-    <form:form method="POST" modelAttribute="form" class="form-signin">
+    <h1 class="text-center">Add Subject</h1>
+    <h2 class="text-center">Title</h2>
+    <form:form method="POST" modelAttribute="subject" class="form-signin">
         <spring:bind path="title">
             <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:input type="text" path="title" class="form-control" placeholder="Title"
+                <form:input type="text" path="position" class="form-control" placeholder="Title"
                             autofocus="true"></form:input>
                 <form:errors path="title"></form:errors>
             </div>
         </spring:bind>
-        <spring:bind path="subjects">
-            <div class="form-group ${status.error ? 'has-error' : ''}">
-                <form:select path="subjects" multiple="true" class="form-control">
-                    <form:options items="${subjectList}" itemValue="id" itemLabel="title"/>
-                </form:select>
-            </div>
-        </spring:bind>
-
-
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
     </form:form>
 </div>

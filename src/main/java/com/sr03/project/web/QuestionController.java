@@ -284,6 +284,76 @@ public class QuestionController {
         return "redirect:/questions/new";
     }
 
+    @RequestMapping(value = "questions/manage", method = RequestMethod.GET)
+    public String getquestions(Model model){
+        Iterable<Question> questionList = questionRepository.findAll();
+        model.addAttribute("questionList", questionList);
+
+        return "questions";
+    }
+    @RequestMapping(value = "questions/manage/delete/{id}", method = RequestMethod.POST)
+    public String deletequestions(Model model, @PathVariable Long id){
+        Question question = questionRepository.findById(id);
+        questionRepository.delete(question);
+        return "questions";
+    }
+    @RequestMapping(value = "questions/manage/edit/{id}", method = RequestMethod.GET)
+    public String editquestions(Model model, @PathVariable Long id){
+        Question question = questionRepository.findById(id);
+        model.addAttribute("question",question);
+        Iterable<Subject> source = subjectRepository.findAll();
+        Set<Subject> subjectList = new HashSet<>();
+        source.forEach(subjectList::add);
+
+        model.addAttribute("subjectList", subjectList);
+        return "editQuestions";
+    }
+
+    @RequestMapping(value = "questions/manage/edit/{id}", method = RequestMethod.POST)
+    public String post_editquestions(Model model, @PathVariable Long id, @ModelAttribute("question") Question question, BindingResult bindingResult){
+        questionValidator.validate(question, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "redirect:/questions/manage/edit/{id}";
+        }
+        questionRepository.save(question);
+        return "redirect:/questions/manage";
+    }
+
+    @RequestMapping(value = "questions/manage/add", method = RequestMethod.GET)
+    public String addquestions(Model model){
+        Question question = new Question();
+        model.addAttribute("question",question);
+        Iterable<Subject> source = subjectRepository.findAll();
+        Set<Subject> subjectList = new HashSet<>();
+        source.forEach(subjectList::add);
+
+        model.addAttribute("subjectList", subjectList);
+        return "addQuestions";
+    }
+
+    @RequestMapping(value = "questions/manage/add", method = RequestMethod.POST)
+    public String post_addquestions(Model model, @ModelAttribute("question") Question question, BindingResult bindingResult){
+        questionValidator.validate(question, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "redirect:/questions/manage/add";
+        }
+
+
+        questionRepository.save(question);
+        return "redirect:/questions/manage";
+    }
+
+    @RequestMapping(value = "questions/manage/disable/{id}", method = RequestMethod.POST)
+    public String manage_disable(@PathVariable int id){
+        Long lid = Long.valueOf(id);
+        Question question = questionRepository.findById(lid);
+        question.setIsActive(!question.getIsActive());
+        questionRepository.save(question);
+        return "redirect:/questions/manage";
+    }
+    
     @InitBinder
     public void initBinder(ServletRequestDataBinder binder) throws Exception {
 
