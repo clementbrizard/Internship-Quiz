@@ -26,7 +26,7 @@
 <%@include file="_header_admin.jsp" %>
 <body>
 <div class="container col-md-12">
-    <h1 class="text-center">User : ${loggedUserName}</h1>
+
     <h1 class="text-center">Form : ${form_name}</h1>
     <c:if test="${nbQuestions>0}">
         <h2 class="text-center">Current ${nbQuestions} question</h2>
@@ -75,6 +75,7 @@
                               action="${contextPath}/questions/editPosition/${item.id}">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         </form>
+<%--                        todo : Make this function works--%>
                         <form id="editQuestionForm/${item.id}" method="POST"
                               action="${contextPath}/questions/new/answers/${item.id}">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

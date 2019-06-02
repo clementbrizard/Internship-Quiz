@@ -25,7 +25,7 @@
 <%@include file="_header_admin.jsp" %>
 <body>
 <div class="container col-md-12">
-    <h1 class="text-center">User : ${loggedUserName}</h1>
+
     <c:if test="${nbForms>0}">
         <h2 class="text-center">Current ${nbForms} forms</h2>
     </c:if>

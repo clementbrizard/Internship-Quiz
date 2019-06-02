@@ -160,7 +160,7 @@ public class QuestionController {
         formQuestionValidator.validate(questionForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            return "redirect:/questions/new";
+            return "redirect:/questions/edit/{id}";
         }
 
         questionForm.setForm(form);

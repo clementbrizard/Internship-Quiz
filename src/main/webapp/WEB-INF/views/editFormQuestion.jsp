@@ -23,8 +23,8 @@
 <%@include file="_header_admin.jsp" %>
 <body>
 <div class="container col-md-12">
-    <h1 class="text-center">${loggedUserName}</h1>
-    <h1 class="text-center">Edit form</h1>
+
+    <h1 class="text-center">Edit Questions</h1>
     <form:form method="POST" modelAttribute="form" class="form-signin">
         <spring:bind path="position">
             <div class="form-group ${status.error ? 'has-error' : ''}">

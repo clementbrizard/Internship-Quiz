@@ -26,7 +26,6 @@
 <%@include file="_header_admin.jsp" %>
 <body>
 <div class="container col-md-12">
-    <h1 class="text-center">User : ${loggedUserName} </h1>
     <h1 class="text-center">Form : ${formName}</h1>
     <h1 class="text-center">Question : ${currentQuestion.title}</h1>
     <c:if test="${nbAnswers>0}">
@@ -57,14 +56,20 @@
                             ${item.isValid}
                     </td>
                     <td class="text-center">
-<%--                        <form id="disableForm/${item.id}" method="POST"
-                              action="${contextPath}/answers/disable/${item.answer.id}">
+                      <form id="deleteForm/${item.id}" method="POST"
+                              action="${contextPath}/answers/delete/${item.id}">
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        </form>--%>
-                        <button type="button" class="btn btn-warning"><i class="far fa-edit"></i> Edit
-                        </button>
-                        <button type="button" class="btn btn-danger"><i class="far fa-edit"></i> Delete
-                        </button>
+                        </form>
+                        <form id="editForm/${item.id}" method="POST"
+                              action="${contextPath}/answers/editPosition/${item.id}">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
+                        <a onclick="document.forms['editForm/${item.id}'].submit()" class="btn btn-warning">
+                            <i class="far fa-edit"></i> Edit</a>
+                        <a onclick="document.forms['deleteForm/${item.id}'].submit()" class="btn btn-danger">
+                        <i class="far fa-trash-alt"></i> Delete</a>
+
+
     <%--                    <c:choose>
                             <c:when test="${item.answer.isActive==true}">
                                 <a onclick="document.forms['disableForm'].submit()" class="btn btn-info">
