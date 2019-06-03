@@ -11,23 +11,55 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Trainee</title>
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="${contextPath}/resources/css/common.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/v/bs4/dt-1.10.18/af-2.3.3/b-1.5.6/b-colvis-1.5.6/b-flash-1.5.6/b-print-1.5.6/cr-1.5.0/r-2.2.2/rr-1.2.4/sc-2.0.0/sl-1.3.0/datatables.min.css"/>
+
 </head>
 <%@include file="_header_trainee.jsp" %>
 <body>
-<div class="container">
+<div class="container col-md-12">
     <c:if test="${loggedUserName!= null}">
         <h2 class="text-center">Welcome ${loggedUserName}</h2>
     </c:if>
+    <div class="col-md-12">
+        <h2 class="text-center">Available quizzes</h2>
+        <table id="formList" class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center">Title</th>
+                <th class="text-center">Subjects</th>
+                <th class="text-center">Action</th>
+            </tr>
+            </thead>
+            <c:forEach items="${formList}" var="item">
+                <tr>
+                    <td class="text-center">${item.title}</td>
+                    <td class="text-center">
+                        <c:forEach items="${item.subjects}" var="subject">
+                            ${subject.title}
+                        </c:forEach>
+                    </td>
+                    <td class="text-center">Actions</td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
 </div>
-<!-- /container -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
-<%--<script src="${contextPath}/resources/js/jqueryScript.js"></script>--%>
+
+<script type="text/javascript" charset="utf8"
+        src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" charset="utf8"
+        src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+        src="https://cdn.datatables.net/v/bs4/dt-1.10.18/af-2.3.3/b-1.5.6/b-colvis-1.5.6/b-flash-1.5.6/b-print-1.5.6/cr-1.5.0/r-2.2.2/rr-1.2.4/sc-2.0.0/sl-1.3.0/datatables.min.js"></script>
+<script src="${contextPath}/resources/js/trainee.js"></script>
 </body>
 </html>
 

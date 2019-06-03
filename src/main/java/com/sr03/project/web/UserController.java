@@ -1,6 +1,8 @@
 package com.sr03.project.web;
 
+import com.sr03.project.model.Form;
 import com.sr03.project.model.User;
+import com.sr03.project.repository.FormRepository;
 import com.sr03.project.repository.UserRepository;
 import com.sr03.project.service.SecurityService;
 import com.sr03.project.service.SecurityServiceImpl;
@@ -35,6 +37,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private FormRepository formRepository;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -165,9 +170,15 @@ public class UserController {
         UserDetails userDetails = userDetailsService.loadUserByUsername(name);
         Boolean isAdmin = userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
 
-        Iterable <User> userList = userRepository.findAll();
-        model.addAttribute("userList",userList);
-        return isAdmin == true ? "admin" : "trainee";
+        if (isAdmin == true) {
+            Iterable <User> userList = userRepository.findAll();
+            model.addAttribute("userList",userList);
+            return "admin";
+        } else {
+            Iterable <Form> formList = formRepository.findAll();
+            model.addAttribute("formList", formList);
+            return "trainee";
+        }
     }
 
 }
