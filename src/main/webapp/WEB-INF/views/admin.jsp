@@ -123,6 +123,15 @@
                 Add user
             </a>
 
+            <form id="mailForm" method="GET" action="${contextPath}/mail">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+
+            <a onclick="document.forms['mailForm'].submit()" class="btn btn-warning">
+                <i class="fas fa-edit"></i>
+                Test Mail
+            </a>
+
         </div>
     </div>
 
