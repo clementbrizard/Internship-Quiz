@@ -13,9 +13,9 @@ public class Subject {
     private Long id;
     @NotNull
     private String title;
-    @ManyToMany(mappedBy = "subjects")
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "subjects",cascade = CascadeType.REMOVE)
     private List<Question> questions;
-    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "subjects")
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "subjects",cascade = CascadeType.REMOVE)
     private List<Form> forms;
 
     public Subject(){

@@ -25,7 +25,7 @@
 <%@include file="_header_admin.jsp" %>
 <body>
 <div class="container col-md-12">
-    <h1 class="text-center">User : ${loggedUserName}</h1>
+
     <c:if test="${nbForms>0}">
         <h2 class="text-center">Current ${nbForms} forms</h2>
     </c:if>
@@ -71,7 +71,7 @@
                             </form>
 
                             <form id="questionForm/${item.id}" method="GET"
-                                  action="${contextPath}/questions/new/${item.id}">
+                                  action="${contextPath}/questions/edit/${item.id}">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                             </form>
 
@@ -82,7 +82,7 @@
                                 <i class="fas fa-trash-alt"></i> Delete</a>
 
                             <a onclick="document.forms['questionForm/${item.id}'].submit()" class="btn btn-success">
-                                <i class="fas fa-question-circle"></i> Add a question</a>
+                                <i class="fas fa-question-circle"></i> Edit question list</a>
 
                             <c:choose>
                                 <c:when test="${item.isActive==true}">

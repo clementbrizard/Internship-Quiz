@@ -70,7 +70,7 @@
                     <td class="text-center">${item.phone}</td>
                     <td class="text-center">${item.creationDate}</td>
                     <td class="text-center">${item.valid}</td>
-                    <td>
+                    <td class="text-center">
                         <c:if test="${item.username != loggedUserName}">
                             <form id="disableForm/${item.id}" method="POST" action="${contextPath}/disable/${item.id}">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -123,14 +123,15 @@
                 Add user
             </a>
 
-            <form id="managerForm" method="GET" action="${contextPath}/forms">
+            <form id="mailForm" method="GET" action="${contextPath}/mail">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
 
-            <a onclick="document.forms['managerForm'].submit()" class="btn btn-success"><i
-                    class="fas fa-list-ol"></i>
-                Manage forms
+            <a onclick="document.forms['mailForm'].submit()" class="btn btn-warning">
+                <i class="fas fa-edit"></i>
+                Test Mail
             </a>
+
         </div>
     </div>
 
