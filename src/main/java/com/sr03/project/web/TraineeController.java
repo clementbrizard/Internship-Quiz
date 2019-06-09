@@ -42,14 +42,10 @@ public class TraineeController {
         // Get form
         Form form = formService.findById(Long.valueOf(formId));
 
-        form.getFormQuestion().forEach(formQuestion -> {
-            System.out.println(formQuestion.getPosition().toString());
-        });
-
         // Get formQuestion
         FormQuestion formQuestion = formQuestionService.findFormQuestionByFormAndPosition(
                 formService.findById(Long.valueOf(formId)),
-                1
+                formQuestionPosition
         );
 
         model.addAttribute("form", form);
@@ -65,12 +61,14 @@ public class TraineeController {
                                      @ModelAttribute("formQuestionId") String formQuestionId) {
 
         Form form = formService.findById(Long.valueOf(formId));
-        FormQuestion formQuestion = formQuestionService.findById(Long.valueOf(formQuestionId));
-        System.out.println(form.getFormQuestionByPosition(formQuestion.getPosition()).getQuestion().getTitle());
+        Integer currentPosition = formQuestionService.findById(Long.valueOf(formQuestionId)).getPosition();
+        if (formQuestionService.findFormQuestionByFormAndPosition(form, currentPosition + 1) != null) {
+            model.addAttribute("formQuestionPosition", currentPosition + 1);
+            return "redirect:/forms/{formId}/questions";
+        }
 
-        model.addAttribute("formQuestionId", formQuestionId);
-
-        return "redirect:/forms/{formId}/questions";
+        else
+            return "redirect:/welcome";
     }
 
 }

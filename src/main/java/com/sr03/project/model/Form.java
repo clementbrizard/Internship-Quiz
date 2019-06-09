@@ -94,15 +94,4 @@ public class Form {
         this.subjects = subjects;
     }
 
-    public FormQuestion getFormQuestionByPosition (Integer position) {
-        FormQuestion formQuestion = this.getFormQuestion().iterator().next();
-
-        while (formQuestion.getPosition() != position) {
-            formQuestion = this.getFormQuestion().iterator().next();
-        }
-
-        return formQuestion;
-    }
-
-
 }
