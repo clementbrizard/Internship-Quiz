@@ -1,9 +1,12 @@
 package com.sr03.project.model;
 
+import org.hibernate.annotations.SortNatural;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Entity
 @Table(name = "form")
@@ -24,7 +27,9 @@ public class Form {
             mappedBy = "form",
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER)
-    private Set<FormQuestion> formQuestion  = new HashSet<FormQuestion>(0);
+    @SortNatural
+    @OrderBy("position ASC")
+    private SortedSet<FormQuestion> formQuestion;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "form")
     private Set<Track> track  = new HashSet<>(0);
@@ -57,11 +62,11 @@ public class Form {
         isActive = active;
     }
 
-    public Set<FormQuestion> getFormQuestion() {
+    public SortedSet<FormQuestion> getFormQuestion() {
         return formQuestion;
     }
 
-    public void setFormQuestion(Set<FormQuestion> formQuestion) {
+    public void setFormQuestion(SortedSet<FormQuestion> formQuestion) {
         this.formQuestion = formQuestion;
     }
 
