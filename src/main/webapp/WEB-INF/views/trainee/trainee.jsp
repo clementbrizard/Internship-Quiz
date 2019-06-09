@@ -22,7 +22,7 @@
           href="https://cdn.datatables.net/v/bs4/dt-1.10.18/af-2.3.3/b-1.5.6/b-colvis-1.5.6/b-flash-1.5.6/b-print-1.5.6/cr-1.5.0/r-2.2.2/rr-1.2.4/sc-2.0.0/sl-1.3.0/datatables.min.css"/>
 
 </head>
-<%@include file="_header_trainee.jsp" %>
+<%@include file="../_header_trainee.jsp" %>
 <body>
 <div class="container col-md-12">
     <c:if test="${loggedUserName!= null}">
@@ -46,7 +46,13 @@
                             ${subject.title}
                         </c:forEach>
                     </td>
-                    <td class="text-center">Actions</td>
+                    <td class="text-center">
+                        <form id="launchQuiz/${item.id}" method="GET" action="/forms/${item.id}">
+                        </form>
+                        <a onclick="document.forms['launchQuiz/${item.id}'].submit()" class="btn btn-info">
+                            Start quiz
+                        </a>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

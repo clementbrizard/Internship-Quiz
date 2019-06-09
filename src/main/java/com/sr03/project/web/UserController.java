@@ -177,7 +177,7 @@ public class UserController {
         } else {
             Iterable <Form> formList = formRepository.findAll();
             model.addAttribute("formList", formList);
-            return "trainee";
+            return "trainee/trainee";
         }
     }
 
