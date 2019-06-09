@@ -48,23 +48,18 @@ public class TraineeController {
         return "trainee/training";
     }
 
-    /*
     // Handle answer
     @RequestMapping(value = "/forms/{formId}/questions/{formQuestionId}", method = RequestMethod.POST)
-    public RedirectView handleAnswer(Model model,
+    public String handleAnswer(Model model,
                                      @PathVariable int formId,
                                      @ModelAttribute("formQuestionId") String formQuestionId) {
 
         FormQuestion formQuestion = formQuestionService.findById(Long.valueOf(formQuestionId));
+        System.out.println(formQuestion.getQuestion().getTitle());
 
-        // Add position of last asked question to model
-        model.addAttribute("lastQuestionAskedPosition", formQuestion.getPosition());
+        model.addAttribute("formQuestionId", formQuestionId);
 
-        RedirectView redirectView = new RedirectView();
-        redirectView.setContextRelative(true);
-        redirectView.setUrl("/forms/{formId}/nextQuestion");
-
-        return redirectView;
-    }*/
+        return "redirect:/forms/{formId}/questions";
+    }
 
 }
