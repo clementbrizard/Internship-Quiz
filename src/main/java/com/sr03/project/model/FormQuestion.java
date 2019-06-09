@@ -72,8 +72,21 @@ public class FormQuestion implements Comparable<FormQuestion> {
         this.position = position;
     }
 
+    @Override
     public int compareTo(FormQuestion formQuestion) {
-        return this.getPosition().compareTo(formQuestion.getPosition());
+        if (this.getId().compareTo(formQuestion.getId()) == 0) {
+            return 0;
+        }
+
+        else if (this.getPosition() == null)
+            if (formQuestion.getPosition() == null)
+                return 0;
+            else
+                return -1;
+            else
+                if (formQuestion.getPosition() == null)
+                    return 1;
+                else return this.getPosition().compareTo(formQuestion.getPosition());
     }
 
 }

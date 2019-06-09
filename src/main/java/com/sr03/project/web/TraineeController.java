@@ -8,11 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.SortedSet;
 
 @Controller
@@ -24,14 +20,15 @@ public class TraineeController {
     @Autowired
     private FormQuestionService formQuestionService;
 
+    // Launch quiz
     @RequestMapping(value = "/forms/{formId}", method = RequestMethod.GET)
     public String launchQuiz(Model model,
                              @PathVariable int formId) {
 
+        // Send first question to display to dedicated method
         Form form = formService.findById(Long.valueOf(formId));
         FormQuestion formQuestion = form.getFormQuestion().iterator().next();
-
-        model.addAttribute("formQuestionId", String.valueOf(formQuestion.getId()));
+        model.addAttribute("formQuestionPosition", 1);
 
         return "redirect:/forms/{formId}/questions";
     }
@@ -40,12 +37,23 @@ public class TraineeController {
     @RequestMapping(value = "/forms/{formId}/questions", method = RequestMethod.GET)
     public String showQuestion(Model model,
                                @PathVariable int formId,
-                               @ModelAttribute("formQuestionId") String formQuestionId) {
+                               @ModelAttribute("formQuestionPosition") Integer formQuestionPosition) {
 
-        FormQuestion formQuestion = formQuestionService.findById(Long.valueOf(formQuestionId));
+        // Get form
+        Form form = formService.findById(Long.valueOf(formId));
 
+        form.getFormQuestion().forEach(formQuestion -> {
+            System.out.println(formQuestion.getPosition().toString());
+        });
+
+        // Get formQuestion
+        FormQuestion formQuestion = formQuestionService.findFormQuestionByFormAndPosition(
+                formService.findById(Long.valueOf(formId)),
+                1
+        );
+
+        model.addAttribute("form", form);
         model.addAttribute("formQuestion", formQuestion);
-        model.addAttribute("formId", formId);
 
         return "trainee/training";
     }
@@ -56,8 +64,9 @@ public class TraineeController {
                                      @PathVariable int formId,
                                      @ModelAttribute("formQuestionId") String formQuestionId) {
 
+        Form form = formService.findById(Long.valueOf(formId));
         FormQuestion formQuestion = formQuestionService.findById(Long.valueOf(formQuestionId));
-        System.out.println(formQuestion.getQuestion().getTitle());
+        System.out.println(form.getFormQuestionByPosition(formQuestion.getPosition()).getQuestion().getTitle());
 
         model.addAttribute("formQuestionId", formQuestionId);
 

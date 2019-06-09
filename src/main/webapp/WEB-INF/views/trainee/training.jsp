@@ -20,7 +20,7 @@
 </head>
 <body>
 <div class="container col-md-12">
-    <h1 class="text-center">${formId}</h1>
+    <h1 class="text-center">${form.title}</h1>
     <h2 class="text-center">${formQuestion.question.title}</h2>
     <form:form method="post" action="/forms/${formId}/questions/${formQuestion.id}">
         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>

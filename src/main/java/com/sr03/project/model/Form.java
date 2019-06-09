@@ -28,7 +28,6 @@ public class Form {
             cascade = CascadeType.REMOVE,
             orphanRemoval = true,
             fetch = FetchType.EAGER)
-    @SortNatural
     @OrderBy("position ASC")
     private SortedSet<FormQuestion> formQuestion;
 
@@ -93,6 +92,16 @@ public class Form {
 
     public void setSubjects(Set<Subject> subjects) {
         this.subjects = subjects;
+    }
+
+    public FormQuestion getFormQuestionByPosition (Integer position) {
+        FormQuestion formQuestion = this.getFormQuestion().iterator().next();
+
+        while (formQuestion.getPosition() != position) {
+            formQuestion = this.getFormQuestion().iterator().next();
+        }
+
+        return formQuestion;
     }
 
 
