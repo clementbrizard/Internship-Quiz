@@ -2,10 +2,11 @@ package com.sr03.project.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Comparator;
 
 @Entity
 @Table(name = "form_question")
-public class FormQuestion {
+public class FormQuestion implements Comparable<FormQuestion> {
 
     @Id
     @GeneratedValue
@@ -70,4 +71,22 @@ public class FormQuestion {
     public void setPosition(Integer position) {
         this.position = position;
     }
+
+    @Override
+    public int compareTo(FormQuestion formQuestion) {
+        if (this.getId().compareTo(formQuestion.getId()) == 0) {
+            return 0;
+        }
+
+        else if (this.getPosition() == null)
+            if (formQuestion.getPosition() == null)
+                return 0;
+            else
+                return -1;
+            else
+                if (formQuestion.getPosition() == null)
+                    return 1;
+                else return this.getPosition().compareTo(formQuestion.getPosition());
+    }
+
 }

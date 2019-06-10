@@ -2,6 +2,7 @@ package com.sr03.project.web;
 
 import com.sr03.project.model.Form;
 import com.sr03.project.model.Subject;
+import com.sr03.project.repository.FormQuestionRepository;
 import com.sr03.project.repository.FormRepository;
 import com.sr03.project.repository.SubjectRepository;
 import com.sr03.project.service.FormService;
@@ -33,6 +34,9 @@ public class FormController {
 
     @Autowired
     private SubjectRepository subjectRepository;
+
+    @Autowired
+    private FormQuestionRepository formQuestionRepository;
 
     // Get list of forms
     @RequestMapping(value = "/forms", method = RequestMethod.GET)
@@ -105,13 +109,35 @@ public class FormController {
         Long lid = Long.valueOf(id);
         Form form = formRepository.findById(lid);
         model.addAttribute("form", form);
+        Iterable<Subject> source = subjectRepository.findAll();
+        Set<Subject> subjectList = new HashSet<>();
+        source.forEach(subjectList::add);
+
+        model.addAttribute("subjectList", subjectList);
 
         return "editForm";
     }
 
     // Save edited form
     @RequestMapping(value = "forms/edit/{id}", method = RequestMethod.POST)
-    public String editForm(@ModelAttribute("form") Form form, @PathVariable int id, BindingResult bindingResult, Model model){
+    public String editForm(@ModelAttribute("form") Form form, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes,@PathVariable int id) {//RedirectAttributes redirectAttributes
+
+        formValidator.validate(form, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "redirect:/edit/{id}";
+        }
+
+        Long lid = Long.valueOf(id);
+        Form savedForm = formRepository.findById(lid);
+        form.setId(lid);
+        form.setIsActive(savedForm.getIsActive());
+        formService.save(form);
+
+        redirectAttributes.addFlashAttribute("form_id", form.getId());
+        return "redirect:/forms";
+    }
+/*    public String editForm(@ModelAttribute("form") Form form, @PathVariable int id, BindingResult bindingResult, Model model){
 
         Long lid = Long.valueOf(id);
         Form savedForm = formRepository.findById(lid);
@@ -121,7 +147,7 @@ public class FormController {
         formService.save(form);
 
         return "redirect:/forms";
-    }
+    }*/
 
 
     @InitBinder

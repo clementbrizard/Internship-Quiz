@@ -22,20 +22,20 @@ public class Question {
 
     @OneToMany(targetEntity = FormQuestion.class,
             mappedBy = "question",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.REMOVE,
             fetch = FetchType.EAGER)
     private Set<FormQuestion> formQuestion = new HashSet<FormQuestion>(0);
 
     @OneToMany(targetEntity = AnswerQuestion.class,
             mappedBy = "question",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.REMOVE,
             fetch = FetchType.EAGER)
     private Set<AnswerQuestion> answerQuestion = new HashSet<AnswerQuestion>(0);
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "question")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "question")
     private Set<TrackQuestion> trackQuestion = new HashSet<>(0);
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinTable(name = "subject_question", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
     private Set<Subject> subjects = new HashSet<Subject>(0);
 /*    @ManyToMany
