@@ -32,6 +32,9 @@ public class TraineeController {
     @Autowired
     private TrackQuestionService trackQuestionService;
 
+    @Autowired
+    private QuestionService questionService;
+
     // Launch quiz
     @RequestMapping(value = "/forms/{formId}", method = RequestMethod.GET)
     public String launchQuiz(Model model, @PathVariable int formId, Principal principal) {
@@ -74,25 +77,34 @@ public class TraineeController {
 
         // Initiate TrackQuestion
         TrackQuestion trackQuestion = new TrackQuestion();
-        trackQuestion.setQuestion(formQuestion.getQuestion());
-        trackQuestion.setTrack(trackService.findById(Long.valueOf(trackId)));
-        trackQuestionService.save(trackQuestion);
         model.addAttribute("trackQuestion", trackQuestion);
+
+        model.addAttribute("trackId", trackId);
 
         return "trainee/training";
     }
 
     // Handle answer
-    @RequestMapping(value = "/forms/{formId}/questions/{formQuestionId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/forms/{formId}/questions/{formQuestionId}/{trackId}", method = RequestMethod.POST)
     public String handleAnswer(Model model,
                                      @PathVariable int formId,
                                      @ModelAttribute("formQuestionId") String formQuestionId,
+                               @ModelAttribute("trackId") String trackId,
                                @ModelAttribute("trackQuestion") TrackQuestion trackQuestion) {
 
+        // Save answer to question
+        trackQuestion.setTrack(trackService.findById(Long.valueOf(trackId)));
+        FormQuestion formQuestion = formQuestionService.findById(Long.valueOf(formQuestionId));
+        trackQuestion.setQuestion(formQuestion.getQuestion());
+        trackQuestionService.save(trackQuestion);
+
+        // Decide whether next question ot back to home
         Form form = formService.findById(Long.valueOf(formId));
         Integer currentPosition = formQuestionService.findById(Long.valueOf(formQuestionId)).getPosition();
+
         if (formQuestionService.findFormQuestionByFormAndPosition(form, currentPosition + 1) != null) {
             model.addAttribute("formQuestionPosition", currentPosition + 1);
+            model.addAttribute("trackId", trackQuestion.getTrack().getId().toString());
             return "redirect:/forms/{formId}/questions";
         }
 
