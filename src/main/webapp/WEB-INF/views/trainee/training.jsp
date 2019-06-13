@@ -24,7 +24,7 @@
     <h2 class="text-center">${formQuestion.question.title}</h2>
     <div class="text-center">
         <form:form method="post" modelAttribute="trackQuestion" action="/forms/${formId}/questions/${formQuestion.id}">
-            <form:checkboxes items="${formQuestion.question.answerQuestion}" path="choicePosition" itemValue="position" itemLabel="answer.title"/>
+            <form:checkboxes items="${formQuestion.question.answerQuestion}" path="choicePosition" itemValue="position" itemLabel="answer.title" element="div"/>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
         </form:form>
     </div>
