@@ -7,15 +7,18 @@ import javax.validation.constraints.NotNull;
 @Table(name = "track_question")
 public class TrackQuestion {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "track_question_id")
     private Long id;
+
     @NotNull
-    private Integer choicePosition;
-    @ManyToOne(cascade = CascadeType.ALL)
+    private Integer choicePosition = 0;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="question_id")
     private Question question;
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="track_id")
     private Track track;
 

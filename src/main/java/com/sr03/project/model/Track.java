@@ -1,7 +1,11 @@
 package com.sr03.project.model;
 
+import com.sr03.project.web.editors.property.LocalDateTimeAttributeConverter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,25 +16,33 @@ public class Track {
     @GeneratedValue
     @Column(name = "track_id")
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="form_id")
     private Form form;
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")
     private User user;
+
     @NotNull
-    private Double score;
-    @NotNull
-    private Integer duration;
-    @OneToMany(mappedBy = "track")
+    private Double score = 0.;
+
+    @Column(name = "date")
+    // @Convert(converter = LocalDateTimeAttributeConverter.class)
+    private String date = LocalDateTime.now().toString();
+
+    @Column(name = "duration")
+    // @Convert(converter = LocalDateTimeAttributeConverter.class)
+    private String duration = LocalDateTime.now().toString();
+
+    @OneToMany(targetEntity = TrackQuestion.class,
+            mappedBy = "track",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
     public Set<TrackQuestion> trackQuestion  = new HashSet<TrackQuestion>(0);
 
-    public Track(Form form, User user, Double score, Integer duration) {
-        this.form = form;
-        this.user = user;
-        this.score = score;
-        this.duration = duration;
-    }
+    public Track() {}
 
     public Long getId() {
         return id;
@@ -64,12 +76,20 @@ public class Track {
         this.score = score;
     }
 
-    public Integer getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(Integer duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public Set<TrackQuestion> getTrackQuestion() {

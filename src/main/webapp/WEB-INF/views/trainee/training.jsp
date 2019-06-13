@@ -22,9 +22,12 @@
 <div class="container col-md-12">
     <h1 class="text-center">${form.title}</h1>
     <h2 class="text-center">${formQuestion.question.title}</h2>
-    <form:form method="post" action="/forms/${formId}/questions/${formQuestion.id}">
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-    </form:form>
+    <div class="text-center">
+        <form:form method="post" modelAttribute="trackQuestion" action="/forms/${formId}/questions/${formQuestion.id}">
+            <form:checkboxes items="${formQuestion.question.answerQuestion}" path="choicePosition" itemValue="position" itemLabel="answer.title"/>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+        </form:form>
+    </div>
 </div>
 <script type="text/javascript" charset="utf8"
         src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
