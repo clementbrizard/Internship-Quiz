@@ -56,6 +56,27 @@
                 </tr>
             </c:forEach>
         </table>
+        <h2 class="text-center">Done quizzes</h2>
+        <table id="trackList" class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th class="text-center">Title</th>
+                <th class="text-center">Subjects</th>
+                <th class="text-center">Score</th>
+            </tr>
+            </thead>
+            <c:forEach items="${trackList}" var="item">
+                <tr>
+                    <td class="text-center">${item.form.title}</td>
+                    <td class="text-center">
+                        <c:forEach items="${item.form.subjects}" var="subject">
+                            ${subject.title}
+                        </c:forEach>
+                    </td>
+                    <td class="text-center">${item.score}</td>
+                </tr>
+            </c:forEach>
+        </table>
     </div>
 </div>
 

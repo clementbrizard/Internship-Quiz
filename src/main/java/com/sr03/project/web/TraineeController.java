@@ -122,6 +122,7 @@ public class TraineeController {
 
         else
             model.addAttribute("score", track.getScore());
+            model.addAttribute("user", track.getUser().getId().toString());
             return "redirect:/endQuiz";
     }
 
@@ -129,10 +130,15 @@ public class TraineeController {
     @RequestMapping(value = "/endQuiz", method = RequestMethod.GET)
     public String quizFinished(Model model,
                                @ModelAttribute("score") String score,
-                               @ModelAttribute("form") String formId) {
+                               @ModelAttribute("user") String userId){
+
         Iterable <Form> formList = formService.findAll();
         model.addAttribute("formList", formList);
         model.addAttribute("score", score);
+
+        User user = userService.findById(Long.valueOf(userId));
+        Iterable<Track> trackList = trackService.findByUser(user);
+        model.addAttribute("trackList", trackList);
 
         return "trainee/trainee";
     }

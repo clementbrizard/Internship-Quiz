@@ -7,6 +7,14 @@ $(document).ready(function () {
         }
     });
 
+    $("#trackList").dataTable({
+        rowReorder: true,
+        colReorder: true,
+        search: {
+            smart: false
+        }
+    });
+
 })
 
 // Get the modal
