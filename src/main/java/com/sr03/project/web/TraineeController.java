@@ -35,6 +35,9 @@ public class TraineeController {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private AnswerQuestionService answerQuestionService;
+
     // Launch quiz
     @RequestMapping(value = "/forms/{formId}", method = RequestMethod.GET)
     public String launchQuiz(Model model, @PathVariable int formId, Principal principal) {
@@ -93,10 +96,18 @@ public class TraineeController {
                                @ModelAttribute("trackQuestion") TrackQuestion trackQuestion) {
 
         // Save answer to question
-        trackQuestion.setTrack(trackService.findById(Long.valueOf(trackId)));
+        Track track = trackService.findById(Long.valueOf(trackId));
+        trackQuestion.setTrack(track);
         FormQuestion formQuestion = formQuestionService.findById(Long.valueOf(formQuestionId));
         trackQuestion.setQuestion(formQuestion.getQuestion());
         trackQuestionService.save(trackQuestion);
+
+        // Update score
+        AnswerQuestion answerQuestion = answerQuestionService.findByQuestionAndPosition(formQuestion.getQuestion(), trackQuestion.getChoicePosition());
+        if (answerQuestion.getIsValid()) {
+            track.setScore(track.getScore() + 1);
+            trackService.save(track);
+        }
 
         // Decide whether next question ot back to home
         Form form = formService.findById(Long.valueOf(formId));
