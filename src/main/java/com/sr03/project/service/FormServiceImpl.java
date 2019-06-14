@@ -5,6 +5,8 @@ import com.sr03.project.repository.FormRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FormServiceImpl implements FormService {
     @Autowired
@@ -20,4 +22,7 @@ public class FormServiceImpl implements FormService {
     public Form findById(Long id) {
         return formRepository.findById(id);
     }
+
+    @Override
+    public List<Form> findAll() { return formRepository.findAll(); }
 }

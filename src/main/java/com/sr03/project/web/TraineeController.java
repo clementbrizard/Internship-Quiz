@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 import java.util.SortedSet;
 
 @Controller
@@ -120,7 +121,20 @@ public class TraineeController {
         }
 
         else
-            return "redirect:/welcome";
+            model.addAttribute("score", track.getScore());
+            return "redirect:/endQuiz";
+    }
+
+    // Redirect to welcome page after quiz
+    @RequestMapping(value = "/endQuiz", method = RequestMethod.GET)
+    public String quizFinished(Model model,
+                               @ModelAttribute("score") String score,
+                               @ModelAttribute("form") String formId) {
+        Iterable <Form> formList = formService.findAll();
+        model.addAttribute("formList", formList);
+        model.addAttribute("score", score);
+
+        return "trainee/trainee";
     }
 
 
