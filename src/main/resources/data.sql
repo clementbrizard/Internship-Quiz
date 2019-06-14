@@ -13,7 +13,7 @@ UPDATE db.answer_question SET question_id = 3, answer_id = 4, position = 4, isVa
 UPDATE db.form SET title = 'kdjsfhkjshfkjh', isActive = 1 WHERE form_id = 81;
 UPDATE db.form_question SET form_id = 81, question_id = 2, position = 1 WHERE form_question_id = 56;
 UPDATE db.form_question SET form_id = 81, question_id = 3, position = 2 WHERE form_question_id = 57;
-UPDATE db.form_subject SET  WHERE form_id = 81 AND subject_id = 1;
+/*UPDATE db.form_subject SET  WHERE form_id = 81 AND subject_id = 1;*/
 UPDATE db.question SET subject_id = 1, title = 'Question 1', isActive = 1 WHERE question_id = 2;
 UPDATE db.question SET subject_id = 1, title = 'Question 2', isActive = 1 WHERE question_id = 3;
 UPDATE db.role SET name = 'ROLE_ADMIN' WHERE id = 1;
@@ -137,6 +137,6 @@ UPDATE db.user SET username = 'jean-brzard', password = '$2a$11$D1sFpoV5c5/7Cx81
 UPDATE db.user SET username = 'marie_briz', password = '$2a$11$X24H5Ssq/4tR.7wrfPnzEe4hTuSdwzRGG12KFmBGjve.Fdhg02YlS', valid = 1, firstName = 'marie', secondName = 'brizard', mail = 'marie@gmail.com', company = 'FSA', phone = '0608315289', creationdate = '2019-05-27 02:11:49' WHERE id = 16;
 UPDATE db.user SET username = 'ninon_lize', password = '$2a$11$OB7vtSX8CvgvjlrnmGCU7eAmc2Tfax9uhPrD.JoWPKZ5/38n7X0nS', valid = 1, firstName = 'ninon', secondName = 'lize', mail = 'ninon@gmail.com', company = 'UTC', phone = '0987654321', creationdate = '2019-05-27 02:15:00' WHERE id = 17;
 UPDATE db.user SET username = 'clement_brizard_53', password = '$2a$11$bU4wGxJ7GJ525GAlr4YzDelZxbKy4KuxDQwG2Oz.VZUWHLjEwjSdq', valid = 1, firstName = 'clement', secondName = 'brizard', mail = 'clementbrizard@gmail.com', company = 'UTC', phone = '0770976800', creationdate = '2019-06-03 08:56:52' WHERE id = 18;
-UPDATE db.user_role SET  WHERE user_id = 5 AND role_id = 1;
+/*UPDATE db.user_role SET  WHERE user_id = 5 AND role_id = 1;
 UPDATE db.user_role SET  WHERE user_id = 5 AND role_id = 2;
-UPDATE db.user_role SET  WHERE user_id = 18 AND role_id = 2;
+UPDATE db.user_role SET  WHERE user_id = 18 AND role_id = 2;*/

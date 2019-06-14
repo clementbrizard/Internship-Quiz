@@ -8,4 +8,5 @@ public interface FormService {
     void save(Form form);
     Form findById(Long id);
     List<Form> findAll();
+    List<Form> findByIsActiveTrue();
 }

@@ -261,7 +261,7 @@ public class UserController {
             model.addAttribute("userList",userList);
             return "admin";
         } else {
-            Iterable <Form> formList = formRepository.findAll();
+            Iterable <Form> formList = formRepository.findByIsActiveTrue();
             model.addAttribute("formList", formList);
 
             Iterable<Track> trackList = trackService.findByUser(user);

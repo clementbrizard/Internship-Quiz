@@ -25,4 +25,7 @@ public class FormServiceImpl implements FormService {
 
     @Override
     public List<Form> findAll() { return formRepository.findAll(); }
+
+    @Override
+    public List<Form> findByIsActiveTrue() {return formRepository.findByIsActiveTrue(); }
 }

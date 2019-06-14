@@ -10,4 +10,6 @@ public interface FormRepository extends JpaRepository<Form, Long> {
 
     @Override
     List<Form> findAll();
+    /*@Override*/
+    List<Form> findByIsActiveTrue();
 }

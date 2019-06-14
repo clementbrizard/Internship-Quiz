@@ -1,3 +1,6 @@
+CREATE DATABASE IF NOT EXISTS `db`;
+USE `db`;
+
 create table if not exists answer
 (
     answer_id int auto_increment

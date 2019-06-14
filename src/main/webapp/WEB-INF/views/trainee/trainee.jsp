@@ -35,6 +35,7 @@
             <tr>
                 <th class="text-center">Title</th>
                 <th class="text-center">Subjects</th>
+                <th class="text-center">Active</th>
                 <th class="text-center">Action</th>
             </tr>
             </thead>
@@ -46,6 +47,7 @@
                             ${subject.title}
                         </c:forEach>
                     </td>
+                    <td class="text-center">${item.isActive}</td>
                     <td class="text-center">
                         <form id="launchQuiz/${item.id}" method="GET" action="/forms/${item.id}">
                         </form>
