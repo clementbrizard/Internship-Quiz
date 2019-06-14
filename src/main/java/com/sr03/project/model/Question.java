@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.SortedSet;
 
 @Entity
 @Table(name = "question")
@@ -30,7 +31,8 @@ public class Question {
             mappedBy = "question",
             cascade = CascadeType.REMOVE,
             fetch = FetchType.EAGER)
-    private Set<AnswerQuestion> answerQuestion = new HashSet<AnswerQuestion>(0);
+    @OrderBy("position ASC")
+    private SortedSet<AnswerQuestion> answerQuestion;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "question")
     private Set<TrackQuestion> trackQuestion = new HashSet<>(0);
@@ -67,11 +69,11 @@ public class Question {
         isActive = active;
     }
 
-    public Set<AnswerQuestion> getAnswerQuestion() {
+    public SortedSet<AnswerQuestion> getAnswerQuestion() {
         return answerQuestion;
     }
 
-    public void setAnswerQuestion(Set<AnswerQuestion> answerQuestion) {
+    public void setAnswerQuestion(SortedSet<AnswerQuestion> answerQuestion) {
         this.answerQuestion = answerQuestion;
     }
 
