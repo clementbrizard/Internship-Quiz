@@ -2,11 +2,13 @@ package com.sr03.project.web;
 
 import com.sr03.project.model.Form;
 import com.sr03.project.env;
+import com.sr03.project.model.Track;
 import com.sr03.project.model.User;
 import com.sr03.project.repository.FormRepository;
 import com.sr03.project.repository.UserRepository;
 import com.sr03.project.service.SecurityService;
 import com.sr03.project.service.SecurityServiceImpl;
+import com.sr03.project.service.TrackService;
 import com.sr03.project.service.UserService;
 import com.sr03.project.validator.UserValidator;
 import org.slf4j.Logger;
@@ -49,6 +51,9 @@ public class UserController {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private TrackService trackService;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -258,6 +263,10 @@ public class UserController {
         } else {
             Iterable <Form> formList = formRepository.findAll();
             model.addAttribute("formList", formList);
+
+            Iterable<Track> trackList = trackService.findByUser(user);
+            model.addAttribute("trackList", trackList);
+
             return "trainee/trainee";
         }
     }
