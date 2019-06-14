@@ -64,6 +64,7 @@
             <tr>
                 <th class="text-center">Title</th>
                 <th class="text-center">Subjects</th>
+                <th class="text-center">Date</th>
                 <th class="text-center">Score</th>
             </tr>
             </thead>
@@ -75,6 +76,7 @@
                             ${subject.title}
                         </c:forEach>
                     </td>
+                    <td class="text-center">${item.date}</td>
                     <td class="text-center">${item.score}</td>
                 </tr>
             </c:forEach>
