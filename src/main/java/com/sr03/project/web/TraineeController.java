@@ -10,10 +10,6 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Set;
-import java.util.SortedSet;
 
 @Controller
 public class TraineeController {
@@ -120,10 +116,11 @@ public class TraineeController {
             return "redirect:/forms/{formId}/questions";
         }
 
-        else
+        else {
             model.addAttribute("score", track.getScore());
             model.addAttribute("user", track.getUser().getId().toString());
             return "redirect:/endQuiz";
+        }
     }
 
     // Redirect to welcome page after quiz
