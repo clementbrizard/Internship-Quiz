@@ -1,4 +1,4 @@
-#S R03 Project Internship
+# SR03 Project Internship
 
 ## Requirements
 * Maven
